@@ -11,7 +11,7 @@ type Block = {
 
 type TextBlock = Block & {
     type: 'text',
-    chars: Array<Char>,
+    chars?: Array<Char>,
 }
 
 type ImageBlock = Block & {
@@ -28,3 +28,19 @@ type GraphicBlock = Block & {
     data: Figure,
 }
 
+type Slide = {
+    id: string,
+    content?: Block[],
+}
+
+type SlidePreview = {
+    id: string,
+}
+
+type ListOfSlides = {
+    content: SlidePreview[],
+}
+
+export {
+    Slide
+}
