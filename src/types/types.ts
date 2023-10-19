@@ -6,13 +6,16 @@ type Char = {
 };
 
 type Position = {
-  x: string;
-  y: string;
+  x: number;
+  y: number;
 };
 
-type Figure = {
+type Size = {
   weight: number;
   height: number;
+}
+
+type Figure = {
   thickness: number;
   fillColor: string;
   outlineColor: string;
@@ -48,29 +51,38 @@ type GraphicBlock = Block & {
   data: Circle | Square | Triangle;
 };
 
+type Operation = {
+  id: string;
+}
+
+type History = {
+  operations: Operation[];
+  undoOperations: Operation[];
+}
+
 type Slide = {
   id: string;
-  backgroundColor: string;
+  background: string;
   data?: Array<TextBlock | ImageBlock | GraphicBlock>;
 };
 
-type SlidesList = {
-  slides?: Array<Slide>;
-};
-
-type Presentation = SlidesList & {
-  workPlace?: Slide;
+type Presentation = {
+  name: string;
+  currentSlide: Slide | null;
+  slides: Slide[];
 };
 
 export type {
   Char,
   Position,
+  Size,
   ImageBlock,
   Figure,
   Block,
   GraphicBlock,
   TextBlock,
-  SlidesList,
+  Operation,
+  History,
   Presentation,
   Circle,
   Triangle,
