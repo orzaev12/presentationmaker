@@ -7,7 +7,6 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-package.json
 yarn.lock
 track.ts
 node_modules

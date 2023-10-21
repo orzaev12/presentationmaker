@@ -2,6 +2,7 @@ import "./Editor.css";
 import Slide from "../Slide/Slide";
 import SlideBar from "../SlideBar/SlideBar";
 
+
 function Editor() {
     return(
         <div className="editor">
