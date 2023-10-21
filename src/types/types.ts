@@ -16,6 +16,7 @@ type Size = {
 }
 
 type Figure = {
+  size: Size;
   thickness: number;
   fillColor: string;
   outlineColor: string;
@@ -24,6 +25,7 @@ type Figure = {
 type Block = {
   id: string;
   position: Position;
+  size: Size;
 };
 
 type Circle = Figure & {
@@ -39,16 +41,19 @@ type Triangle = Figure & {
 type TextBlock = Block & {
   type: "text";
   chars?: Array<Char>;
+  size: Size;
 };
 
 type ImageBlock = Block & {
   type: "image";
   data: string;
+  size: Size;
 };
 
 type GraphicBlock = Block & {
   type: "graphic";
   data: Circle | Square | Triangle;
+  size?: Size;
 };
 
 type Operation = {

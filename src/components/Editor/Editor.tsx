@@ -1,5 +1,5 @@
 import "./Editor.css";
-import Slide from "../Slide/Slide";
+import Slide from "../Slide/Slide.tsx";
 import SlideBar from "../SlideBar/SlideBar";
 
 

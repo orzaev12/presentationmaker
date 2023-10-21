@@ -1,0 +1,11 @@
+.slide-bar {
+    height: 1034px;
+    width: 219px;
+    padding: 8px 16px;
+}
+
+.slide-bar__slide {
+    width: 152;
+    height: 88;
+    border: 1px;
+}

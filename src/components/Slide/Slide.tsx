@@ -1,8 +1,13 @@
-import React from 'react'
+import { Slide as TSlide} from '../../types/types';
+import classNames from 'classnames';
 
-function Slide() {
+type SlideProps = {
+    className?: string;
+}
+
+function Slide({className}: SlideProps) {
     return (
-        <div className="slide"></div>
+        <div className={classNames("slide", className)}></div>
     )
 }
 
