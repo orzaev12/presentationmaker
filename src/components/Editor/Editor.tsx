@@ -1,13 +1,17 @@
 import "./Editor.css";
 import Slide from "../Slide/Slide.tsx";
 import SlideBar from "../SlideBar/SlideBar";
+import {Presentation} from "../../types/types.ts";
 
+type EditorProps = {
+    presentation: Presentation;
+}
 
-function Editor() {
+function Editor({presentation}: EditorProps) {
     return(
         <div className="editor">
-            <SlideBar />
-            <Slide />
+            <SlideBar slides={presentation.slides}/>
+            <Slide slide={presentation.currentSlide}/>
         </div>
     );
 }

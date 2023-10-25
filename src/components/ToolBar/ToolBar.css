@@ -1,0 +1,13 @@
+.tool-bar
+{
+    background-color: #edf2fa;
+    border: none;
+    border-radius: 24px;
+    margin: 2px 0;
+    min-height: 40px;
+}
+
+.tool-bar__button
+{
+    margin: 3px 4px;
+}

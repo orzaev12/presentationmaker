@@ -1,0 +1,47 @@
+import {
+    Presentation,
+    Slide,
+    TextBlock,
+    Char,
+    Size,
+    Position
+} from "./types";
+
+const char: Char = {
+    value: "A",
+    fontSize: 14,
+    fontFamily: "inherit",
+    color: "#FFFFFF"
+}
+
+const positionTextBlock: Position = {
+    x: 12,
+    y: 90
+}
+
+const sizeTextBlock: Size = {
+    weight: 500,
+    height: 400
+}
+
+const textBlock: TextBlock = {
+    id: "sdfs",
+    size: sizeTextBlock,
+    position: positionTextBlock,
+    type: "text",
+    chars: [char]
+}
+
+const slide: Slide = {
+    id: "kdmf1",
+    background: "#aaaaaa",
+    data: [textBlock],
+};
+
+const presentation: Presentation = {
+    name: "Middle examples",
+    currentSlide: slide,
+    slides: [slide],
+  };
+
+export default presentation;

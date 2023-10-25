@@ -8,10 +8,10 @@ function ToolBar()
     return (
         <div className="tool-bar">
             <IconButton aria-label="undo">
-                <UndoIcon sx={{ fontSize: 17}} />
+                <UndoIcon className="tool-bar__button" sx={{ fontSize: 17}} />
             </IconButton>
             <IconButton aria-label="redo" disabled>
-                <RedoIcon sx={{ fontSize: 17}} />
+                <RedoIcon className="tool-bar__button" sx={{ fontSize: 17}} />
             </IconButton>
         </div>
     );

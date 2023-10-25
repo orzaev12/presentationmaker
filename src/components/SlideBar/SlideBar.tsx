@@ -1,13 +1,20 @@
 import "./SlideBar.css";
 import Slide from "../Slide/Slide.tsx";
+import {Slide as TSlide} from "../../types/types.ts";
 
-function SlideBar() {
+type SlideBarProps = {
+    slides: TSlide[];
+}
+
+function SlideBar({slides}: SlideBarProps) {
     return (
         <div className="slide-bar">
-            <div>
-                <span>1</span>
-                <Slide className="slide-bar__slide"/>
-            </div>
+            {slides.length > 0 && slides.map((slide, index) => (
+                <div className="slide-bar__elem" >
+                    <span>{index + 1}</span>
+                    <Slide key={slide.id} className="slide-bar__slide" slide={slide}/>
+                </div>
+            ))}
         </div>
     );
 }

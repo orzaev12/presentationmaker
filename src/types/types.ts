@@ -41,19 +41,16 @@ type Triangle = Figure & {
 type TextBlock = Block & {
   type: "text";
   chars?: Array<Char>;
-  size: Size;
 };
 
 type ImageBlock = Block & {
   type: "image";
   data: string;
-  size: Size;
 };
 
 type GraphicBlock = Block & {
   type: "graphic";
   data: Circle | Square | Triangle;
-  size?: Size;
 };
 
 type Operation = {
@@ -68,12 +65,12 @@ type History = {
 type Slide = {
   id: string;
   background: string;
-  data?: Array<TextBlock | ImageBlock | GraphicBlock>;
+  data?: Array<TextBlock | ImageBlock | GraphicBlock> | null;
 };
 
 type Presentation = {
   name: string;
-  currentSlide: Slide | null;
+  currentSlide: Slide;
   slides: Slide[];
 };
 
