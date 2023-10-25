@@ -9,7 +9,6 @@ type HeaderProps = {
 function Header({name}: HeaderProps) {
     return (
         <div className="header">
-          <img src="" />
             {name ? (
               <span className="title">{name}</span>
             ) : (

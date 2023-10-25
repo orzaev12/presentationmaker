@@ -11,7 +11,7 @@ function Editor({presentation}: EditorProps) {
     return(
         <div className="editor">
             <SlideBar slides={presentation.slides}/>
-            <Slide slide={presentation.currentSlide}/>
+            <Slide className="editor__slide" slide={presentation.currentSlide} id={presentation.currentSlide.id} data={null}/>
         </div>
     );
 }

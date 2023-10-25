@@ -2,3 +2,12 @@
 {
     display: flex;
 }
+
+.editor__slide
+{
+    max-width: 1590px;
+    max-height: 900px;
+    width: 1590px;
+    height: 900px;
+    margin: 9px 45px;
+}

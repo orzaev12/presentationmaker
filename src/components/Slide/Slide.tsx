@@ -4,12 +4,13 @@ import classNames from 'classnames';
 import { CSSProperties } from "react"
 
 type SlideProps = {
+    id: string;
     className?: string;
     slide: TSlide;
     data: Array<TextBlock | ImageBlock | GraphicBlock> | null;
 }
 
-function Slide({className, slide, data}: SlideProps) {
+function Slide({className, slide}: SlideProps) {
     const background: CSSProperties = {
         background: slide.background,
     }
@@ -17,7 +18,7 @@ function Slide({className, slide, data}: SlideProps) {
 
 
     return (
-        <div className={classNames("slide", className)} style={background}></div>
+        <div id={slide.id} className={classNames("slide", className)} style={background}></div>
     )
 }
 
