@@ -1,1 +1,1 @@
-# Added Vite, components without implementation.
+# Added components with style modules.
