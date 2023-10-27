@@ -11,15 +11,21 @@ type Position = {
 };
 
 type Size = {
-  weight: number;
+  width: number;
   height: number;
 }
 
+type TriangleSize = {
+  firstSide: number;
+  secondSide: number;
+  thirdSide: number;
+}
+
 type Figure = {
-  size: Size;
-  thickness: number;
+  background: string;
+  /* thickness: number;
   fillColor: string;
-  outlineColor: string;
+  outlineColor: string; */
 };
 
 type Block = {
@@ -29,12 +35,15 @@ type Block = {
 };
 
 type Circle = Figure & {
+  size: Size;
   type: "circle";
 };
 type Square = Figure & {
+  size: Size;
   type: "square";
 };
 type Triangle = Figure & {
+  size: TriangleSize;
   type: "triangle";
 };
 
@@ -65,7 +74,7 @@ type History = {
 type Slide = {
   id: string;
   background: string;
-  data?: Array<TextBlock | ImageBlock | GraphicBlock> | null;
+  data: Array<TextBlock | ImageBlock | GraphicBlock> | null;
 };
 
 type Presentation = {
@@ -78,6 +87,7 @@ export type {
   Char,
   Position,
   Size,
+  TriangleSize,
   ImageBlock,
   Figure,
   Block,

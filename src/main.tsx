@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
-import presentation from "./types/middle.ts"
+import presentation from "./types/min.ts"
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

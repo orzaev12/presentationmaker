@@ -1,13 +1,12 @@
-import { Slide as TSlide, TextBlock, ImageBlock, GraphicBlock} from '../../types/types.ts';
-import "./Slide.css"
+import { Slide as TSlide} from '../../types/types.ts';
+import styles from "./Slide.module.css"
 import classNames from 'classnames';
 import { CSSProperties } from "react"
+import Block from '../Block/Block.tsx';
 
 type SlideProps = {
-    id: string;
     className?: string;
     slide: TSlide;
-    data: Array<TextBlock | ImageBlock | GraphicBlock> | null;
 }
 
 function Slide({className, slide}: SlideProps) {
@@ -15,10 +14,12 @@ function Slide({className, slide}: SlideProps) {
         background: slide.background,
     }
 
-
-
     return (
-        <div id={slide.id} className={classNames("slide", className)} style={background}></div>
+        <div id={slide.id} className={classNames(styles.slide, className)} style={background}>
+            {slide.data?.map((block) => (
+                <Block id={block.id} key={block.id} data={block}/>
+            ))}
+        </div>
     )
 }
 

@@ -1,4 +1,4 @@
-.tool-bar
+.toolbar
 {
     background-color: #edf2fa;
     border: none;
@@ -7,7 +7,7 @@
     min-height: 40px;
 }
 
-.tool-bar__button
+.button
 {
     margin: 3px 4px;
 }

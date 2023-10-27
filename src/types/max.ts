@@ -1,116 +1,149 @@
 import {
-  Char,
-  Position,
-  ImageBlock,
-  GraphicBlock,
-  TextBlock,
   Presentation,
-  Circle,
-  Triangle,
-  Square,
   Slide,
-} from "./type";
+  TextBlock,
+  ImageBlock,
+  Char,
+  Size,
+  Position,
+  GraphicBlock,
+  TriangleSize,
+  Triangle,
+  Circle,
+  Square
+} from "./types";
 
-const char1: Char = {
+const char: Char = {
   value: "A",
-  fontSize: 12,
-  fontFamily: "sans-serif",
-  color: "#000000",
-};
+  fontSize: 14,
+  fontFamily: "inherit",
+  color: "#FFFFFF"
+}
 
-const char2: Char = {
-  value: "B",
-  fontSize: 22,
-  fontFamily: "sans-serif",
-  color: "#FFFFFF",
-};
+const positionOfTextBlock: Position = {
+  x: 12,
+  y: 90,
+}
 
-const position1: Position = {
-  x: "12px",
-  y: "12%",
-};
+const positionOfImageBlock: Position = {
+  x: 90,
+  y: 50,
+}
+
+const positionOfTriangle: Position = {
+  x: 12,
+  y: 10,
+}
+
+const positionOfCircle: Position = {
+  x: 12,
+  y: 10,
+}
+
+const positionOfSquare: Position = {
+  x: 12,
+  y: 10,
+}
+
+const sizeOfTriangle: TriangleSize = {
+  firstSide: 80,
+  secondSide: 80,
+  thirdSide: 80,
+}
+
+const sizeOfTriangleBlock: Size = {
+  width: 160,
+  height: 40,
+}
+
+const sizeOfCircle: Size = {
+  width: 400,
+  height: 400,
+}
+
+const sizeOfSquare: Size = {
+  width: 200,
+  height: 200,
+}
+
+const sizeOfTextBlock: Size = {
+  width: 80,
+  height: 40,
+}
+
+const sizeofImageBlock: Size = {
+  width: 200,
+  height: 200,
+}
 
 const textBlock: TextBlock = {
-  position: position1,
-  id: "id1",
+  id: "sdfs",
+  size: sizeOfTextBlock,
+  position: positionOfTextBlock,
   type: "text",
-  chars: [char1, char2],
-};
+  chars: [char],
+}
 
 const imageBlock: ImageBlock = {
-  position: position1,
-  id: "id1",
+  id: "segs",
+  size: sizeofImageBlock,
+  position: positionOfImageBlock,
   type: "image",
-  data: "http://happyFace",
-};
+  data: "/coconut.svg",
+}
 
-const circleBlock: Circle = {
-  weight: 12,
-  height: 13,
-  thickness: 1,
-  fillColor: "#000",
-  outlineColor: "#000",
-  type: "circle",
-};
-
-const squareBlock: Square = {
-  weight: 12,
-  height: 13,
-  thickness: 1,
-  fillColor: "#000",
-  outlineColor: "#000",
-  type: "square",
-};
-
-const triangleBlock: Triangle = {
-  weight: 12,
-  height: 13,
-  thickness: 1,
-  fillColor: "#000",
-  outlineColor: "#000",
+const triangle: Triangle = {
   type: "triangle",
-};
+  size: sizeOfTriangle,
+  background: "#FF0000",
+}
 
-const graphicBlock: GraphicBlock = {
-  position: position1,
-  id: "id3",
+const graphicBlock1: GraphicBlock = {
+  id: "segssergfc",
+  size: sizeOfTriangleBlock,
+  position: positionOfTriangle,
   type: "graphic",
-  data: circleBlock,
-};
+  data: triangle,
+}
+
+const circle: Circle = {
+  type: "circle",
+  size: sizeOfCircle,
+  background: "#00FF00",
+}
 
 const graphicBlock2: GraphicBlock = {
-  position: {
-    x: "12px",
-    y: "12%",
-  },
-  id: "id3",
+  id: "segsse1rgfc",
+  size: sizeOfCircle,
+  position: positionOfCircle,
   type: "graphic",
-  data: squareBlock,
-};
+  data: circle,
+}
+
+const square: Square = {
+  type: "square",
+  size: sizeOfSquare,
+  background: "#00FFFF",
+}
 
 const graphicBlock3: GraphicBlock = {
-  position: {
-    x: "12px",
-    y: "12%",
-  },
-  id: "id3",
+  id: "segsse1rgesfc",
+  size: sizeOfSquare,
+  position: positionOfSquare,
   type: "graphic",
-  data: triangleBlock,
-};
+  data: square,
+}
 
 const slide: Slide = {
-  id: "id6",
-  data: [textBlock, imageBlock, graphicBlock, graphicBlock2, graphicBlock3],
-  backgroundColor: "#FF00FF",
+  id: "kdmf1",
+  background: "#aaaaaa",
+  data: [textBlock, imageBlock, graphicBlock1, graphicBlock2, graphicBlock3],
 };
 
-const slide2: Slide = {
-  id: "id8",
-  data: [imageBlock, graphicBlock],
-  backgroundColor: "00FF00",
+const presentation: Presentation = {
+  name: "Middle examples",
+  currentSlide: slide,
+  slides: [slide],
 };
 
-const presentation1: Presentation = {
-  slides: [slide, slide2],
-  workPlace: slide,
-};
+export default presentation;

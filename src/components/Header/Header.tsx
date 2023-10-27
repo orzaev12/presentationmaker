@@ -1,4 +1,4 @@
-import "./Header.css";
+import styles from "./Header.module.css";
 import MenuBar from "../MenuBar/MenuBar";
 import ToolBar from "../ToolBar/ToolBar";
 
@@ -8,11 +8,11 @@ type HeaderProps = {
 
 function Header({name}: HeaderProps) {
     return (
-        <div className="header">
+        <div className={styles.header}>
             {name ? (
-              <span className="title">{name}</span>
+              <span className={styles.title}>{name}</span>
             ) : (
-              <span className="title">Введите название презентации</span>
+              <span className={styles.title}>Введите название презентации</span>
             )}
             <MenuBar />
             <ToolBar />

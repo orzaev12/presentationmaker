@@ -12,7 +12,7 @@ const slide: Slide = {
 const presentation: Presentation = {
   name: "",
   currentSlide: slide,
-  slides: [],
+  slides: [slide],
 };
 
 export default presentation;

@@ -1,4 +1,4 @@
-import "./SlideBar.css";
+import styles from "./SlideBar.module.css"
 import Slide from "../Slide/Slide.tsx";
 import {Slide as TSlide} from "../../types/types.ts";
 
@@ -8,11 +8,11 @@ type SlideBarProps = {
 
 function SlideBar({slides}: SlideBarProps) {
     return (
-        <div className="slide-bar">
-            {slides.length > 0 && slides.map((slide, index) => (
-                <div className="slide-bar__elem" >
+        <div className={styles.slidebar}>
+            {slides.map((slide, index) => (
+                <div key={index} className={styles.elem} >
                     <span>{index + 1}</span>
-                    <Slide id={slide.id} className="slide-bar__slide" slide={slide} data={null}/>
+                    <Slide className={styles.slide} slide={slide} />
                 </div>
             ))}
         </div>

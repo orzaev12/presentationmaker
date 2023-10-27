@@ -1,16 +1,17 @@
-.slide-bar {
+.slidebar {
     height: 1034px;
     width: 219px;
     padding: 8px 16px;
 }
 
-.slide-bar__elem
+.elem
 {
     display: flex;
     gap: 0 15px;
 }
 
-.slide-bar__slide {
+.slide {
+    overflow: hidden;
     min-width: 160px;
     min-height: 100px;
     max-width: 160px;
@@ -20,5 +21,3 @@
     background-color: azure;
     cursor: pointer;
 }
-
-/*.slide-bar__slide:hover*/

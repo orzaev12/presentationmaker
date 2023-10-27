@@ -14,14 +14,21 @@ const char: Char = {
     color: "#FFFFFF"
 }
 
+const char2: Char = {
+    value: "b",
+    fontSize: 14,
+    fontFamily: "inherit",
+    color: "#000"
+}
+
 const positionTextBlock: Position = {
     x: 12,
-    y: 90
+    y: 90,
 }
 
 const sizeTextBlock: Size = {
-    weight: 500,
-    height: 400
+    width: 500,
+    height: 400,
 }
 
 const textBlock: TextBlock = {
@@ -29,7 +36,7 @@ const textBlock: TextBlock = {
     size: sizeTextBlock,
     position: positionTextBlock,
     type: "text",
-    chars: [char]
+    chars: [char, char2],
 }
 
 const slide: Slide = {
