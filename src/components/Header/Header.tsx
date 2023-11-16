@@ -1,12 +1,14 @@
 import styles from "./Header.module.css";
 import MenuBar from "../MenuBar/MenuBar";
 import ToolBar from "../ToolBar/ToolBar";
+import { Presentation } from "../../types/types";
 
 type HeaderProps = {
-    name: string;
+  presentation: Presentation;
+  name: string;
 }
 
-function Header({name}: HeaderProps) {
+function Header({name, presentation}: HeaderProps) {
     return (
         <div className={styles.header}>
             {name ? (
@@ -14,7 +16,7 @@ function Header({name}: HeaderProps) {
             ) : (
               <span className={styles.title}>Введите название презентации</span>
             )}
-            <MenuBar />
+            <MenuBar presentation={presentation}/>
             <ToolBar />
         </div>
     );

@@ -4,6 +4,7 @@ import {Slide as TSlide} from "../../types/types.ts";
 
 type SlideBarProps = {
     slides: TSlide[];
+    current: TSlide;
 }
 
 function SlideBar({slides}: SlideBarProps) {

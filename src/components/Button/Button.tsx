@@ -1,7 +1,7 @@
 import styles from "./Button.module.css"
 
 type ButtonProps = {
-    text?: string;
+    text?: string; 
 }
 
 function Button({text}: ButtonProps)

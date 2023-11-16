@@ -13,11 +13,18 @@ import {
   Square
 } from "./types";
 
-const char: Char = {
+const char1: Char = {
   value: "A",
   fontSize: 14,
   fontFamily: "inherit",
   color: "#FFFFFF"
+}
+
+const char2: Char = {
+  value: "B",
+  fontSize: 20,
+  fontFamily: "inherit",
+  color: "#FF77FF"
 }
 
 const positionOfTextBlock: Position = {
@@ -46,7 +53,7 @@ const positionOfSquare: Position = {
 }
 
 const sizeOfTriangle: TriangleSize = {
-  firstSide: 80,
+  firstSide: 40,
   secondSide: 80,
   thirdSide: 80,
 }
@@ -81,7 +88,7 @@ const textBlock: TextBlock = {
   size: sizeOfTextBlock,
   position: positionOfTextBlock,
   type: "text",
-  chars: [char],
+  chars: [char1, char2],
 }
 
 const imageBlock: ImageBlock = {
@@ -140,10 +147,22 @@ const slide: Slide = {
   data: [textBlock, imageBlock, graphicBlock1, graphicBlock2, graphicBlock3],
 };
 
+const slide2: Slide = {
+  id: "kdmfs1",
+  background: "#F5A133",
+  data: [graphicBlock2, graphicBlock3],
+};
+
+const slide3: Slide = {
+  id: "kds1",
+  background: "#FF55FF",
+  data: [],
+};
+
 const presentation: Presentation = {
   name: "Middle examples",
   currentSlide: slide,
-  slides: [slide],
+  slides: [slide, slide2, slide3],
 };
 
 export default presentation;

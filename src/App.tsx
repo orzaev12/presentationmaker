@@ -10,7 +10,7 @@ type AppProps = {
 function App({presentation}: AppProps) {
   return (
     <div className="app">
-      <Header name={presentation.name}/>
+      <Header name={presentation.name} presentation={presentation}/>
       <Editor presentation={presentation}/>
     </div>
   );
