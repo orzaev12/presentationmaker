@@ -9,10 +9,10 @@ const slide: Slide = {
   data: [],
 };
 
-const presentation: Presentation = {
+const present: Presentation = {
   name: "",
   currentSlide: slide,
   slides: [slide],
 };
 
-export default presentation;
+export default present;

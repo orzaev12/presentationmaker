@@ -45,10 +45,10 @@ const slide: Slide = {
     data: [textBlock],
 };
 
-const presentation: Presentation = {
+const present: Presentation = {
     name: "Middle examples",
     currentSlide: slide,
     slides: [slide],
   };
 
-export default presentation;
+export default present;

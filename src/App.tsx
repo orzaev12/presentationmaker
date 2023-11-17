@@ -2,15 +2,14 @@ import "./App.css";
 import Header from "./components/Header/Header.tsx";
 import Editor from "./components/Editor/Editor.tsx"
 import {Presentation} from "./types/types.ts"
+import present  from "./types/min.ts"
+import { useState } from "react";
 
-type AppProps = {
-  presentation: Presentation;
-}
-
-function App({presentation}: AppProps) {
+function App() {
+  const [presentation, setPresentation] = useState<Presentation>(present)
   return (
     <div className="app">
-      <Header name={presentation.name} presentation={presentation}/>
+      <Header presentation={presentation} setPresentation={setPresentation}/>
       <Editor presentation={presentation}/>
     </div>
   );

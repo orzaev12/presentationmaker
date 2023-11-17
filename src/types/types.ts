@@ -48,17 +48,17 @@ type Triangle = Figure & {
 };
 
 type TextBlock = Block & {
-  type: "text";
+  type: string;
   chars?: Array<Char>;
 };
 
 type ImageBlock = Block & {
-  type: "image";
+  type: string;
   data: string;
 };
 
 type GraphicBlock = Block & {
-  type: "graphic";
+  type: string;
   data: Circle | Square | Triangle;
 };
 

@@ -5,18 +5,18 @@ import { Presentation } from "../../types/types";
 
 type HeaderProps = {
   presentation: Presentation;
-  name: string;
+  setPresentation: (value: Presentation) => void
 }
 
-function Header({name, presentation}: HeaderProps) {
+function Header({presentation, setPresentation}: HeaderProps) {
     return (
         <div className={styles.header}>
-            {name ? (
-              <span className={styles.title}>{name}</span>
+            {presentation.name ? (
+              <span className={styles.title}>{presentation.name}</span>
             ) : (
               <span className={styles.title}>Введите название презентации</span>
             )}
-            <MenuBar presentation={presentation}/>
+            <MenuBar presentation={presentation} setPresentation={setPresentation}/>
             <ToolBar />
         </div>
     );

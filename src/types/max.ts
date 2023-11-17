@@ -159,10 +159,10 @@ const slide3: Slide = {
   data: [],
 };
 
-const presentation: Presentation = {
-  name: "Middle examples",
+const present: Presentation = {
+  name: "Max examples",
   currentSlide: slide,
   slides: [slide, slide2, slide3],
 };
 
-export default presentation;
+export default present;
