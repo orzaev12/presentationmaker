@@ -13,7 +13,9 @@ function SlideBar({slides}: SlideBarProps) {
             {slides.map((slide, index) => (
                 <div key={index} className={styles.elem} >
                     <span>{index + 1}</span>
-                    <Slide className={styles.slide} slide={slide} />
+                    <div className={styles.wrapper}>
+                        <Slide className={styles.slide} slide={slide} />
+                    </div>
                 </div>
             ))}
         </div>

@@ -11,6 +11,7 @@ type BlockProps = {
 
 function Block({data, id}: BlockProps) {
     const styleList: CSSProperties = {
+        position: "absolute",
         width: data.size.width,
         height: data.size.height,
         left: data.position.x,
