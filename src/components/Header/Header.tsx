@@ -7,7 +7,12 @@ import classNames from "classnames";
 
 function Header() {
     const { presentation, setPresentation } = useContext(PresentationContext)
+    const newPresentation = { ...presentation }
     const ref = useRef<HTMLInputElement>(null)
+    const changeTitle = (newTitle: string) => {
+        newPresentation.name = newTitle
+        setPresentation(newPresentation)
+    }
 
     useEffect(() => {
         const onKeyDown = () => {
@@ -28,7 +33,7 @@ function Header() {
                         ref={ref}
                         className={classNames(styles.title, styles.input)}
                         value={presentation.name}
-                        //onChange={(event) => createChangeTitleAction(event.target.value)}
+                        onChange={(event) => changeTitle(event.target.value)}
                     />
                     <MenuBar />
                 </div>

@@ -9,9 +9,45 @@ import ImageIcon from '@mui/icons-material/Image';
 import CircleIcon from '@mui/icons-material/Circle';
 import SquareIcon from '@mui/icons-material/Square';
 import CategoryIcon from '@mui/icons-material/Category';
+import { useContext } from "react";
+import { PresentationContext } from "../../context/presentation";
+import { v4 as uuid} from "uuid"
+import { textBlock, circle, square, triangle } from "../../const/const";
 
 function ToolBar()
 {
+    const { presentation, setPresentation } = useContext(PresentationContext)
+    const currentSlide = presentation.slides[presentation.indexOfCurrentSlide]
+    const newPresentation = { ...presentation }
+
+    const addSlide = () => {
+        const newSlide = {
+                id: uuid(),
+                background: "#FFFFFF",
+                data: [],
+        }
+        newPresentation.slides.splice(presentation.indexOfCurrentSlide + 1, 0, newSlide)
+        setPresentation(newPresentation)
+    }
+
+    const removeSlide = () => {
+        newPresentation.slides = newPresentation.slides.filter(slide => slide.id !== currentSlide.id)
+        presentation.indexOfCurrentSlide == presentation.slides.length - 1 && newPresentation.indexOfCurrentSlide--
+        setPresentation(newPresentation)
+    }
+
+    const addTextBlock = () => {
+        newPresentation.slides[newPresentation.indexOfCurrentSlide].data?.push({ ...textBlock, id: uuid()})
+        setPresentation(newPresentation)
+    }
+
+    const addGraphicBlock = (type: string) => {
+        type === 'circle' && newPresentation.slides[newPresentation.indexOfCurrentSlide].data?.push({ ...circle, id: uuid()})
+        type === 'square' && newPresentation.slides[newPresentation.indexOfCurrentSlide].data?.push({ ...square, id: uuid()})
+        type === 'triangle' && newPresentation.slides[newPresentation.indexOfCurrentSlide].data?.push({ ...triangle, id: uuid()})
+        setPresentation(newPresentation)
+    }
+
     const addImageBlock = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (!event.target.files)
         {
@@ -33,6 +69,11 @@ function ToolBar()
         reader.readAsDataURL(file)
     }
 
+    const changeBackgroundOfSlide = (color: string) => {
+        newPresentation.slides[newPresentation.indexOfCurrentSlide].background = color
+        setPresentation(newPresentation)
+    }
+
     return (
         <div className={styles.toolbar}>
             <IconButton aria-label="undo" >
@@ -42,20 +83,19 @@ function ToolBar()
                 <RedoIcon className={styles.button} sx={{ fontSize: 17}} />
             </IconButton>
             <hr className={styles.separate} />
-            <IconButton aria-label="add" >
+            <IconButton aria-label="add" onClick={() => addSlide()}>
                 <AddIcon className={styles.button} sx={{ fontSize: 17}} />
             </IconButton>
-            <IconButton aria-label="delete" ><DeleteIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
-            {/* {slides?.length == 1
+            {presentation.slides?.length == 1
                 ? <IconButton aria-label="delete" disabled><DeleteIcon className={styles.button} sx={{ fontSize: 17}}/></IconButton>
-                : <IconButton aria-label="delete" ><DeleteIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
-            } */}
+                : <IconButton aria-label="delete" onClick={() => removeSlide()}><DeleteIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
+            }
             <label htmlFor="colors" className={styles.text}>Фон</label>
             <select
                 className={styles.select}
                 id="colors" name="colors"
-                //value={currentSlide.background}
-                //onChange={(event) => changeColorOfSlide(event.target.value)}
+                value={currentSlide.background}
+                onChange={(event) => changeBackgroundOfSlide(event.target.value)}
             >
                 <option value="#FFFFFF">Белый</option>
                 <option value="#000000">Черный</option>
@@ -68,7 +108,7 @@ function ToolBar()
                 <option value="#808080">Серый</option>
             </select>
             <hr className={styles.separate} />
-            <IconButton aria-label="title" >
+            <IconButton aria-label="title" onClick={() => addTextBlock()}>
                 <TitleIcon className={styles.button} sx={{ fontSize: 17}} />
             </IconButton>
             <IconButton aria-label="image" >
@@ -80,13 +120,13 @@ function ToolBar()
                     onChange={(event) => addImageBlock(event)}
                 />
             </IconButton>
-            <IconButton aria-label="circle" >
+            <IconButton aria-label="circle" onClick={() => addGraphicBlock("circle")}>
                 <CircleIcon className={styles.button} sx={{ fontSize: 17}} />
             </IconButton>
-            <IconButton aria-label="square" >
+            <IconButton aria-label="square" onClick={() => addGraphicBlock("square")}>
                 <SquareIcon className={styles.button} sx={{ fontSize: 17}} />
             </IconButton>
-            <IconButton aria-label="category" >
+            <IconButton aria-label="category" onClick={() => addGraphicBlock("triangle")}>
                 <CategoryIcon className={styles.button} sx={{ fontSize: 17}} />
             </IconButton>
         </div>

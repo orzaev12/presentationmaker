@@ -1,5 +1,5 @@
 .button {
-    border-radius: 8px;
+    border-radius: 4px;
     border: 1px solid transparent;
     font-family: inherit;
     cursor: pointer;
@@ -11,12 +11,14 @@
 }
 
 .text {
-    padding: 0;
-    font-size: 16px;
-    color: #213547;
+    font-family:  Sans,Roboto,sans-serif;
+    font-size: 14px;
+    color: #202124;
     font-weight: 400;
+    letter-spacing: .2px;
+    white-space: nowrap;
 }
 
 .input {
-    visibility: hidden;
+    display: none;
 }

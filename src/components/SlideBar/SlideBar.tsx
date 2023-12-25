@@ -6,13 +6,19 @@ import classNames from "classnames";
 
 function SlideBar() {
     const { presentation, setPresentation} = useContext(PresentationContext)
+    const newPresentation = { ...presentation }
+
+    const SetCurrentSlide = (index: number) => {
+        newPresentation.indexOfCurrentSlide = index
+        setPresentation(newPresentation)
+    }
     const indexOfCurrentSlide = presentation.indexOfCurrentSlide
     return (
         <div className={styles.slidebar}>
             {presentation.slides.map((slide, index) => (
                 <div key={index} className={styles.elem} >
                     <span>{index + 1}</span>
-                    <div className={styles.wrapper} >
+                    <div className={styles.wrapper} onMouseDown={() => SetCurrentSlide(index)}>
                         <Slide className={indexOfCurrentSlide === index ? classNames(styles.slide, styles.current) : classNames(styles.slide, styles.aim)} slide={slide} />
                     </div>
                 </div>

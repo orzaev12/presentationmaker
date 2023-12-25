@@ -12,7 +12,7 @@ function Char({char}: CharProps) {
         fontSize: char.fontSize,
     }
 
-    return (<p style={styleList}>{char.value}</p>)
+    return (<span style={styleList}>{char.value}</span>)
 }
 
 export default Char;

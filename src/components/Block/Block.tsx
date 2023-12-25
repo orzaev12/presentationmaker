@@ -5,7 +5,7 @@ import GraphicBlock from "../GraphicBlock/GraphicBlock";
 import { CSSProperties } from "react"
 
 type BlockProps = {
-    data: TTextBlock | TImageBlock | TGraphicBlock;
+    data: TTextBlock | TImageBlock | TGraphicBlock | any;
     id: string;
 }
 
