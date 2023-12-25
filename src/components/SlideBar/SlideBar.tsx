@@ -1,20 +1,19 @@
 import styles from "./SlideBar.module.css"
 import Slide from "../Slide/Slide.tsx";
-import {Slide as TSlide} from "../../types/types.ts";
+import { useContext } from "react";
+import { PresentationContext } from "../../context/presentation.tsx";
+import classNames from "classnames";
 
-type SlideBarProps = {
-    slides: TSlide[];
-    current: TSlide;
-}
-
-function SlideBar({slides}: SlideBarProps) {
+function SlideBar() {
+    const { presentation, setPresentation} = useContext(PresentationContext)
+    const indexOfCurrentSlide = presentation.indexOfCurrentSlide
     return (
         <div className={styles.slidebar}>
-            {slides.map((slide, index) => (
+            {presentation.slides.map((slide, index) => (
                 <div key={index} className={styles.elem} >
                     <span>{index + 1}</span>
-                    <div className={styles.wrapper}>
-                        <Slide className={styles.slide} slide={slide} />
+                    <div className={styles.wrapper} >
+                        <Slide className={indexOfCurrentSlide === index ? classNames(styles.slide, styles.current) : classNames(styles.slide, styles.aim)} slide={slide} />
                     </div>
                 </div>
             ))}

@@ -5,7 +5,37 @@
     gap: 3px;
 }
 
+.infoColumn {
+    display: flex;
+    flex-direction: column;
+}
+
+.infoRow {
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    width: 49px;
+    height: 49px;
+}
+
 .title {
     font-size: 18px;
     padding: 0 6px;
+}
+
+.input {
+    font-size: 18px;
+    padding: 0;
+    outline: none;
+    border: none;
+    background: transparent;
+    margin: 0 0 5px 6px;
+}
+
+.input:focus {
+    outline: 2px solid #0b57d0 !important;
+    outline-offset: 4px;
+    border-radius: 1px;
 }

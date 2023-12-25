@@ -79,7 +79,7 @@ type Slide = {
 
 type Presentation = {
   name: string;
-  currentSlide: Slide;
+  indexOfCurrentSlide: number;
   slides: Slide[];
 };
 
