@@ -1,11 +1,11 @@
-import { TextBlock, GraphicBlock } from "../types/types";
+import { TextBlock, GraphicBlock, ImageBlock, Char } from "../types/types";
 import { v4 as uuid } from "uuid"
 
 const textBlock: TextBlock = {
     id: uuid(),
     size: {
-        width: 80,
-        height: 40,
+        width: 30,
+        height: 24,
     },
     position: {
         x: 12,
@@ -85,7 +85,7 @@ const triangle: GraphicBlock = {
     id: uuid(),
     size: {
         width: 160,
-        height: 40,
+        height: 80,
     },
     position: {
         x: 12,
@@ -103,4 +103,25 @@ const triangle: GraphicBlock = {
     }
 }
 
-export { textBlock, circle, square, triangle }
+const image: ImageBlock = {
+    id: uuid(),
+    size: {
+        width: 200,
+        height: 40,
+    },
+    position: {
+        x: 12,
+        y: 10,
+    },
+    type: 'image',
+    data: '',
+}
+
+const char: Char = {
+    value: "e",
+    fontSize: 14,
+    fontFamily: "inherit",
+    color: "#000000",
+}
+
+export { textBlock, circle, square, triangle, image, char }

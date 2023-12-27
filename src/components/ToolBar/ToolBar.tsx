@@ -12,7 +12,7 @@ import CategoryIcon from '@mui/icons-material/Category';
 import { useContext } from "react";
 import { PresentationContext } from "../../context/presentation";
 import { v4 as uuid} from "uuid"
-import { textBlock, circle, square, triangle } from "../../const/const";
+import { textBlock, circle, square, triangle, image } from "../../const/const";
 
 function ToolBar()
 {
@@ -61,7 +61,8 @@ function ToolBar()
                 return
             }
             try {
-                console.log("test")//createAddImageBlockAction(currentSlide.id, event.target.result.toString())
+                newPresentation.slides[newPresentation.indexOfCurrentSlide].data?.push({ ...image, id: uuid(), data: event.target.result.toString()})
+                setPresentation(newPresentation)
             } catch (error) {
                 alert("Invalid file!")
             }
@@ -76,16 +77,10 @@ function ToolBar()
 
     return (
         <div className={styles.toolbar}>
-            <IconButton aria-label="undo" >
-                <UndoIcon className={styles.button} sx={{ fontSize: 17}} />
-            </IconButton>
-            <IconButton aria-label="redo" >
-                <RedoIcon className={styles.button} sx={{ fontSize: 17}} />
-            </IconButton>
+            <IconButton aria-label="undo" ><UndoIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
+            <IconButton aria-label="redo" ><RedoIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
             <hr className={styles.separate} />
-            <IconButton aria-label="add" onClick={() => addSlide()}>
-                <AddIcon className={styles.button} sx={{ fontSize: 17}} />
-            </IconButton>
+            <IconButton aria-label="add" onClick={() => addSlide()}><AddIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
             {presentation.slides?.length == 1
                 ? <IconButton aria-label="delete" disabled><DeleteIcon className={styles.button} sx={{ fontSize: 17}}/></IconButton>
                 : <IconButton aria-label="delete" onClick={() => removeSlide()}><DeleteIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
@@ -108,9 +103,8 @@ function ToolBar()
                 <option value="#808080">Серый</option>
             </select>
             <hr className={styles.separate} />
-            <IconButton aria-label="title" onClick={() => addTextBlock()}>
-                <TitleIcon className={styles.button} sx={{ fontSize: 17}} />
-            </IconButton>
+            <IconButton aria-label="title" onClick={() => addTextBlock()}><TitleIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
+
             <IconButton aria-label="image" >
                 <label className={styles.button} htmlFor="image_uploads"><ImageIcon sx={{ fontSize: 17}}/></label>
                 <input
@@ -120,15 +114,9 @@ function ToolBar()
                     onChange={(event) => addImageBlock(event)}
                 />
             </IconButton>
-            <IconButton aria-label="circle" onClick={() => addGraphicBlock("circle")}>
-                <CircleIcon className={styles.button} sx={{ fontSize: 17}} />
-            </IconButton>
-            <IconButton aria-label="square" onClick={() => addGraphicBlock("square")}>
-                <SquareIcon className={styles.button} sx={{ fontSize: 17}} />
-            </IconButton>
-            <IconButton aria-label="category" onClick={() => addGraphicBlock("triangle")}>
-                <CategoryIcon className={styles.button} sx={{ fontSize: 17}} />
-            </IconButton>
+            <IconButton aria-label="circle" onClick={() => addGraphicBlock("circle")}><CircleIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
+            <IconButton aria-label="square" onClick={() => addGraphicBlock("square")}><SquareIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
+            <IconButton aria-label="category" onClick={() => addGraphicBlock("triangle")}><CategoryIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
         </div>
     );
 }

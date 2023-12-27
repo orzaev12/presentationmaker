@@ -1,14 +1,17 @@
-import "./App.css";
-import Header from "./components/Header/Header.tsx";
-import Editor from "./components/Editor/Editor.tsx"
+import "./App.css"
+import Header from "./components/Header/Header"
+import Editor from "./components/Editor/Editor"
+import { useArrowsListeners } from "./hooks/useArrowsListener"
 
 function App() {
-  return (
-    <div className="app">
-      <Header />
-      <Editor />
-    </div>
-  );
+    useArrowsListeners()
+
+    return (
+        <div className="app">
+            <Header />
+            <Editor />
+        </div>
+    )
 }
 
 export default App;
