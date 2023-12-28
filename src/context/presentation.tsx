@@ -24,7 +24,7 @@ function PresentationProvider({ children }: PropsWithChildren) {
       setPresentation({ ...newPresentation });
     }
 
-    const handleSetSelectedBlockId = (newSelectedBlockId: string) => {
+    const handleSetSelectedBlockId = (newSelectedBlockId: string ) => {
       setSelectedBlockId(newSelectedBlockId)
     }
 

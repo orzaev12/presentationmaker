@@ -23,9 +23,6 @@ type TriangleSize = {
 
 type Figure = {
   background: string;
-  /* thickness: number;
-  fillColor: string;
-  outlineColor: string; */
 };
 
 type Block = {

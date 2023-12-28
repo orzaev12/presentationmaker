@@ -8,8 +8,8 @@ const textBlock: TextBlock = {
         height: 24,
     },
     position: {
-        x: 12,
-        y: 90,
+        x: 10,
+        y: 10,
     },
     type: "text",
     chars: [{
@@ -46,7 +46,7 @@ const circle: GraphicBlock = {
         height: 400,
     },
     position: {
-        x: 12,
+        x: 10,
         y: 10,
     },
     type: 'graphic',
@@ -67,7 +67,7 @@ const square: GraphicBlock = {
         height: 200,
     },
     position: {
-        x: 12,
+        x: 10,
         y: 10,
     },
     type: 'graphic',
@@ -88,7 +88,7 @@ const triangle: GraphicBlock = {
         height: 80,
     },
     position: {
-        x: 12,
+        x: 10,
         y: 10,
     },
     type: 'graphic',
@@ -106,11 +106,11 @@ const triangle: GraphicBlock = {
 const image: ImageBlock = {
     id: uuid(),
     size: {
-        width: 200,
-        height: 40,
+        width: 500,
+        height: 500,
     },
     position: {
-        x: 12,
+        x: 10,
         y: 10,
     },
     type: 'image',

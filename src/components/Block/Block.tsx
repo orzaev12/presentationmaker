@@ -1,9 +1,11 @@
 import {TextBlock as TTextBlock, ImageBlock as TImageBlock, GraphicBlock as TGraphicBlock } from "../../types/types";
+import styles from "./Block.module.css"
 import TextBlock from "../TextBlock/TextBlock";
 import ImageBlock from "../ImageBlock/ImageBlock";
 import GraphicBlock from "../GraphicBlock/GraphicBlock";
 import { CSSProperties, useContext, useEffect, useRef } from "react";
 import { PresentationContext } from "../../context/presentation";
+import { useDnD } from "../../hooks/useDndObject";
 
 type BlockProps = {
     data: TTextBlock | TImageBlock | TGraphicBlock | any;
@@ -11,23 +13,14 @@ type BlockProps = {
 }
 
 function Block({data, id}: BlockProps) {
-    const { setSelectedBlockId } = useContext(PresentationContext)
+    const { selectedBlockId, setSelectedBlockId } = useContext(PresentationContext)
+    const { presentation, setPresentation } = useContext(PresentationContext)
+    const newPresentation = { ...presentation }
+    const { registerDndItem } = useDnD()
     const ref = useRef<HTMLDivElement | null>(null)
-    const styleList: CSSProperties = {
-        position: "absolute",
+    const position: CSSProperties = {
         left: data.position.x,
         top: data.position.y,
-    }
-
-    if (data.type === 'graphic')
-    {
-        styleList.width = data.size.width,
-        styleList.height = data.size.height
-    }
-    if (data.type === 'text')
-    {
-        styleList.minHeight = 24
-        styleList.minWidth = 5
     }
 
     useEffect(() => {
@@ -41,7 +34,6 @@ function Block({data, id}: BlockProps) {
             } else {
                 block.style.outline = "none"
                 block.style.outlineOffset = "none"
-                setSelectedBlockId('')
             }
         }
         document.addEventListener("mousedown", handleClick)
@@ -49,8 +41,40 @@ function Block({data, id}: BlockProps) {
             document.removeEventListener("mousedown", handleClick)
         }
     }, [])
+
+    useEffect(() => {
+        const { onDragStart } = registerDndItem({
+            elementRef: ref,
+        })
+        const onMouseDown = (event: MouseEvent) => {
+            if (selectedBlockId === id)
+            {
+                onDragStart({
+                    onDrag: (dragEvent) => {
+                        dragEvent.preventDefault()
+                        ref.current!.style.top = `${dragEvent.clientY + (data.position.y - event.clientY)}px`
+                        ref.current!.style.left = `${dragEvent.clientX + (data.position.x - event.clientX)}px`
+                    },
+                    onDrop: (dropEvent) => {
+                        const position = {
+                            x: dropEvent.clientX + (data.position.x - event.clientX),
+                            y: dropEvent.clientY + (data.position.y - event.clientY),
+                        }
+                        const block = newPresentation.slides[newPresentation.indexOfCurrentSlide].data?.find((elem) => elem.id == id)!
+                        block.position = position
+                        setPresentation(newPresentation)
+                    },
+                })
+            }
+        }
+        ref.current!.addEventListener('mousedown', onMouseDown)
+        return () => {
+            ref.current!.removeEventListener('mousedown', onMouseDown)
+        }
+    }, [selectedBlockId])
+
     return (
-        <div className="block" id={id} style={styleList} ref={ref}>
+        <div className={styles.block} id={id} style={position} ref={ref}>
             {data.type === "text" && <TextBlock object={data} id={id}/>}
             {data.type === "image" && <ImageBlock object={data}/>}
             {data.type === "graphic" && <GraphicBlock data={data}/>}

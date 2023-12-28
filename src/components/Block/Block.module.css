@@ -1,0 +1,8 @@
+.selected {
+    outline: 3px solid #1A73E8;
+    outline-offset: 1px;
+}
+
+.block {
+    position: absolute;
+}

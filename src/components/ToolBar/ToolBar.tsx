@@ -9,14 +9,17 @@ import ImageIcon from '@mui/icons-material/Image';
 import CircleIcon from '@mui/icons-material/Circle';
 import SquareIcon from '@mui/icons-material/Square';
 import CategoryIcon from '@mui/icons-material/Category';
-import { useContext } from "react";
+import FormatBoldIcon from '@mui/icons-material/FormatBold';
+import FormatUnderlinedIcon from '@mui/icons-material/FormatUnderlined';
+import FormatItalicIcon from '@mui/icons-material/FormatItalic';
+import { useContext, useEffect, useRef } from "react";
 import { PresentationContext } from "../../context/presentation";
 import { v4 as uuid} from "uuid"
 import { textBlock, circle, square, triangle, image } from "../../const/const";
 
 function ToolBar()
 {
-    const { presentation, setPresentation } = useContext(PresentationContext)
+    const { presentation, setPresentation, selectedBlockId } = useContext(PresentationContext)
     const currentSlide = presentation.slides[presentation.indexOfCurrentSlide]
     const newPresentation = { ...presentation }
 
@@ -104,7 +107,11 @@ function ToolBar()
             </select>
             <hr className={styles.separate} />
             <IconButton aria-label="title" onClick={() => addTextBlock()}><TitleIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
-
+            <div>
+                <IconButton><FormatBoldIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
+                <IconButton><FormatUnderlinedIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
+                <IconButton><FormatItalicIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
+            </div>
             <IconButton aria-label="image" >
                 <label className={styles.button} htmlFor="image_uploads"><ImageIcon sx={{ fontSize: 17}}/></label>
                 <input

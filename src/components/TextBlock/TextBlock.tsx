@@ -1,5 +1,6 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { Size, TextBlock as TTextBlock } from "../../types/types";
+import styles from "./TextBlock.module.css"
+import { TextBlock as TTextBlock } from "../../types/types";
 import Char from "../Char/Char.tsx"
 import { PresentationContext } from "../../context/presentation.tsx";
 import { char } from "../../const/const.ts";
@@ -48,7 +49,7 @@ function TextBlock({object, id}: TextBlockProps) {
     })
 
     return (
-        <div ref={ref}>
+        <div ref={ref} className={styles.text}>
             {object.chars?.map((item, index) => (
                 <Char char={item} key={index} />
             ))}
