@@ -10,7 +10,7 @@ function Editor() {
     return(
         <div className={styles.editor}>
             <SlideBar />
-            <Slide className={styles.slide} slide={presentation.slides[presentation.indexOfCurrentSlide]}/>
+            <Slide className={styles.slide} slide={presentation.slides[presentation.indexOfCurrentSlide]} isWorkSpace={true}/>
         </div>
     );
 }

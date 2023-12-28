@@ -10,9 +10,10 @@ import { useDnD } from "../../hooks/useDndObject";
 type BlockProps = {
     data: TTextBlock | TImageBlock | TGraphicBlock | any;
     id: string;
+    isWorkSpace: boolean;
 }
 
-function Block({data, id}: BlockProps) {
+function Block({data, id, isWorkSpace}: BlockProps) {
     const { selectedBlockId, setSelectedBlockId } = useContext(PresentationContext)
     const { presentation, setPresentation } = useContext(PresentationContext)
     const newPresentation = { ...presentation }
@@ -23,56 +24,59 @@ function Block({data, id}: BlockProps) {
         top: data.position.y,
     }
 
-    useEffect(() => {
-        const block: HTMLDivElement = ref.current!
-        const handleClick = (event: MouseEvent) => {
-            if (block && block?.contains(event.target as Node))
-            {
-                block.style.outline = "3px solid #1A73E8"
-                block.style.outlineOffset = "1px"
-                setSelectedBlockId(id)
-            } else {
-                block.style.outline = "none"
-                block.style.outlineOffset = "none"
+    //выделение блока
+    if (isWorkSpace)
+    {
+        useEffect(() => {
+            const block: HTMLDivElement = ref.current!
+            const handleClick = (event: MouseEvent) => {
+                if (block && block?.contains(event.target as Node))
+                {
+                    block.style.outline = "3px solid #1A73E8"
+                    block.style.outlineOffset = "1px"
+                    setSelectedBlockId(id)
+                } else {
+                    block.style.outline = "none"
+                    block.style.outlineOffset = "none"
+                }
             }
-        }
-        document.addEventListener("mousedown", handleClick)
-        return () => {
-            document.removeEventListener("mousedown", handleClick)
-        }
-    }, [])
-
-    useEffect(() => {
-        const { onDragStart } = registerDndItem({
-            elementRef: ref,
-        })
-        const onMouseDown = (event: MouseEvent) => {
-            if (selectedBlockId === id)
-            {
-                onDragStart({
-                    onDrag: (dragEvent) => {
-                        dragEvent.preventDefault()
-                        ref.current!.style.top = `${dragEvent.clientY + (data.position.y - event.clientY)}px`
-                        ref.current!.style.left = `${dragEvent.clientX + (data.position.x - event.clientX)}px`
-                    },
-                    onDrop: (dropEvent) => {
-                        const position = {
-                            x: dropEvent.clientX + (data.position.x - event.clientX),
-                            y: dropEvent.clientY + (data.position.y - event.clientY),
-                        }
-                        const block = newPresentation.slides[newPresentation.indexOfCurrentSlide].data?.find((elem) => elem.id == id)!
-                        block.position = position
-                        setPresentation(newPresentation)
-                    },
-                })
+            document.addEventListener("mousedown", handleClick)
+            return () => {
+                document.removeEventListener("mousedown", handleClick)
             }
-        }
-        ref.current!.addEventListener('mousedown', onMouseDown)
-        return () => {
-            ref.current!.removeEventListener('mousedown', onMouseDown)
-        }
-    }, [selectedBlockId])
-
+        }, [])
+        // DnD
+        useEffect(() => {
+            const { onDragStart } = registerDndItem({
+                elementRef: ref,
+            })
+            const onMouseDown = (event: MouseEvent) => {
+                if (selectedBlockId === id)
+                {
+                    onDragStart({
+                        onDrag: (dragEvent) => {
+                            dragEvent.preventDefault()
+                            ref.current!.style.top = `${dragEvent.clientY + (data.position.y - event.clientY)}px`
+                            ref.current!.style.left = `${dragEvent.clientX + (data.position.x - event.clientX)}px`
+                        },
+                        onDrop: (dropEvent) => {
+                            const position = {
+                                x: dropEvent.clientX + (data.position.x - event.clientX),
+                                y: dropEvent.clientY + (data.position.y - event.clientY),
+                            }
+                            const block = newPresentation.slides[newPresentation.indexOfCurrentSlide].data?.find((elem) => elem.id == id)!
+                            block.position = position
+                            setPresentation(newPresentation)
+                        },
+                    })
+                }
+            }
+            ref.current!.addEventListener('mousedown', onMouseDown)
+            return () => {
+                ref.current?.removeEventListener('mousedown', onMouseDown)
+            }
+        }, [selectedBlockId])
+    }
     return (
         <div className={styles.block} id={id} style={position} ref={ref}>
             {data.type === "text" && <TextBlock object={data} id={id}/>}

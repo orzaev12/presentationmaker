@@ -19,7 +19,7 @@ function SlideBar() {
                 <div key={index} className={styles.elem} >
                     <span>{index + 1}</span>
                     <div className={styles.wrapper} onMouseDown={() => SetCurrentSlide(index)}>
-                        <Slide className={indexOfCurrentSlide === index ? classNames(styles.slide, styles.current) : classNames(styles.slide, styles.aim)} slide={slide} />
+                        <Slide className={indexOfCurrentSlide === index ? classNames(styles.slide, styles.current) : classNames(styles.slide, styles.aim)} slide={slide} isWorkSpace={false} />
                     </div>
                 </div>
             ))}
