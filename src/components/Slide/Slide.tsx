@@ -4,20 +4,49 @@ import classNames from 'classnames';
 import { CSSProperties, useContext, useEffect, useRef, useState } from "react"
 import Block from '../Block/Block.tsx';
 import { PresentationContext } from '../../context/presentation.tsx';
+import { RegisterDndItemFn } from '../../hooks/useDndSlide.ts';
 
 type SlideProps = {
     className?: string;
     slide: TSlide;
     isWorkSpace: boolean;
+    registerDndItem?: RegisterDndItemFn;
+    index?: number;
 }
 
-function Slide({className, slide, isWorkSpace}: SlideProps) {
+function Slide({className, slide, isWorkSpace, registerDndItem, index}: SlideProps) {
     const { setSelectedBlockId } = useContext(PresentationContext)
     const [select, setSelect] = useState(false)
     const background: CSSProperties = {
         background: slide.background,
     }
     const ref = useRef<HTMLDivElement>(null)
+
+    if (!isWorkSpace && registerDndItem)
+    {
+        useEffect(() => {
+            const { onDragStart } = registerDndItem(index!, { elementRef: ref })
+
+            const onMouseDown = (event: MouseEvent) => {
+                onDragStart({
+                    onDrag: (dragEvent) => {
+                        ref.current!.style.position = 'relative'
+					    ref.current!.style.zIndex = '1'
+					    //ref.current!.style.boxShadow = 'black 2px 2px 4px'
+					    ref.current!.style.top = `${dragEvent.clientY +  event.clientY}px`
+                    },
+                    onDrop: (dropEvent) => {
+                        ref.current!.style.position = ''
+					    ref.current!.style.zIndex = ''
+					    ref.current!.style.boxShadow = ''
+					    ref.current!.style.top = ''
+                    }
+                })
+            }
+            ref.current?.addEventListener('mousedown', onMouseDown)
+            return (() => ref.current?.removeEventListener('mousedown', onMouseDown))
+        }, [])
+    }
 
     // если блок не выделен
     if (isWorkSpace)

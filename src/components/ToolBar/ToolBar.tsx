@@ -12,14 +12,14 @@ import CategoryIcon from '@mui/icons-material/Category';
 import FormatBoldIcon from '@mui/icons-material/FormatBold';
 import FormatUnderlinedIcon from '@mui/icons-material/FormatUnderlined';
 import FormatItalicIcon from '@mui/icons-material/FormatItalic';
-import { useContext, useEffect, useRef } from "react";
+import { useContext } from "react";
 import { PresentationContext } from "../../context/presentation";
 import { v4 as uuid} from "uuid"
 import { textBlock, circle, square, triangle, image } from "../../const/const";
 
 function ToolBar()
 {
-    const { presentation, setPresentation, selectedBlockId } = useContext(PresentationContext)
+    const { presentation, setPresentation } = useContext(PresentationContext)
     const currentSlide = presentation.slides[presentation.indexOfCurrentSlide]
     const newPresentation = { ...presentation }
 

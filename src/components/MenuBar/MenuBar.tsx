@@ -37,7 +37,7 @@ function MenuBar()
 
     return (
         <div className="menu">
-            <button className={styles.button}><a className={styles.text} href={getURL()} download={"presentation.json"}>Сохранить</a></button>
+            <button className={styles.button}><a className={styles.text} href={getURL()} download={presentation.name}>Сохранить</a></button>
             <button className={styles.button}><label className={styles.text} htmlFor="file_uploads">Загрузить</label></button>
             <input className={styles.input} id="file_uploads" type="file" accept="application/json" onChange={(event) => loadFile(event)}></input>
         </div>

@@ -5,7 +5,7 @@ import ImageBlock from "../ImageBlock/ImageBlock";
 import GraphicBlock from "../GraphicBlock/GraphicBlock";
 import { CSSProperties, useContext, useEffect, useRef } from "react";
 import { PresentationContext } from "../../context/presentation";
-import { useDnD } from "../../hooks/useDndObject";
+import { useDragAndDropObject } from "../../hooks/useDndObject";
 
 type BlockProps = {
     data: TTextBlock | TImageBlock | TGraphicBlock | any;
@@ -17,16 +17,15 @@ function Block({data, id, isWorkSpace}: BlockProps) {
     const { selectedBlockId, setSelectedBlockId } = useContext(PresentationContext)
     const { presentation, setPresentation } = useContext(PresentationContext)
     const newPresentation = { ...presentation }
-    const { registerDndItem } = useDnD()
+    const { registerDndItem } = useDragAndDropObject()
     const ref = useRef<HTMLDivElement | null>(null)
     const position: CSSProperties = {
         left: data.position.x,
         top: data.position.y,
     }
 
-    //выделение блока
     if (isWorkSpace)
-    {
+    {   //выделение блока
         useEffect(() => {
             const block: HTMLDivElement = ref.current!
             const handleClick = (event: MouseEvent) => {
@@ -47,12 +46,8 @@ function Block({data, id, isWorkSpace}: BlockProps) {
         }, [])
         // DnD
         useEffect(() => {
-            const { onDragStart } = registerDndItem({
-                elementRef: ref,
-            })
+            const { onDragStart } = registerDndItem({ elementRef: ref })
             const onMouseDown = (event: MouseEvent) => {
-                if (selectedBlockId === id)
-                {
                     onDragStart({
                         onDrag: (dragEvent) => {
                             dragEvent.preventDefault()
@@ -69,7 +64,6 @@ function Block({data, id, isWorkSpace}: BlockProps) {
                             setPresentation(newPresentation)
                         },
                     })
-                }
             }
             ref.current!.addEventListener('mousedown', onMouseDown)
             return () => {
