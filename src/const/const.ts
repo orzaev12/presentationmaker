@@ -34,7 +34,7 @@ const circle: GraphicBlock = {
     type: 'graphic',
     data: {
         type: "circle",
-        background: "#00FF00",
+        background: "#808080",
     }
 }
 
@@ -51,7 +51,7 @@ const square: GraphicBlock = {
     type: 'graphic',
     data: {
         type: "square",
-        background: "#00FF00",
+        background: "#808080",
     }
 }
 
@@ -68,7 +68,7 @@ const triangle: GraphicBlock = {
     type: 'graphic',
     data: {
         type: "triangle",
-        background: "#00FF00",
+        background: "#808080",
     }
 }
 

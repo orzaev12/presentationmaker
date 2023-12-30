@@ -12,11 +12,11 @@ import CategoryIcon from '@mui/icons-material/Category';
 import FormatBoldIcon from '@mui/icons-material/FormatBold';
 import FormatUnderlinedIcon from '@mui/icons-material/FormatUnderlined';
 import FormatItalicIcon from '@mui/icons-material/FormatItalic';
-import { ChangeEvent, useContext } from "react";
+import { useContext } from "react";
 import { PresentationContext } from "../../context/presentation";
 import { v4 as uuid} from "uuid"
 import { textBlock, circle, square, triangle, image } from "../../const/const";
-import { TextBlock as TTextBlock} from "../../types/types";
+import { TextBlock as TTextBlock, GraphicBlock as TGraphicBlock} from "../../types/types";
 
 function ToolBar()
 {
@@ -24,7 +24,8 @@ function ToolBar()
     const currentSlide = presentation.slides[presentation.indexOfCurrentSlide]
     const newPresentation = { ...presentation }
     const block = newPresentation.slides[newPresentation.indexOfCurrentSlide].data?.find((block) => block.id === selectedBlockId)
-    //const textBlock = block as TTextBlock
+    const graphicBlock = block as TGraphicBlock
+
     const addSlide = () => {
         const newSlide = {
                 id: uuid(),
@@ -51,6 +52,15 @@ function ToolBar()
         type === 'square' && newPresentation.slides[newPresentation.indexOfCurrentSlide].data?.push({ ...square, id: uuid()})
         type === 'triangle' && newPresentation.slides[newPresentation.indexOfCurrentSlide].data?.push({ ...triangle, id: uuid()})
         setPresentation(newPresentation)
+    }
+
+    const changeColorOfGraphicBlock = (color: string) => {
+        if (block!.type === 'graphic')
+        {
+            const graphicBlock = block as TGraphicBlock
+            graphicBlock.data.background = color
+            setPresentation(newPresentation)
+        }
     }
 
     const addImageBlock = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -182,6 +192,29 @@ function ToolBar()
             <IconButton onClick={() => addGraphicBlock("circle")}><CircleIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
             <IconButton onClick={() => addGraphicBlock("square")}><SquareIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
             <IconButton onClick={() => addGraphicBlock("triangle")}><CategoryIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
+
+
+            {block?.type === 'graphic' &&
+                <div>
+                    <label htmlFor="graphicColors" className={styles.text}>Цвет фигуры</label>
+                    <select
+                        className={styles.select}
+                        id="graphicColors" name="graphicColors"
+                        value={graphicBlock.data.background}
+                        onChange={(event) => changeColorOfGraphicBlock(event.target.value)}
+                    >
+                        <option value="#FFFFFF">Белый</option>
+                        <option value="#000000">Черный</option>
+                        <option value="#FF0000">Красный</option>
+                        <option value="#008000">Зеленый</option>
+                        <option value="#0000FF">Синий</option>
+                        <option value="#8B00FF">Фиолетовый</option>
+                        <option value="#FFFF00">Желтый</option>
+                        <option value="#FFA500">Оранжевый</option>
+                        <option value="#808080">Серый</option>
+                    </select>
+                </div>
+            }
         </div>
     );
 }
