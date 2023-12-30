@@ -1,9 +1,7 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { CSSProperties, useContext, useEffect, useRef, useState } from "react";
 import styles from "./TextBlock.module.css"
 import { TextBlock as TTextBlock } from "../../types/types";
-import Char from "../Char/Char.tsx"
 import { PresentationContext } from "../../context/presentation.tsx";
-import { char } from "../../const/const.ts";
 
 type TextBlockProps = {
     object: TTextBlock;
@@ -11,6 +9,14 @@ type TextBlockProps = {
 }
 
 function TextBlock({object, id}: TextBlockProps) {
+    const stylelist: CSSProperties = {
+        fontFamily: object.fontFamily,
+        fontSize: object.fontSize,
+        color: object.color,
+        textDecoration: object.underline ? "underline" : "",
+        fontStyle: object.italic ? "italic" : "",
+        fontWeight: object.bold ? "bold" : "",
+    }
     const { presentation, setPresentation } = useContext(PresentationContext)
     const newPresentation = { ...presentation }
     const ref = useRef<HTMLDivElement>(null)
@@ -32,9 +38,18 @@ function TextBlock({object, id}: TextBlockProps) {
                     if (item.id === id)
                     {
                         const currentSlide = newPresentation.slides[newPresentation.indexOfCurrentSlide]
-                        event.key.length === 1 && object?.chars?.push({ ...char, value: event.key})
-                        event.key == 'Backspace' && object?.chars?.pop()
-                        event.key === 'Enter' && object?.chars?.push({ ...char, value: '\n' })
+                        if (event.key.length === 1) {
+                            object.value += event.key
+                        }
+                        if (event.key === 'Backspace') {
+                            object.value = object.value.slice(0, -1)
+                        }
+                        if (event.key === 'Enter') {
+                            object.value += "\n"
+                        }
+                        if (event.key === 'Space') {
+                            object.value += "\u00A0"
+                        }
                         currentSlide.data![index] = object
                         setPresentation(newPresentation)
                     }
@@ -51,9 +66,7 @@ function TextBlock({object, id}: TextBlockProps) {
 
     return (
         <div ref={ref} className={styles.text}>
-            {object.chars?.map((item, index) => (
-                <Char char={item} key={index} />
-            ))}
+            <span className={styles.span} style={stylelist}>{object.value}</span>
         </div>
     )
 }

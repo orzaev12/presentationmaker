@@ -44,7 +44,7 @@ function Block({data, id, isWorkSpace}: BlockProps) {
                 ref.current?.parentElement?.removeEventListener("mousedown", handleClick)
             }
         }, [])
-        // DnD
+        // DnD and resize objects
         useEffect(() => {
             const { onDragStart } = registerDndItem({ elementRef: ref })
             const onMouseDown = (event: MouseEvent) => {
@@ -66,7 +66,7 @@ function Block({data, id, isWorkSpace}: BlockProps) {
                     })
             }
             const onMouseWheel = (event: WheelEvent) => {
-                if (selectedBlockId === id) {
+                if (selectedBlockId === id && data.type !== 'text') {
                     const newSize = {
                         height: data.size.height + event.deltaY,
                         width: data.size.width + event.deltaY,

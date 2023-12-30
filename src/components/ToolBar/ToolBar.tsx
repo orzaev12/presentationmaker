@@ -81,7 +81,30 @@ function ToolBar()
     }
 
     const setUnderlineText = () => {
-        
+        if (block!.type === 'text')
+        {
+            const textBlock = block as TTextBlock
+            textBlock.underline = !textBlock.underline
+            setPresentation(newPresentation)
+        }
+    }
+
+    const setBoldText = () => {
+        if (block!.type === 'text')
+        {
+            const textBlock = block as TTextBlock
+            textBlock.bold = !textBlock.bold
+            setPresentation(newPresentation)
+        }
+    }
+
+    const setItalicText = () => {
+        if (block!.type === 'text')
+        {
+            const textBlock = block as TTextBlock
+            textBlock.italic = !textBlock.italic
+            setPresentation(newPresentation)
+        }
     }
 
     return (
@@ -115,9 +138,22 @@ function ToolBar()
             <IconButton onClick={() => addTextBlock()}><TitleIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
             {block?.type === 'text' &&
                 <div>
-                    <IconButton onClick={() => { setUnderlineText() }}><FormatBoldIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
-                    <IconButton><FormatUnderlinedIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
-                    <IconButton><FormatItalicIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
+                    <IconButton onClick={() => { setBoldText() }}><FormatBoldIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
+                    <IconButton onClick={() => { setUnderlineText() }}><FormatUnderlinedIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
+                    <IconButton onClick={() => { setItalicText() }}><FormatItalicIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
+                    <label htmlFor="fontFamilies" className={styles.text}>Шрифт</label>
+                    <select
+                        className={styles.select}
+                        id="fontFamilies" name="fontFamilies"
+                        value="Inherit"
+                        //onchange={}
+                    >
+                        <option value="Arial">Arial</option>
+                        <option value="Georgia">Georgia</option>
+                        <option value="Verdana">Verdana</option>
+                        <option value="Inherit">Inherit</option>
+                        <option value="Times New Roman">Times New Roman</option>
+                    </select>
                 </div>
             }
             <IconButton>
