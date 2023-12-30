@@ -12,7 +12,7 @@ import CategoryIcon from '@mui/icons-material/Category';
 import FormatBoldIcon from '@mui/icons-material/FormatBold';
 import FormatUnderlinedIcon from '@mui/icons-material/FormatUnderlined';
 import FormatItalicIcon from '@mui/icons-material/FormatItalic';
-import { useContext } from "react";
+import { ChangeEvent, useContext } from "react";
 import { PresentationContext } from "../../context/presentation";
 import { v4 as uuid} from "uuid"
 import { textBlock, circle, square, triangle, image } from "../../const/const";
@@ -24,7 +24,7 @@ function ToolBar()
     const currentSlide = presentation.slides[presentation.indexOfCurrentSlide]
     const newPresentation = { ...presentation }
     const block = newPresentation.slides[newPresentation.indexOfCurrentSlide].data?.find((block) => block.id === selectedBlockId)
-
+    //const textBlock = block as TTextBlock
     const addSlide = () => {
         const newSlide = {
                 id: uuid(),
@@ -107,6 +107,18 @@ function ToolBar()
         }
     }
 
+    const changeFontFamilyOfText = (fontFamily: string) => {
+        const textBlock = block as TTextBlock
+        textBlock.fontFamily = fontFamily
+        setPresentation(newPresentation)
+    }
+
+    const changeFontSizeOfText = (fontSize: string) => {
+        const textBlock = block as TTextBlock
+        textBlock.fontSize = parseInt(fontSize)
+        setPresentation(newPresentation)
+    }
+
     return (
         <div className={styles.toolbar}>
             <IconButton><UndoIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
@@ -145,8 +157,8 @@ function ToolBar()
                     <select
                         className={styles.select}
                         id="fontFamilies" name="fontFamilies"
-                        value="Inherit"
-                        //onchange={}
+                        value={(block as TTextBlock).fontFamily}
+                        onChange={(event) => changeFontFamilyOfText(event.target.value)}
                     >
                         <option value="Arial">Arial</option>
                         <option value="Georgia">Georgia</option>
@@ -154,6 +166,8 @@ function ToolBar()
                         <option value="Inherit">Inherit</option>
                         <option value="Times New Roman">Times New Roman</option>
                     </select>
+                    <label htmlFor="fontSize" className={styles.text}>Размер</label>
+                    <input type="number" value={(block as TTextBlock).fontSize} onChange={(event) => changeFontSizeOfText(event.target.value)} />
                 </div>
             }
             <IconButton>
