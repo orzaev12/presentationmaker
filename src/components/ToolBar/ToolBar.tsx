@@ -24,7 +24,6 @@ function ToolBar()
     const currentSlide = presentation.slides[presentation.indexOfCurrentSlide]
     const newPresentation = { ...presentation }
     const block = newPresentation.slides[newPresentation.indexOfCurrentSlide].data?.find((block) => block.id === selectedBlockId)
-    const graphicBlock = block as TGraphicBlock
 
     const addSlide = () => {
         const newSlide = {
@@ -52,15 +51,6 @@ function ToolBar()
         type === 'square' && newPresentation.slides[newPresentation.indexOfCurrentSlide].data?.push({ ...square, id: uuid()})
         type === 'triangle' && newPresentation.slides[newPresentation.indexOfCurrentSlide].data?.push({ ...triangle, id: uuid()})
         setPresentation(newPresentation)
-    }
-
-    const changeColorOfGraphicBlock = (color: string) => {
-        if (block!.type === 'graphic')
-        {
-            const graphicBlock = block as TGraphicBlock
-            graphicBlock.data.background = color
-            setPresentation(newPresentation)
-        }
     }
 
     const addImageBlock = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -129,6 +119,16 @@ function ToolBar()
         setPresentation(newPresentation)
     }
 
+    const changeColorOfGraphicBlock = (color: string) => {
+        if (block!.type === 'graphic')
+        {
+            const graphicBlock = block as TGraphicBlock
+            graphicBlock.background = color
+            console.log(newPresentation)
+            setPresentation(newPresentation)
+        }
+    }
+
     return (
         <div className={styles.toolbar}>
             <IconButton><UndoIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
@@ -192,15 +192,13 @@ function ToolBar()
             <IconButton onClick={() => addGraphicBlock("circle")}><CircleIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
             <IconButton onClick={() => addGraphicBlock("square")}><SquareIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
             <IconButton onClick={() => addGraphicBlock("triangle")}><CategoryIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
-
-
             {block?.type === 'graphic' &&
                 <div>
                     <label htmlFor="graphicColors" className={styles.text}>Цвет фигуры</label>
                     <select
                         className={styles.select}
                         id="graphicColors" name="graphicColors"
-                        value={graphicBlock.data.background}
+                        value={(block as TGraphicBlock).background}
                         onChange={(event) => changeColorOfGraphicBlock(event.target.value)}
                     >
                         <option value="#FFFFFF">Белый</option>

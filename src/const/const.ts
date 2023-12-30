@@ -32,10 +32,8 @@ const circle: GraphicBlock = {
         y: 10,
     },
     type: 'graphic',
-    data: {
-        type: "circle",
-        background: "#808080",
-    }
+    data: "circle",
+    background: "#808080",
 }
 
 const square: GraphicBlock = {
@@ -49,10 +47,8 @@ const square: GraphicBlock = {
         y: 10,
     },
     type: 'graphic',
-    data: {
-        type: "square",
-        background: "#808080",
-    }
+    data: "square",
+    background: "#808080",
 }
 
 const triangle: GraphicBlock = {
@@ -66,10 +62,8 @@ const triangle: GraphicBlock = {
         y: 10,
     },
     type: 'graphic',
-    data: {
-        type: "triangle",
-        background: "#808080",
-    }
+    data: "triangle",
+    background: "#808080",
 }
 
 const image: ImageBlock = {

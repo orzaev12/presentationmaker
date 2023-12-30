@@ -14,24 +14,10 @@ type TriangleSize = {
   thirdSide: number;
 }
 
-type Figure = {
-  background: string;
-};
-
 type Block = {
   id: string;
   position: Position;
   size: Size;
-};
-
-type Circle = Figure & {
-  type: "circle";
-};
-type Square = Figure & {
-  type: "square";
-};
-type Triangle = Figure & {
-  type: "triangle";
 };
 
 type TextBlock = Block & {
@@ -52,7 +38,8 @@ type ImageBlock = Block & {
 
 type GraphicBlock = Block & {
   type: string;
-  data: Circle | Square | Triangle;
+  background: string;
+  data: string;
 };
 
 type Operation = {
@@ -81,15 +68,11 @@ export type {
   Size,
   TriangleSize,
   ImageBlock,
-  Figure,
   Block,
   GraphicBlock,
   TextBlock,
   Operation,
   History,
   Presentation,
-  Circle,
-  Triangle,
-  Square,
   Slide,
 };

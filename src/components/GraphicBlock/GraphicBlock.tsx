@@ -6,35 +6,34 @@ type GraphicBlockProps = {
 }
 
 function GraphicBlock({data}: GraphicBlockProps) {
-    const object = data.data
     let styleList: CSSProperties;
 
-    if (object.type == "circle")
+    if (data.data == "circle")
     {
         styleList = {
             width: data.size.width,
             height: data.size.height,
-            backgroundColor: object.background,
+            backgroundColor: data.background,
             borderRadius: data.size.width / 2,
         }
     }
-    if (object.type == "square")
+    if (data.data == "square")
     {
         styleList = {
             width: data.size.width,
             height: data.size.height,
-            backgroundColor: object.background,
+            backgroundColor: data.background,
         }
     }
 
-    if (object.type == "triangle")
+    if (data.type == "triangle")
     {
         styleList = {
             width: 0,
             height: 0,
             borderLeft: `${data.size.height}px solid transparent`,
             borderRight: `${data.size.height}px solid transparent`,
-            borderBottom: `${data.size.height}px solid ${object.background}`,
+            borderBottom: `${data.size.height}px solid ${data.background}`,
         }
     }
     return (
