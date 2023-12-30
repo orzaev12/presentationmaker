@@ -53,6 +53,7 @@ const square: GraphicBlock = {
 
 const triangle: GraphicBlock = {
     id: uuid(),
+    type: 'graphic',
     size: {
         width: 160,
         height: 80,
@@ -61,8 +62,7 @@ const triangle: GraphicBlock = {
         x: 10,
         y: 10,
     },
-    type: 'graphic',
-    data: "triangle",
+    data: 'triangle',
     background: "#808080",
 }
 

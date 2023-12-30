@@ -26,7 +26,7 @@ function GraphicBlock({data}: GraphicBlockProps) {
         }
     }
 
-    if (data.type == "triangle")
+    if (data.data == "triangle")
     {
         styleList = {
             width: 0,
