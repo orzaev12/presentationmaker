@@ -16,7 +16,7 @@ import { useContext } from "react";
 import { PresentationContext } from "../../context/presentation";
 import { v4 as uuid} from "uuid"
 import { textBlock, circle, square, triangle, image } from "../../const/const";
-import { TextBlock as TTextBlock} from "../../types/types";
+import { TextBlock as TTextBlock, GraphicBlock as TGraphicBlock} from "../../types/types";
 
 function ToolBar()
 {
@@ -107,6 +107,28 @@ function ToolBar()
         }
     }
 
+    const changeFontFamilyOfText = (fontFamily: string) => {
+        const textBlock = block as TTextBlock
+        textBlock.fontFamily = fontFamily
+        setPresentation(newPresentation)
+    }
+
+    const changeFontSizeOfText = (fontSize: string) => {
+        const textBlock = block as TTextBlock
+        textBlock.fontSize = parseInt(fontSize)
+        setPresentation(newPresentation)
+    }
+
+    const changeColorOfGraphicBlock = (color: string) => {
+        if (block!.type === 'graphic')
+        {
+            const graphicBlock = block as TGraphicBlock
+            graphicBlock.background = color
+            console.log(newPresentation)
+            setPresentation(newPresentation)
+        }
+    }
+
     return (
         <div className={styles.toolbar}>
             <IconButton><UndoIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
@@ -145,8 +167,8 @@ function ToolBar()
                     <select
                         className={styles.select}
                         id="fontFamilies" name="fontFamilies"
-                        value="Inherit"
-                        //onchange={}
+                        value={(block as TTextBlock).fontFamily}
+                        onChange={(event) => changeFontFamilyOfText(event.target.value)}
                     >
                         <option value="Arial">Arial</option>
                         <option value="Georgia">Georgia</option>
@@ -154,12 +176,14 @@ function ToolBar()
                         <option value="Inherit">Inherit</option>
                         <option value="Times New Roman">Times New Roman</option>
                     </select>
+                    <label htmlFor="fontSize" className={styles.text}>Размер</label>
+                    <input className={styles.input} type="number" value={(block as TTextBlock).fontSize} onChange={(event) => changeFontSizeOfText(event.target.value)} />
                 </div>
             }
             <IconButton>
                 <label className={styles.button} htmlFor="image_uploads"><ImageIcon sx={{ fontSize: 17}}/></label>
                 <input
-                    className={styles.input}
+                    className={styles.none}
                     id='image_uploads'
                     type='file'
                     onChange={(event) => addImageBlock(event)}
@@ -168,6 +192,27 @@ function ToolBar()
             <IconButton onClick={() => addGraphicBlock("circle")}><CircleIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
             <IconButton onClick={() => addGraphicBlock("square")}><SquareIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
             <IconButton onClick={() => addGraphicBlock("triangle")}><CategoryIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
+            {block?.type === 'graphic' &&
+                <div>
+                    <label htmlFor="graphicColors" className={styles.text}>Цвет фигуры</label>
+                    <select
+                        className={styles.select}
+                        id="graphicColors" name="graphicColors"
+                        value={(block as TGraphicBlock).background}
+                        onChange={(event) => changeColorOfGraphicBlock(event.target.value)}
+                    >
+                        <option value="#FFFFFF">Белый</option>
+                        <option value="#000000">Черный</option>
+                        <option value="#FF0000">Красный</option>
+                        <option value="#008000">Зеленый</option>
+                        <option value="#0000FF">Синий</option>
+                        <option value="#8B00FF">Фиолетовый</option>
+                        <option value="#FFFF00">Желтый</option>
+                        <option value="#FFA500">Оранжевый</option>
+                        <option value="#808080">Серый</option>
+                    </select>
+                </div>
+            }
         </div>
     );
 }
