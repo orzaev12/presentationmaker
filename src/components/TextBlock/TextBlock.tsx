@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { CSSProperties, useContext, useEffect, useRef, useState } from "react";
 import styles from "./TextBlock.module.css"
 import { TextBlock as TTextBlock } from "../../types/types";
 import Char from "../Char/Char.tsx"
@@ -11,6 +11,11 @@ type TextBlockProps = {
 }
 
 function TextBlock({object, id}: TextBlockProps) {
+    const stylelist: CSSProperties = {
+        textDecoration: object.underline ? "underline" : "",
+        fontStyle: object.italic ? "italic" : "",
+        fontWeight: object.bold ? "bold" : "",
+    }
     const { presentation, setPresentation } = useContext(PresentationContext)
     const newPresentation = { ...presentation }
     const ref = useRef<HTMLDivElement>(null)
@@ -50,7 +55,7 @@ function TextBlock({object, id}: TextBlockProps) {
     })
 
     return (
-        <div ref={ref} className={styles.text}>
+        <div ref={ref} className={styles.text} style={stylelist}>
             {object.chars?.map((item, index) => (
                 <Char char={item} key={index} />
             ))}

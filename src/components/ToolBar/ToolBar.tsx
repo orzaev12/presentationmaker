@@ -81,7 +81,30 @@ function ToolBar()
     }
 
     const setUnderlineText = () => {
-        
+        if (block!.type === 'text')
+        {
+            const textBlock = block as TTextBlock
+            textBlock.underline = !textBlock.underline
+            setPresentation(newPresentation)
+        }
+    }
+
+    const setBoldText = () => {
+        if (block!.type === 'text')
+        {
+            const textBlock = block as TTextBlock
+            textBlock.bold = !textBlock.bold
+            setPresentation(newPresentation)
+        }
+    }
+
+    const setItalicText = () => {
+        if (block!.type === 'text')
+        {
+            const textBlock = block as TTextBlock
+            textBlock.italic = !textBlock.italic
+            setPresentation(newPresentation)
+        }
     }
 
     return (
@@ -115,9 +138,9 @@ function ToolBar()
             <IconButton onClick={() => addTextBlock()}><TitleIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
             {block?.type === 'text' &&
                 <div>
-                    <IconButton onClick={() => { setUnderlineText() }}><FormatBoldIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
-                    <IconButton><FormatUnderlinedIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
-                    <IconButton><FormatItalicIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
+                    <IconButton onClick={() => { setBoldText() }}><FormatBoldIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
+                    <IconButton onClick={() => { setUnderlineText() }}><FormatUnderlinedIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
+                    <IconButton onClick={() => { setItalicText() }}><FormatItalicIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
                 </div>
             }
             <IconButton>
