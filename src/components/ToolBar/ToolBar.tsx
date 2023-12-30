@@ -141,6 +141,19 @@ function ToolBar()
                     <IconButton onClick={() => { setBoldText() }}><FormatBoldIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
                     <IconButton onClick={() => { setUnderlineText() }}><FormatUnderlinedIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
                     <IconButton onClick={() => { setItalicText() }}><FormatItalicIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
+                    <label htmlFor="fontFamilies" className={styles.text}>Шрифт</label>
+                    <select
+                        className={styles.select}
+                        id="fontFamilies" name="fontFamilies"
+                        value="Inherit"
+                        //onchange={}
+                    >
+                        <option value="Arial">Arial</option>
+                        <option value="Georgia">Georgia</option>
+                        <option value="Verdana">Verdana</option>
+                        <option value="Inherit">Inherit</option>
+                        <option value="Times New Roman">Times New Roman</option>
+                    </select>
                 </div>
             }
             <IconButton>

@@ -1,10 +1,3 @@
-type Char = {
-  value: string;
-  fontSize: number;
-  fontFamily: string;
-  color: string;
-};
-
 type Position = {
   x: number;
   y: number;
@@ -43,10 +36,13 @@ type Triangle = Figure & {
 
 type TextBlock = Block & {
   type: string;
+  value: string;
+  fontSize: number;
+  fontFamily: string;
+  color: string;
   underline: boolean;
   italic: boolean;
   bold: boolean;
-  chars?: Array<Char>;
 };
 
 type ImageBlock = Block & {
@@ -81,7 +77,6 @@ type Presentation = {
 };
 
 export type {
-  Char,
   Position,
   Size,
   TriangleSize,

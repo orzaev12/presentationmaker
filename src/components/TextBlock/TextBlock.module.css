@@ -3,3 +3,8 @@
     min-width: 5px;
     user-select: none;
 }
+
+.span {
+    display: block;
+    white-space: pre-wrap;
+}
