@@ -31,10 +31,11 @@ function TextBlock({object, id}: TextBlockProps) {
                 newPresentation.slides[newPresentation.indexOfCurrentSlide].data?.map((item, index) => {
                     if (item.id === id)
                     {
-                        const textBlock: TTextBlock = newPresentation.slides[newPresentation.indexOfCurrentSlide].data![index]
-                        event.key.length === 1 && textBlock?.chars?.push({ ...char, value: event.key})
-                        event.key == 'Backspace' && textBlock?.chars?.pop()
-                        event.key === 'Enter' && textBlock?.chars?.push({ ...char, value: '\n' })
+                        const currentSlide = newPresentation.slides[newPresentation.indexOfCurrentSlide]
+                        event.key.length === 1 && object?.chars?.push({ ...char, value: event.key})
+                        event.key == 'Backspace' && object?.chars?.pop()
+                        event.key === 'Enter' && object?.chars?.push({ ...char, value: '\n' })
+                        currentSlide.data![index] = object
                         setPresentation(newPresentation)
                     }
                 })
