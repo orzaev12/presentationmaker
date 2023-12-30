@@ -17,19 +17,19 @@ function SlideBar() {
 
     const { registerDndItem } = useDragAndDropSlide({
 		onOrderChange: (from, to) => {
-			const newSlides = [...newPresentation.slides]
+			const newSlides = newPresentation.slides
 			const removed = newSlides.splice(from, 1)
 			newSlides.splice(to, 0, removed[0])
+            newPresentation.indexOfCurrentSlide = to
 			setPresentation(newPresentation)
 		}
 	})
 
-    useEffect(() => {}, [])
     return (
         <div className={styles.slidebar}>
             {presentation.slides.map((slide, index) => (
                 <div key={index} className={styles.elem} >
-                    <span>{index + 1}</span>
+                    <span className={styles.index}>{index + 1}</span>
                     <div className={styles.wrapper} onMouseDown={() => SetCurrentSlide(index)}>
                         <Slide className={indexOfCurrentSlide === index ? classNames(styles.slide, styles.current) : classNames(styles.slide, styles.aim)}
                             slide={slide}

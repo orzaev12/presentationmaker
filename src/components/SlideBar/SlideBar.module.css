@@ -23,10 +23,8 @@
     border: 1px;
     border-radius: 12px;
     cursor: pointer;
-    left: -680px;
-    top: -380px;
     transform: scale(0.15);
-    position: absolute;
+    transform-origin: 0 0;
 }
 
 .wrapper {
@@ -43,4 +41,8 @@
 .aim:hover {
     outline: 15px solid #C7C7C7;
     outline-offset: 5px;
+}
+
+.index {
+    user-select: none;
 }

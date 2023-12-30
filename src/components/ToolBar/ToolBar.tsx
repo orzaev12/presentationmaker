@@ -159,7 +159,7 @@ function ToolBar()
             <hr className={styles.separate} />
             <IconButton onClick={() => addTextBlock()}><TitleIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
             {block?.type === 'text' &&
-                <div>
+                <div className={styles.flex}>
                     <IconButton onClick={() => { setBoldText() }}><FormatBoldIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
                     <IconButton onClick={() => { setUnderlineText() }}><FormatUnderlinedIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
                     <IconButton onClick={() => { setItalicText() }}><FormatItalicIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
@@ -193,7 +193,7 @@ function ToolBar()
             <IconButton onClick={() => addGraphicBlock("square")}><SquareIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
             <IconButton onClick={() => addGraphicBlock("triangle")}><CategoryIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
             {block?.type === 'graphic' &&
-                <div>
+                <div className={styles.flex}>
                     <label htmlFor="graphicColors" className={styles.text}>Цвет фигуры</label>
                     <select
                         className={styles.select}
