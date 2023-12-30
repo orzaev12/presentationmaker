@@ -84,7 +84,6 @@ function Block({data, id, isWorkSpace}: BlockProps) {
             }
         }, [selectedBlockId])
     }
-    console.log(selectedBlockId)
     return (
         <div className={styles.block} id={id} style={position} ref={ref}>
             {data.type === "text" && <TextBlock object={data} id={id}/>}
