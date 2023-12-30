@@ -21,7 +21,6 @@ type UseDraggableSlidesParams = {
 
 const useDragAndDropSlide = ({onOrderChange}: UseDraggableSlidesParams) => {
     const slidesRef = useRef<Array<InternalDndItemInfo>>([])
-	console.log(slidesRef)
     const registerDndItem = useCallback((index: number, dndItemInfo: DndItemInfo) => {
         const slide = {
             ...dndItemInfo,

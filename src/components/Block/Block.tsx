@@ -18,7 +18,7 @@ function Block({data, id, isWorkSpace}: BlockProps) {
     const { presentation, setPresentation } = useContext(PresentationContext)
     const newPresentation = { ...presentation }
     const { registerDndItem } = useDragAndDropObject()
-    const ref = useRef<HTMLDivElement | null>(null)
+    const ref = useRef<HTMLDivElement>(null)
     const position: CSSProperties = {
         left: data.position.x,
         top: data.position.y,
@@ -39,9 +39,9 @@ function Block({data, id, isWorkSpace}: BlockProps) {
                     block.style.outlineOffset = "none"
                 }
             }
-            document.addEventListener("mousedown", handleClick)
+            ref.current!.parentElement?.addEventListener("mousedown", handleClick)
             return () => {
-                document.removeEventListener("mousedown", handleClick)
+                ref.current?.parentElement?.removeEventListener("mousedown", handleClick)
             }
         }, [])
         // DnD
@@ -65,12 +65,26 @@ function Block({data, id, isWorkSpace}: BlockProps) {
                         },
                     })
             }
+            const onMouseWheel = (event: WheelEvent) => {
+                if (selectedBlockId === id) {
+                    const newSize = {
+                        height: data.size.height + event.deltaY,
+                        width: data.size.width + event.deltaY,
+                    }
+                    const currentBlock = newPresentation.slides[newPresentation.indexOfCurrentSlide].data?.find((element) => element.id === id)!
+                    currentBlock.size = newSize
+                    setPresentation(newPresentation)
+                }
+            }
             ref.current!.addEventListener('mousedown', onMouseDown)
+            ref.current!.addEventListener('wheel', onMouseWheel, { passive: true})
             return () => {
                 ref.current?.removeEventListener('mousedown', onMouseDown)
+                ref.current?.removeEventListener('wheel', onMouseWheel)
             }
         }, [selectedBlockId])
     }
+
     return (
         <div className={styles.block} id={id} style={position} ref={ref}>
             {data.type === "text" && <TextBlock object={data} id={id}/>}

@@ -32,20 +32,20 @@ type Block = {
 };
 
 type Circle = Figure & {
-  size: Size;
   type: "circle";
 };
 type Square = Figure & {
-  size: Size;
   type: "square";
 };
 type Triangle = Figure & {
-  size: TriangleSize;
   type: "triangle";
 };
 
 type TextBlock = Block & {
   type: string;
+  underline: boolean;
+  italic: boolean;
+  bold: boolean;
   chars?: Array<Char>;
 };
 

@@ -22,31 +22,31 @@ function Slide({className, slide, isWorkSpace, registerDndItem, index}: SlidePro
     }
     const ref = useRef<HTMLDivElement>(null)
 
-    if (!isWorkSpace && registerDndItem)
-    {
-        useEffect(() => {
-            const { onDragStart } = registerDndItem(index!, { elementRef: ref })
+    // if (!isWorkSpace && registerDndItem)
+    // {
+    //     useEffect(() => {
+    //         const { onDragStart } = registerDndItem(index!, { elementRef: ref })
 
-            const onMouseDown = (event: MouseEvent) => {
-                onDragStart({
-                    onDrag: (dragEvent) => {
-                        ref.current!.style.position = 'relative'
-					    ref.current!.style.zIndex = '1'
-					    //ref.current!.style.boxShadow = 'black 2px 2px 4px'
-					    ref.current!.style.top = `${dragEvent.clientY +  event.clientY}px`
-                    },
-                    onDrop: (dropEvent) => {
-                        ref.current!.style.position = ''
-					    ref.current!.style.zIndex = ''
-					    ref.current!.style.boxShadow = ''
-					    ref.current!.style.top = ''
-                    }
-                })
-            }
-            ref.current?.addEventListener('mousedown', onMouseDown)
-            return (() => ref.current?.removeEventListener('mousedown', onMouseDown))
-        }, [])
-    }
+    //         const onMouseDown = (event: MouseEvent) => {
+    //             onDragStart({
+    //                 onDrag: (dragEvent) => {
+    //                     ref.current!.style.position = 'relative'
+	// 				    ref.current!.style.zIndex = '1'
+	// 				    //ref.current!.style.boxShadow = 'black 2px 2px 4px'
+	// 				    ref.current!.style.top = `${dragEvent.clientY +  event.clientY}px`
+    //                 },
+    //                 onDrop: (dropEvent) => {
+    //                     ref.current!.style.position = ''
+	// 				    ref.current!.style.zIndex = ''
+	// 				    ref.current!.style.boxShadow = ''
+	// 				    ref.current!.style.top = ''
+    //                 }
+    //             })
+    //         }
+    //         ref.current?.addEventListener('mousedown', onMouseDown)
+    //         return (() => ref.current?.removeEventListener('mousedown', onMouseDown))
+    //     }, [])
+    // }
 
     // если блок не выделен
     if (isWorkSpace)
@@ -65,13 +65,12 @@ function Slide({className, slide, isWorkSpace, registerDndItem, index}: SlidePro
                     setSelectedBlockId('')
                 }
             }
-            document.addEventListener('mousedown', handleClick)
+            ref.current!.addEventListener('mousedown', handleClick)
             return (() => {
-                document.removeEventListener('mousedown', handleClick)
+                ref.current!.removeEventListener('mousedown', handleClick)
             })
         }, [])
     }
-
     return (
         <div ref={ref} id={slide.id} className={classNames(styles.slide, className)} style={background}>
             {slide.data?.map((block) => (

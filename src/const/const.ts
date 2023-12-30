@@ -12,6 +12,9 @@ const textBlock: TextBlock = {
         y: 10,
     },
     type: "text",
+    underline: false,
+    italic: false,
+    bold: false,
     chars: [{
         value: "T",
         fontSize: 14,
@@ -52,10 +55,6 @@ const circle: GraphicBlock = {
     type: 'graphic',
     data: {
         type: "circle",
-        size: {
-            width: 400,
-            height: 400,
-        },
         background: "#00FF00",
     }
 }
@@ -73,10 +72,6 @@ const square: GraphicBlock = {
     type: 'graphic',
     data: {
         type: "square",
-        size: {
-            width: 200,
-            height: 200,
-        },
         background: "#00FF00",
     }
 }
@@ -94,11 +89,6 @@ const triangle: GraphicBlock = {
     type: 'graphic',
     data: {
         type: "triangle",
-        size: {
-            firstSide: 80,
-            secondSide: 80,
-            thirdSide: 80,
-        },
         background: "#00FF00",
     }
 }

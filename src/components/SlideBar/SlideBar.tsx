@@ -6,10 +6,11 @@ import classNames from "classnames";
 import { useDragAndDropSlide } from "../../hooks/useDndSlide.ts";
 
 function SlideBar() {
-    const { presentation, setPresentation} = useContext(PresentationContext)
+    const { presentation, setPresentation, setSelectedBlockId } = useContext(PresentationContext)
     const newPresentation = { ...presentation }
     const indexOfCurrentSlide = newPresentation.indexOfCurrentSlide
     const SetCurrentSlide = (index: number) => {
+        index !== indexOfCurrentSlide && setSelectedBlockId('')
         newPresentation.indexOfCurrentSlide = index
         setPresentation(newPresentation)
     }

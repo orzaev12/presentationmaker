@@ -16,12 +16,14 @@ import { useContext } from "react";
 import { PresentationContext } from "../../context/presentation";
 import { v4 as uuid} from "uuid"
 import { textBlock, circle, square, triangle, image } from "../../const/const";
+import { TextBlock } from "../../types/types";
 
 function ToolBar()
 {
-    const { presentation, setPresentation } = useContext(PresentationContext)
+    const { presentation, setPresentation, selectedBlockId } = useContext(PresentationContext)
     const currentSlide = presentation.slides[presentation.indexOfCurrentSlide]
     const newPresentation = { ...presentation }
+    const block = newPresentation.slides[newPresentation.indexOfCurrentSlide].data?.find((block) => block.id === selectedBlockId)
 
     const addSlide = () => {
         const newSlide = {
@@ -78,15 +80,19 @@ function ToolBar()
         setPresentation(newPresentation)
     }
 
+    const setUnderlineText = () => {
+        const textBlock: TextBlock
+    }
+
     return (
         <div className={styles.toolbar}>
-            <IconButton aria-label="undo" ><UndoIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
-            <IconButton aria-label="redo" ><RedoIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
+            <IconButton><UndoIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
+            <IconButton><RedoIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
             <hr className={styles.separate} />
-            <IconButton aria-label="add" onClick={() => addSlide()}><AddIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
+            <IconButton onClick={() => addSlide()}><AddIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
             {presentation.slides?.length == 1
-                ? <IconButton aria-label="delete" disabled><DeleteIcon className={styles.button} sx={{ fontSize: 17}}/></IconButton>
-                : <IconButton aria-label="delete" onClick={() => removeSlide()}><DeleteIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
+                ? <IconButton disabled><DeleteIcon className={styles.button} sx={{ fontSize: 17}}/></IconButton>
+                : <IconButton onClick={() => removeSlide()}><DeleteIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
             }
             <label htmlFor="colors" className={styles.text}>Фон</label>
             <select
@@ -106,13 +112,15 @@ function ToolBar()
                 <option value="#808080">Серый</option>
             </select>
             <hr className={styles.separate} />
-            <IconButton aria-label="title" onClick={() => addTextBlock()}><TitleIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
-            <div>
-                <IconButton><FormatBoldIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
-                <IconButton><FormatUnderlinedIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
-                <IconButton><FormatItalicIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
-            </div>
-            <IconButton aria-label="image" >
+            <IconButton onClick={() => addTextBlock()}><TitleIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
+            {block?.type === 'text' &&
+                <div>
+                    <IconButton onClick={() => { setUnderlineText() }}><FormatBoldIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
+                    <IconButton><FormatUnderlinedIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
+                    <IconButton><FormatItalicIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
+                </div>
+            }
+            <IconButton>
                 <label className={styles.button} htmlFor="image_uploads"><ImageIcon sx={{ fontSize: 17}}/></label>
                 <input
                     className={styles.input}
@@ -121,9 +129,9 @@ function ToolBar()
                     onChange={(event) => addImageBlock(event)}
                 />
             </IconButton>
-            <IconButton aria-label="circle" onClick={() => addGraphicBlock("circle")}><CircleIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
-            <IconButton aria-label="square" onClick={() => addGraphicBlock("square")}><SquareIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
-            <IconButton aria-label="category" onClick={() => addGraphicBlock("triangle")}><CategoryIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
+            <IconButton onClick={() => addGraphicBlock("circle")}><CircleIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
+            <IconButton onClick={() => addGraphicBlock("square")}><SquareIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
+            <IconButton onClick={() => addGraphicBlock("triangle")}><CategoryIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
         </div>
     );
 }

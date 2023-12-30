@@ -12,17 +12,17 @@ function GraphicBlock({data}: GraphicBlockProps) {
     if (object.type == "circle")
     {
         styleList = {
-            width: object.size.width,
-            height: object.size.height,
+            width: data.size.width,
+            height: data.size.height,
             backgroundColor: object.background,
-            borderRadius: object.size.width / 2,
+            borderRadius: data.size.width / 2,
         }
     }
     if (object.type == "square")
     {
         styleList = {
-            width: object.size.width,
-            height: object.size.height,
+            width: data.size.width,
+            height: data.size.height,
             backgroundColor: object.background,
         }
     }
@@ -32,12 +32,11 @@ function GraphicBlock({data}: GraphicBlockProps) {
         styleList = {
             width: 0,
             height: 0,
-            borderLeft: `${object.size.firstSide}px solid transparent`,
-            borderRight: `${object.size.secondSide}px solid transparent`,
-            borderBottom: `${object.size.thirdSide}px solid ${object.background}`,
+            borderLeft: `${data.size.height}px solid transparent`,
+            borderRight: `${data.size.height}px solid transparent`,
+            borderBottom: `${data.size.height}px solid ${object.background}`,
         }
     }
-
     return (
         <div style={styleList!}></div>
     )
