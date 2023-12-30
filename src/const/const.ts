@@ -1,4 +1,4 @@
-import { TextBlock, GraphicBlock, ImageBlock } from "../types/types";
+import {TextBlock, GraphicBlock, ImageBlock, Slide, Presentation} from "../types/types";
 import { v4 as uuid } from "uuid"
 
 const textBlock: TextBlock = {
@@ -80,4 +80,16 @@ const image: ImageBlock = {
     data: '',
 }
 
-export { textBlock, circle, square, triangle, image }
+const slide: Slide = {
+    id: uuid(),
+    background: "#FFFFFF",
+    data: [],
+}
+
+const presentation: Presentation = {
+    name: '',
+    indexOfCurrentSlide: 0,
+    slides: [slide],
+}
+
+export { textBlock, circle, square, triangle, image, presentation}

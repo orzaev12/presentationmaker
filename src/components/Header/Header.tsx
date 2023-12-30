@@ -4,6 +4,7 @@ import { PresentationContext } from "../../context/presentation";
 import MenuBar from "../MenuBar/MenuBar";
 import ToolBar from "../ToolBar/ToolBar";
 import classNames from "classnames";
+import {useAppActions} from "../../store/types.ts";
 
 function Header() {
     const { presentation, setPresentation } = useContext(PresentationContext)
@@ -13,6 +14,8 @@ function Header() {
         newPresentation.name = newTitle
         setPresentation(newPresentation)
     }
+
+    const { createChangeTitleAction } = useAppActions()
 
     useEffect(() => {
         const onKeyDown = () => {
@@ -33,7 +36,7 @@ function Header() {
                         ref={ref}
                         className={classNames(styles.title, styles.input)}
                         value={presentation.name}
-                        onChange={(event) => changeTitle(event.target.value)}
+                        onChange={(event) => createChangeTitleAction(event.target.value)}
                     />
                     <MenuBar />
                 </div>
