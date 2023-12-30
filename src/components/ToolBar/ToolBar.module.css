@@ -37,5 +37,9 @@
 }
 
 .input {
+    width: 40px;
+}
+
+.none {
     display: none;
 }

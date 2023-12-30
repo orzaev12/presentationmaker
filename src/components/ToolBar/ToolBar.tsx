@@ -167,13 +167,13 @@ function ToolBar()
                         <option value="Times New Roman">Times New Roman</option>
                     </select>
                     <label htmlFor="fontSize" className={styles.text}>Размер</label>
-                    <input type="number" value={(block as TTextBlock).fontSize} onChange={(event) => changeFontSizeOfText(event.target.value)} />
+                    <input className={styles.input} type="number" value={(block as TTextBlock).fontSize} onChange={(event) => changeFontSizeOfText(event.target.value)} />
                 </div>
             }
             <IconButton>
                 <label className={styles.button} htmlFor="image_uploads"><ImageIcon sx={{ fontSize: 17}}/></label>
                 <input
-                    className={styles.input}
+                    className={styles.none}
                     id='image_uploads'
                     type='file'
                     onChange={(event) => addImageBlock(event)}
