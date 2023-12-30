@@ -16,7 +16,7 @@ import { useContext } from "react";
 import { PresentationContext } from "../../context/presentation";
 import { v4 as uuid} from "uuid"
 import { textBlock, circle, square, triangle, image } from "../../const/const";
-import { TextBlock } from "../../types/types";
+import { TextBlock as TTextBlock} from "../../types/types";
 
 function ToolBar()
 {
@@ -81,7 +81,7 @@ function ToolBar()
     }
 
     const setUnderlineText = () => {
-        const textBlock: TextBlock
+        
     }
 
     return (
