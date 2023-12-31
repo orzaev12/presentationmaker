@@ -30,17 +30,13 @@ const useDragAndDropSlide = ({onOrderChange}: UseDraggableSlidesParams) => {
 
         const onDragStart: OnDragStartFn = ({ onDrag, onDrop }) => {
             slide.startY = slide.elementRef.current!.getBoundingClientRect().top
-
             const onMouseUp = (event: MouseEvent) => {
                 let newIndex = 0
 				const draggableItemTop = slide.elementRef.current!.getBoundingClientRect().top
 				for (let i = 0; i < slidesRef.current.length; ++i) {
-					if (i === index) {
-						continue
-					}
 					const currItem = slidesRef.current[i].elementRef.current!
 					if (currItem.getBoundingClientRect().top > draggableItemTop) {
-						newIndex = draggableItemTop > slide.startY
+						newIndex = draggableItemTop >= slide.startY
 							? i - 1
 							: i
 						break
@@ -48,6 +44,7 @@ const useDragAndDropSlide = ({onOrderChange}: UseDraggableSlidesParams) => {
 					newIndex = i
 				}
 				onOrderChange(index, newIndex)
+				console.log(index, newIndex)
 				onDrop(event)
 
 				window.removeEventListener('mousemove', onDrag)
