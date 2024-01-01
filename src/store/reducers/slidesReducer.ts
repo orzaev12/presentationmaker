@@ -174,7 +174,7 @@ const slidesReducer = (state = presentation.slides, action: Action) => {
                 if (slide.id === action.payload.slideId) {
                     return {
                         ...slide,
-                        data: slide.data?.map(block => {
+                        data: slide.data!.map(block => {
                             if (block.id === action.payload.blockId) {
                                 return  { ...block, position: action.payload.newPosition }
                             }
@@ -204,7 +204,7 @@ const slidesReducer = (state = presentation.slides, action: Action) => {
                 if (slide.id === action.payload.slideId) {
                     return {
                         ...slide,
-                        data: slide.data?.map(block => {
+                        data: slide.data!.map(block => {
                             if (block.id === action.payload.blockId) {
                                 block = block as TextBlock
                                 return  { ...block, underline: !block.underline }
@@ -237,7 +237,7 @@ const slidesReducer = (state = presentation.slides, action: Action) => {
                 if (slide.id === action.payload.slideId) {
                     return {
                         ...slide,
-                        data: slide.data?.map(block => {
+                        data: slide.data!.map(block => {
                             if (block.id === action.payload.blockId) {
                                 block = block as TextBlock
                                 return  { ...block, bold: !block.bold }
@@ -256,10 +256,48 @@ const slidesReducer = (state = presentation.slides, action: Action) => {
                 if (slide.id === action.payload.slideId) {
                     return {
                         ...slide,
-                        data: slide.data?.map(block => {
+                        data: slide.data!.map(block => {
                             if (block.id === action.payload.blockId) {
                                 block = block as TextBlock
                                 return  { ...block, italic: !block.italic }
+                            }
+                            return block
+                        })
+                    }
+                }
+                return slide
+            })
+            history.addHistoryItem(newState)
+            return newState
+        }
+        case PresentationActions.CHANGE_FONT_FAMILY_OF_TEXT: {
+            const newState = state.map(slide => {
+                if (slide.id === action.payload.slideId) {
+                    return {
+                        ...slide,
+                        data: slide.data!.map(block => {
+                            if (block.id === action.payload.blockId) {
+                                block = block as TextBlock
+                                return  { ...block, fontFamily: action.payload.newFontFamily }
+                            }
+                            return block
+                        })
+                    }
+                }
+                return slide
+            })
+            history.addHistoryItem(newState)
+            return newState
+        }
+        case PresentationActions.CHANGE_FONT_SIZE_OF_TEXT: {
+            const newState = state.map(slide => {
+                if (slide.id === action.payload.slideId) {
+                    return {
+                        ...slide,
+                        data: slide.data!.map(block => {
+                            if (block.id === action.payload.blockId) {
+                                block = block as TextBlock
+                                return  { ...block, fontSize: action.payload.newFontSize }
                             }
                             return block
                         })

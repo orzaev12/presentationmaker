@@ -21,6 +21,8 @@ import {
     createSetUnderlineTextAction,
     createSetBoldTextAction,
     createSetItalicTextAction,
+    createChangeFontFamilyOfTextAction,
+    createChangeFontSizeOfTextAction,
 } from "./actionCreators.ts"
 
 type RootState = ReturnType<typeof rootReducer>
@@ -47,6 +49,8 @@ const useAppActions = () => {
         createSetUnderlineTextAction: createSetUnderlineTextAction,
         createSetBoldTextAction: createSetBoldTextAction,
         createSetItalicTextAction: createSetItalicTextAction,
+        createChangeFontFamilyOfTextAction: createChangeFontFamilyOfTextAction,
+        createChangeFontSizeOfTextAction: createChangeFontSizeOfTextAction,
         createUndoAction: createUndoAction,
         createRedoAction: createRedoAction,
     }, dispatch)

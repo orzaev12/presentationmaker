@@ -147,6 +147,24 @@ type SetItalicTextAction = {
     },
 }
 
+type ChangeFontFamilyOfTextAction = {
+    type: PresentationActions.CHANGE_FONT_FAMILY_OF_TEXT,
+    payload: {
+        slideId: string,
+        blockId: string,
+        newFontFamily: string,
+    }
+}
+
+type ChangeFontSizeOfTextAction = {
+    type: PresentationActions.CHANGE_FONT_SIZE_OF_TEXT,
+    payload: {
+        slideId: string,
+        blockId: string,
+        newFontSize: number,
+    }
+}
+
 type UndoAction = {
     type: PresentationActions.UNDO,
     payload: {},
@@ -161,7 +179,7 @@ type RedoAction = {
 export type Action = AddPresentationAction | SavePresentationAction |ChangePresentationTitleAction |
     AddSlideAction | SetCurrentSlide | RemoveSlideAction | ChangeOrderAction | ChangeBackgroundAction |
     SetSelectedBlockAction | ChangePositionOfBlockAction | AddTextBlockAction | AddGraphicBlockAction |
-    AddImageBlockAction | SetUnderlineTextAction | SetBoldTextAction | SetItalicTextAction | UndoAction |
-    RedoAction
+    AddImageBlockAction | SetUnderlineTextAction | SetBoldTextAction | SetItalicTextAction | ChangeFontFamilyOfTextAction |
+    ChangeFontSizeOfTextAction | UndoAction | RedoAction
 
 export { PresentationActions }

@@ -21,7 +21,8 @@ function ToolBar()
 {
     const { createSetCurrentSlide, createAddSlideAction, createRemoveSlideAction, createChangeBackgroundAction,
         createAddTextBlockAction, createUndoAction, createRedoAction, createAddGraphicBlockAction,createAddImageBlockAction,
-        createSetUnderlineTextAction, createSetBoldTextAction, createSetItalicTextAction
+        createSetUnderlineTextAction, createSetBoldTextAction, createSetItalicTextAction, createChangeFontFamilyOfTextAction,
+        createChangeFontSizeOfTextAction,
     } = useAppActions()
     const slides = useAppSelector(state => state.slides)
     const indexOfCurrentSlide = useAppSelector(state => state.indexOfCurrentSlide)
@@ -96,15 +97,11 @@ function ToolBar()
     }
 
     const changeFontFamilyOfText = (fontFamily: string) => {
-        const textBlock = selectedBlock as TTextBlock
-        textBlock.fontFamily = fontFamily
-        setPresentation(newPresentation)
+        createChangeFontFamilyOfTextAction(currentSlide.id, selectedBlock!.id, fontFamily)
     }
 
     const changeFontSizeOfText = (fontSize: string) => {
-        const textBlock = selectedBlock as TTextBlock
-        textBlock.fontSize = parseInt(fontSize)
-        setPresentation(newPresentation)
+        createChangeFontSizeOfTextAction(currentSlide.id, selectedBlock!.id, parseInt(fontSize))
     }
 
     const changeColorOfGraphicBlock = (color: string) => {

@@ -160,6 +160,28 @@ function createSetItalicTextAction(slideId: string, blockId: string) {
     }
 }
 
+function createChangeFontFamilyOfTextAction(slideId: string, blockId: string, newFontFamily: string) {
+    return {
+        type: PresentationActions.CHANGE_FONT_FAMILY_OF_TEXT,
+        payload: {
+            slideId,
+            blockId,
+            newFontFamily,
+        }
+    }
+}
+
+function createChangeFontSizeOfTextAction(slideId: string, blockId: string, newFontSize: number) {
+    return {
+        type: PresentationActions.CHANGE_FONT_SIZE_OF_TEXT,
+        payload: {
+            slideId,
+            blockId,
+            newFontSize,
+        }
+    }
+}
+
 function createUndoAction() {
     return {
         type: PresentationActions.UNDO,
@@ -191,6 +213,8 @@ export {
     createSetUnderlineTextAction,
     createSetBoldTextAction,
     createSetItalicTextAction,
+    createChangeFontFamilyOfTextAction,
+    createChangeFontSizeOfTextAction,
     createUndoAction,
     createRedoAction,
 }
