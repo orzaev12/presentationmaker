@@ -1,7 +1,7 @@
 import {Action, PresentationActions} from "../actions/actions.ts"
 import {presentation} from "../../const/const.ts"
 import {createHistory} from "../history.ts"
-import {GraphicBlock, ImageBlock, Slide, TextBlock} from "../../types/types.ts"
+import {Slide, TextBlock} from "../../types/types.ts"
 import {v4 as uuid} from "uuid"
 
 const history = createHistory<Slide[]>(presentation.slides)
@@ -164,10 +164,7 @@ const slidesReducer = (state = presentation.slides, action: Action) => {
         case PresentationActions.SET_SELECTED_BLOCK: {
             return state.map(slide => {
                 if (slide.id === action.payload.slideId) {
-                    return {
-                        ...slide,
-                        selectedBlockId: action.payload.blockId,
-                    }
+                    slide.selectedBlockId = action.payload.blockId
                 }
                 return slide
             })
@@ -181,7 +178,6 @@ const slidesReducer = (state = presentation.slides, action: Action) => {
                         }
                     })
                 }
-                //TODO поменять возвращаемый слайд
                 return slide
             })
             history.addHistoryItem(newState)
@@ -194,6 +190,36 @@ const slidesReducer = (state = presentation.slides, action: Action) => {
                         if (block.id === action.payload.blockId) {
                             block = block as TextBlock
                             block.underline = !block.underline
+                        }
+                    })
+                }
+                return slide
+            })
+            history.addHistoryItem(newState)
+            return newState
+        }
+        case PresentationActions.SET_BOLD_TEXT: {
+            const newState = state.map(slide => {
+                if (slide.id === action.payload.slideId) {
+                    slide.data?.map(block => {
+                        if (block.id === action.payload.blockId) {
+                            block = block as TextBlock
+                            block.bold = !block.bold
+                        }
+                    })
+                }
+                return slide
+            })
+            history.addHistoryItem(newState)
+            return newState
+        }
+        case PresentationActions.SET_ITALIC_TEXT: {
+            const newState = state.map(slide => {
+                if (slide.id === action.payload.slideId) {
+                    slide.data?.map(block => {
+                        if (block.id === action.payload.blockId) {
+                            block = block as TextBlock
+                            block.italic = !block.italic
                         }
                     })
                 }

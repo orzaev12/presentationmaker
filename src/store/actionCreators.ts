@@ -140,6 +140,26 @@ function createSetUnderlineTextAction(slideId: string, blockId: string) {
     }
 }
 
+function createSetBoldTextAction(slideId: string, blockId: string) {
+    return {
+        type: PresentationActions.SET_BOLD_TEXT,
+        payload: {
+            slideId,
+            blockId,
+        }
+    }
+}
+
+function createSetItalicTextAction(slideId: string, blockId: string) {
+    return {
+        type: PresentationActions.SET_ITALIC_TEXT,
+        payload: {
+            slideId,
+            blockId,
+        }
+    }
+}
+
 function createUndoAction() {
     return {
         type: PresentationActions.UNDO,
@@ -169,6 +189,8 @@ export {
     createAddGraphicBlockAction,
     createAddImageBlockAction,
     createSetUnderlineTextAction,
+    createSetBoldTextAction,
+    createSetItalicTextAction,
     createUndoAction,
     createRedoAction,
 }

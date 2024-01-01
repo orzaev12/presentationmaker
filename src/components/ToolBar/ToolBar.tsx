@@ -21,7 +21,7 @@ function ToolBar()
 {
     const { createSetCurrentSlide, createAddSlideAction, createRemoveSlideAction, createChangeBackgroundAction,
         createAddTextBlockAction, createUndoAction, createRedoAction, createAddGraphicBlockAction,createAddImageBlockAction,
-        createSetUnderlineTextAction
+        createSetUnderlineTextAction, createSetBoldTextAction, createSetItalicTextAction
     } = useAppActions()
     const slides = useAppSelector(state => state.slides)
     const indexOfCurrentSlide = useAppSelector(state => state.indexOfCurrentSlide)
@@ -31,7 +31,6 @@ function ToolBar()
 
     const { presentation, setPresentation } = useContext(PresentationContext)
     const newPresentation = { ...presentation }
-//    const block = newPresentation.slides[newPresentation.indexOfCurrentSlide].data?.find((block) => block.id === selectedBlockId)
 
     const addSlide = () => {
         createAddSlideAction(indexOfCurrentSlide)
@@ -82,29 +81,17 @@ function ToolBar()
         if (selectedBlock?.type === 'text') {
             createSetUnderlineTextAction(currentSlide.id, selectedBlock.id)
         }
-        // if (block!.type === 'text')
-        // {
-        //     const textBlock = block as TTextBlock
-        //     textBlock.underline = !textBlock.underline
-        //     setPresentation(newPresentation)
-        // }
     }
 
     const setBoldText = () => {
-        if (selectedBlock!.type === 'text')
-        {
-            const textBlock = selectedBlock as TTextBlock
-            textBlock.bold = !textBlock.bold
-            setPresentation(newPresentation)
+        if (selectedBlock?.type === 'text') {
+            createSetBoldTextAction(currentSlide.id, selectedBlock.id)
         }
     }
 
     const setItalicText = () => {
-        if (selectedBlock!.type === 'text')
-        {
-            const textBlock = selectedBlock as TTextBlock
-            textBlock.italic = !textBlock.italic
-            setPresentation(newPresentation)
+        if (selectedBlock?.type === 'text') {
+            createSetItalicTextAction(currentSlide.id, selectedBlock.id)
         }
     }
 

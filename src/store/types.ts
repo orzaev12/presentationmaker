@@ -19,6 +19,8 @@ import {
     createRedoAction,
     createChangePositionOfBlockAction,
     createSetUnderlineTextAction,
+    createSetBoldTextAction,
+    createSetItalicTextAction,
 } from "./actionCreators.ts"
 
 type RootState = ReturnType<typeof rootReducer>
@@ -43,6 +45,8 @@ const useAppActions = () => {
         createAddGraphicBlockAction: createAddGraphicBlockAction,
         createAddImageBlockAction: createAddImageBlockAction,
         createSetUnderlineTextAction: createSetUnderlineTextAction,
+        createSetBoldTextAction: createSetBoldTextAction,
+        createSetItalicTextAction: createSetItalicTextAction,
         createUndoAction: createUndoAction,
         createRedoAction: createRedoAction,
     }, dispatch)

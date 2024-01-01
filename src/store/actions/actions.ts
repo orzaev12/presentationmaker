@@ -131,6 +131,22 @@ type SetUnderlineTextAction = {
     },
 }
 
+type SetBoldTextAction = {
+    type: PresentationActions.SET_BOLD_TEXT,
+    payload: {
+        slideId: string,
+        blockId: string,
+    },
+}
+
+type SetItalicTextAction = {
+    type: PresentationActions.SET_ITALIC_TEXT,
+    payload: {
+        slideId: string,
+        blockId: string,
+    },
+}
+
 type UndoAction = {
     type: PresentationActions.UNDO,
     payload: {},
@@ -145,6 +161,7 @@ type RedoAction = {
 export type Action = AddPresentationAction | SavePresentationAction |ChangePresentationTitleAction |
     AddSlideAction | SetCurrentSlide | RemoveSlideAction | ChangeOrderAction | ChangeBackgroundAction |
     SetSelectedBlockAction | ChangePositionOfBlockAction | AddTextBlockAction | AddGraphicBlockAction |
-    AddImageBlockAction | SetUnderlineTextAction | UndoAction | RedoAction
+    AddImageBlockAction | SetUnderlineTextAction | SetBoldTextAction | SetItalicTextAction | UndoAction |
+    RedoAction
 
 export { PresentationActions }
