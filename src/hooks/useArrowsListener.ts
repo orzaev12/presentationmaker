@@ -1,23 +1,22 @@
-import {useContext, useEffect} from 'react'
-import { PresentationContext } from '../context/presentation'
+import {useEffect} from 'react'
+import {useAppActions, useAppSelector} from "../store/types.ts";
 
 function useArrowsListeners() {
-    const { presentation, setPresentation } = useContext(PresentationContext)
-    const newPresentation = { ...presentation }
+    const slides = useAppSelector(state => state.slides)
+    const indexOfCurrentSlide = useAppSelector(state => state.indexOfCurrentSlide)
+    const { createSetCurrentSlide } = useAppActions()
 
 	useEffect(() => {
 		const handleKeydownEvent = (event: KeyboardEvent) => {
 			if (event.key)
             {
-                if (newPresentation.indexOfCurrentSlide !== newPresentation.slides.length - 1 && (event.key === 'ArrowDown' || event.key === 'ArrowRight'))
+                if (indexOfCurrentSlide !== slides.length - 1 && (event.key === 'ArrowDown' || event.key === 'ArrowRight'))
                 {
-                    newPresentation.indexOfCurrentSlide++
-                    setPresentation(newPresentation)
+                    createSetCurrentSlide(indexOfCurrentSlide + 1)
                 }
-                if (newPresentation.indexOfCurrentSlide > 0 && (event.key === 'ArrowLeft' || event.key === 'ArrowUp'))
+                if (indexOfCurrentSlide > 0 && (event.key === 'ArrowLeft' || event.key === 'ArrowUp'))
                 {
-                    newPresentation.indexOfCurrentSlide--
-                    setPresentation(newPresentation)
+                    createSetCurrentSlide(indexOfCurrentSlide - 1)
                 }
             }
 		}
