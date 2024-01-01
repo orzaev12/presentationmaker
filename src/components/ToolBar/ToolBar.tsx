@@ -192,9 +192,9 @@ function ToolBar()
             <IconButton onClick={() => addGraphicBlock("circle")}><CircleIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
             <IconButton onClick={() => addGraphicBlock("square")}><SquareIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
             <IconButton onClick={() => addGraphicBlock("triangle")}><CategoryIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
-            {block?.type === 'graphic' &&
+            {(block?.type === 'graphic' || block?.type === 'text' )&&
                 <div className={styles.flex}>
-                    <label htmlFor="graphicColors" className={styles.text}>Цвет фигуры</label>
+                    <label htmlFor="graphicColors" className={styles.text}>Цвет</label>
                     <select
                         className={styles.select}
                         id="graphicColors" name="graphicColors"
