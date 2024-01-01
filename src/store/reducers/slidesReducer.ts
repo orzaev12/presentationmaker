@@ -172,41 +172,79 @@ const slidesReducer = (state = presentation.slides, action: Action) => {
         case PresentationActions.CHANGE_POSITION_OF_BLOCK: {
             const newState = state.map(slide => {
                 if (slide.id === action.payload.slideId) {
-                    slide.data?.map(block => {
-                        if (block.id === action.payload.blockId) {
-                            block.position = action.payload.newPosition
-                        }
-                    })
+                    return {
+                        ...slide,
+                        data: slide.data?.map(block => {
+                            if (block.id === action.payload.blockId) {
+                                return  { ...block, position: action.payload.newPosition }
+                            }
+                            return block
+                        })
+                    }
                 }
                 return slide
             })
             history.addHistoryItem(newState)
             return newState
+            // const newState = state.map(slide => {
+            //     if (slide.id === action.payload.slideId) {
+            //         slide.data?.map(block => {
+            //             if (block.id === action.payload.blockId) {
+            //                 block.position = action.payload.newPosition
+            //             }
+            //         })
+            //     }
+            //     return {...slide}
+            // })
+            // history.addHistoryItem(newState)
+            // return newState
         }
         case PresentationActions.SET_UNDERLINE_TEXT: {
             const newState = state.map(slide => {
                 if (slide.id === action.payload.slideId) {
-                    slide.data?.map(block => {
-                        if (block.id === action.payload.blockId) {
-                            block = block as TextBlock
-                            block.underline = !block.underline
-                        }
-                    })
+                    return {
+                        ...slide,
+                        data: slide.data?.map(block => {
+                            if (block.id === action.payload.blockId) {
+                                block = block as TextBlock
+                                return  { ...block, underline: !block.underline }
+                            }
+                            return block
+                        })
+                    }
                 }
                 return slide
             })
             history.addHistoryItem(newState)
             return newState
+
+            //         slide.data?.map(block => {
+            //             if (block.id === action.payload.blockId) {
+            //                 const newBlock = {...block as TextBlock, underline: !block.underline}
+            //                 return newBlock
+            //                 //block.underline = !block.underline
+            //             }
+            //         })
+            //     }
+            //     return {...slide}
+            // })
+            // history.addHistoryItem(newState)
+            // console.log(newState)
+            // return newState
         }
         case PresentationActions.SET_BOLD_TEXT: {
             const newState = state.map(slide => {
                 if (slide.id === action.payload.slideId) {
-                    slide.data?.map(block => {
-                        if (block.id === action.payload.blockId) {
-                            block = block as TextBlock
-                            block.bold = !block.bold
-                        }
-                    })
+                    return {
+                        ...slide,
+                        data: slide.data?.map(block => {
+                            if (block.id === action.payload.blockId) {
+                                block = block as TextBlock
+                                return  { ...block, bold: !block.bold }
+                            }
+                            return block
+                        })
+                    }
                 }
                 return slide
             })
@@ -216,12 +254,16 @@ const slidesReducer = (state = presentation.slides, action: Action) => {
         case PresentationActions.SET_ITALIC_TEXT: {
             const newState = state.map(slide => {
                 if (slide.id === action.payload.slideId) {
-                    slide.data?.map(block => {
-                        if (block.id === action.payload.blockId) {
-                            block = block as TextBlock
-                            block.italic = !block.italic
-                        }
-                    })
+                    return {
+                        ...slide,
+                        data: slide.data?.map(block => {
+                            if (block.id === action.payload.blockId) {
+                                block = block as TextBlock
+                                return  { ...block, italic: !block.italic }
+                            }
+                            return block
+                        })
+                    }
                 }
                 return slide
             })
