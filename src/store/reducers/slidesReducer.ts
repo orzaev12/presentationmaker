@@ -175,12 +175,9 @@ const slidesReducer = (state = presentation.slides, action: Action) => {
         case PresentationActions.CHANGE_POSITION_OF_BLOCK: {
             const newState = state.map(slide => {
                 if (slide.id === action.payload.slideId) {
-                    const newBlock: TextBlock|GraphicBlock|ImageBlock  = slide.data?.map(block => {
+                    slide.data?.map(block => {
                         if (block.id === action.payload.blockId) {
-                            return {
-                                ...block,
-                                position: action.payload.newPosition,
-                            }
+                            block.position = action.payload.newPosition
                         }
                     })
                 }
@@ -195,15 +192,11 @@ const slidesReducer = (state = presentation.slides, action: Action) => {
                 if (slide.id === action.payload.slideId) {
                     slide.data?.map(block => {
                         if (block.id === action.payload.blockId) {
-                            let textBlock = block as TextBlock
-                            return  {
-                                ...textBlock,
-                                underline: !textBlock.underline
-                            }
+                            block = block as TextBlock
+                            block.underline = !block.underline
                         }
                     })
                 }
-                //TODO поменять возвращаемый слайд
                 return slide
             })
             history.addHistoryItem(newState)

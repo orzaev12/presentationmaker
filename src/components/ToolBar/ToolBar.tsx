@@ -16,12 +16,13 @@ import { useContext } from "react";
 import { PresentationContext } from "../../context/presentation";
 import { TextBlock as TTextBlock, GraphicBlock as TGraphicBlock} from "../../types/types";
 import {useAppActions, useAppSelector} from "../../store/types.ts";
-import {createSetUnderlineTextAction} from "../../store/actionCreators.ts";
 
 function ToolBar()
 {
     const { createSetCurrentSlide, createAddSlideAction, createRemoveSlideAction, createChangeBackgroundAction,
-        createAddTextBlockAction, createUndoAction, createRedoAction, createAddGraphicBlockAction, createAddImageBlockAction } = useAppActions()
+        createAddTextBlockAction, createUndoAction, createRedoAction, createAddGraphicBlockAction,createAddImageBlockAction,
+        createSetUnderlineTextAction
+    } = useAppActions()
     const slides = useAppSelector(state => state.slides)
     const indexOfCurrentSlide = useAppSelector(state => state.indexOfCurrentSlide)
     const currentSlide = useAppSelector(state => state.slides[indexOfCurrentSlide])
