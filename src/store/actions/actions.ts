@@ -19,7 +19,7 @@ enum PresentationActions {
     SET_ITALIC_TEXT = 'SET_ITALIC_TEXT',
     CHANGE_FONT_FAMILY_OF_TEXT = 'CHANGE_FONT_FAMILY_OF_TEXT',
     CHANGE_FONT_SIZE_OF_TEXT = 'CHANGE_FONT_SIZE_OF_TEXT',
-    CHANGE_COLOR_OF_GRAPHIC_BLOCK = 'CHANGE_COLOR_OF_GRAPHIC_BLOCK',
+    CHANGE_COLOR_OF_BLOCK = 'CHANGE_COLOR_OF_BLOCK',
     UNDO = 'UNDO',
     REDO = 'REDO',
 }
@@ -165,6 +165,15 @@ type ChangeFontSizeOfTextAction = {
     }
 }
 
+type ChangeColorOfBlock = {
+    type: PresentationActions.CHANGE_COLOR_OF_BLOCK,
+    payload: {
+        slideId: string,
+        blockId: string,
+        newColor: string,
+    }
+}
+
 type UndoAction = {
     type: PresentationActions.UNDO,
     payload: {},
@@ -180,6 +189,6 @@ export type Action = AddPresentationAction | SavePresentationAction |ChangePrese
     AddSlideAction | SetCurrentSlide | RemoveSlideAction | ChangeOrderAction | ChangeBackgroundAction |
     SetSelectedBlockAction | ChangePositionOfBlockAction | AddTextBlockAction | AddGraphicBlockAction |
     AddImageBlockAction | SetUnderlineTextAction | SetBoldTextAction | SetItalicTextAction | ChangeFontFamilyOfTextAction |
-    ChangeFontSizeOfTextAction | UndoAction | RedoAction
+    ChangeFontSizeOfTextAction | ChangeColorOfBlock | UndoAction | RedoAction
 
 export { PresentationActions }

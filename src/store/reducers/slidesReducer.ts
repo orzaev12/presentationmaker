@@ -1,7 +1,7 @@
 import {Action, PresentationActions} from "../actions/actions.ts"
 import {presentation} from "../../const/const.ts"
 import {createHistory} from "../history.ts"
-import {Slide, TextBlock} from "../../types/types.ts"
+import {GraphicBlock, Slide, TextBlock} from "../../types/types.ts"
 import {v4 as uuid} from "uuid"
 
 const history = createHistory<Slide[]>(presentation.slides)
@@ -186,18 +186,6 @@ const slidesReducer = (state = presentation.slides, action: Action) => {
             })
             history.addHistoryItem(newState)
             return newState
-            // const newState = state.map(slide => {
-            //     if (slide.id === action.payload.slideId) {
-            //         slide.data?.map(block => {
-            //             if (block.id === action.payload.blockId) {
-            //                 block.position = action.payload.newPosition
-            //             }
-            //         })
-            //     }
-            //     return {...slide}
-            // })
-            // history.addHistoryItem(newState)
-            // return newState
         }
         case PresentationActions.SET_UNDERLINE_TEXT: {
             const newState = state.map(slide => {
@@ -217,20 +205,6 @@ const slidesReducer = (state = presentation.slides, action: Action) => {
             })
             history.addHistoryItem(newState)
             return newState
-
-            //         slide.data?.map(block => {
-            //             if (block.id === action.payload.blockId) {
-            //                 const newBlock = {...block as TextBlock, underline: !block.underline}
-            //                 return newBlock
-            //                 //block.underline = !block.underline
-            //             }
-            //         })
-            //     }
-            //     return {...slide}
-            // })
-            // history.addHistoryItem(newState)
-            // console.log(newState)
-            // return newState
         }
         case PresentationActions.SET_BOLD_TEXT: {
             const newState = state.map(slide => {
@@ -298,6 +272,30 @@ const slidesReducer = (state = presentation.slides, action: Action) => {
                             if (block.id === action.payload.blockId) {
                                 block = block as TextBlock
                                 return  { ...block, fontSize: action.payload.newFontSize }
+                            }
+                            return block
+                        })
+                    }
+                }
+                return slide
+            })
+            history.addHistoryItem(newState)
+            return newState
+        }
+        case PresentationActions.CHANGE_COLOR_OF_BLOCK: {
+            const newState = state.map(slide => {
+                if (slide.id === action.payload.slideId) {
+                    return {
+                        ...slide,
+                        data: slide.data!.map(block => {
+                            if (block.id === action.payload.blockId) {
+                                if (block.type === 'text') {
+                                    const textBlock = block as TextBlock
+                                    return {...textBlock, color: action.payload.newColor}
+                                } else if (block.type === 'graphic') {
+                                    const graphicBlock = block as GraphicBlock
+                                    return {...graphicBlock, background: action.payload.newColor}
+                                }
                             }
                             return block
                         })

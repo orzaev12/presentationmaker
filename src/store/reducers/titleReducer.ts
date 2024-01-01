@@ -2,7 +2,7 @@ import { presentation } from "../../const/const.ts"
 import { Action, PresentationActions } from "../actions/actions.ts"
 import { createHistory } from "../history.ts"
 
-const title = presentation.name ? presentation.name : 'Презентация без названия'
+const title = presentation.title ? presentation.title : 'Презентация без названия'
 
 const history = createHistory<string>(title)
 

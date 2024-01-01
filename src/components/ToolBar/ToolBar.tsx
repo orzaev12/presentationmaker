@@ -12,8 +12,6 @@ import CategoryIcon from '@mui/icons-material/Category';
 import FormatBoldIcon from '@mui/icons-material/FormatBold';
 import FormatUnderlinedIcon from '@mui/icons-material/FormatUnderlined';
 import FormatItalicIcon from '@mui/icons-material/FormatItalic';
-import { useContext } from "react";
-import { PresentationContext } from "../../context/presentation";
 import { TextBlock as TTextBlock, GraphicBlock as TGraphicBlock} from "../../types/types";
 import {useAppActions, useAppSelector} from "../../store/types.ts";
 
@@ -22,16 +20,13 @@ function ToolBar()
     const { createSetCurrentSlide, createAddSlideAction, createRemoveSlideAction, createChangeBackgroundAction,
         createAddTextBlockAction, createUndoAction, createRedoAction, createAddGraphicBlockAction,createAddImageBlockAction,
         createSetUnderlineTextAction, createSetBoldTextAction, createSetItalicTextAction, createChangeFontFamilyOfTextAction,
-        createChangeFontSizeOfTextAction,
+        createChangeFontSizeOfTextAction, createChangeColorOfBlockAction,
     } = useAppActions()
     const slides = useAppSelector(state => state.slides)
     const indexOfCurrentSlide = useAppSelector(state => state.indexOfCurrentSlide)
     const currentSlide = useAppSelector(state => state.slides[indexOfCurrentSlide])
     const selectedBlockId = useAppSelector(state => state.slides[indexOfCurrentSlide].selectedBlockId)
     const selectedBlock = currentSlide.data?.find((block) => block.id === selectedBlockId)
-
-    const { presentation, setPresentation } = useContext(PresentationContext)
-    const newPresentation = { ...presentation }
 
     const addSlide = () => {
         createAddSlideAction(indexOfCurrentSlide)
@@ -104,14 +99,8 @@ function ToolBar()
         createChangeFontSizeOfTextAction(currentSlide.id, selectedBlock!.id, parseInt(fontSize))
     }
 
-    const changeColorOfGraphicBlock = (color: string) => {
-        if (selectedBlock!.type === 'graphic')
-        {
-            const graphicBlock = selectedBlock as TGraphicBlock
-            graphicBlock.background = color
-            console.log(newPresentation)
-            setPresentation(newPresentation)
-        }
+    const changeColorOfBlock = (color: string) => {
+        createChangeColorOfBlockAction(currentSlide.id, selectedBlock!.id, color)
     }
 
     return (
@@ -124,10 +113,10 @@ function ToolBar()
                 ? <IconButton disabled><DeleteIcon className={styles.button} sx={{ fontSize: 17}}/></IconButton>
                 : <IconButton onClick={() => removeSlide()}><DeleteIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
             }
-            <label htmlFor="colors" className={styles.text}>Фон</label>
+            <span className={styles.text}>Фон</span>
             <select
                 className={styles.select}
-                id="colors" name="colors"
+                name="colors"
                 value={currentSlide.background}
                 onChange={(event) => changeColorOfSlide(event.target.value)}
             >
@@ -142,16 +131,15 @@ function ToolBar()
                 <option value="#808080">Серый</option>
             </select>
             <hr className={styles.separate} />
-            <IconButton onClick={() => addTextBlock()}><TitleIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
             {selectedBlock?.type === 'text' &&
                 <div className={styles.flex}>
                     <IconButton onClick={() => { setBoldText() }}><FormatBoldIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
                     <IconButton onClick={() => { setUnderlineText() }}><FormatUnderlinedIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
                     <IconButton onClick={() => { setItalicText() }}><FormatItalicIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
-                    <label htmlFor="fontFamilies" className={styles.text}>Шрифт</label>
+                    <span className={styles.text}>Шрифт</span>
                     <select
                         className={styles.select}
-                        id="fontFamilies" name="fontFamilies"
+                        name="fontFamilies"
                         value={(selectedBlock as TTextBlock).fontFamily}
                         onChange={(event) => changeFontFamilyOfText(event.target.value)}
                     >
@@ -161,31 +149,18 @@ function ToolBar()
                         <option value="Inherit">Inherit</option>
                         <option value="Times New Roman">Times New Roman</option>
                     </select>
-                    <label htmlFor="fontSize" className={styles.text}>Размер</label>
+                    <span className={styles.text}>Размер</span>
                     <input className={styles.input} type="number" value={(selectedBlock as TTextBlock).fontSize} onChange={(event) => changeFontSizeOfText(event.target.value)} />
                 </div>
             }
-            <IconButton>
-                <label className={styles.button} htmlFor="image_uploads"><ImageIcon sx={{ fontSize: 17}}/></label>
-                <input
-                    className={styles.none}
-                    id='image_uploads'
-                    type='file'
-                    accept={'image/png, image/jpeg'}
-                    onChange={(event) => addImageBlock(event)}
-                />
-            </IconButton>
-            <IconButton onClick={() => addGraphicBlock("circle")}><CircleIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
-            <IconButton onClick={() => addGraphicBlock("square")}><SquareIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
-            <IconButton onClick={() => addGraphicBlock("triangle")}><CategoryIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
-            {selectedBlock?.type === 'graphic' &&
+            {(selectedBlock?.type === 'graphic' || selectedBlock?.type === 'text') &&
                 <div className={styles.flex}>
-                    <label htmlFor="graphicColors" className={styles.text}>Цвет фигуры</label>
+                    <span className={styles.text}>{selectedBlock?.type === 'graphic' ? 'Цвет фигуры' : 'Цвет шрифта'}</span>
                     <select
                         className={styles.select}
-                        id="graphicColors" name="graphicColors"
-                        value={(selectedBlock as TGraphicBlock).background}
-                        onChange={(event) => changeColorOfGraphicBlock(event.target.value)}
+                        name="graphicColors"
+                        value={selectedBlock.type === 'graphic' ? (selectedBlock as TGraphicBlock).background : (selectedBlock as TTextBlock).color}
+                        onChange={(event) => changeColorOfBlock(event.target.value)}
                     >
                         <option value="#FFFFFF">Белый</option>
                         <option value="#000000">Черный</option>
@@ -199,6 +174,20 @@ function ToolBar()
                     </select>
                 </div>
             }
+            <IconButton onClick={() => addTextBlock()}><TitleIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
+            <IconButton>
+                <label className={styles.button} htmlFor="image_uploads"><ImageIcon sx={{ fontSize: 17}}/></label>
+                <input
+                    className={styles.none}
+                    id='image_uploads'
+                    type='file'
+                    accept={'image/png, image/jpeg'}
+                    onChange={(event) => addImageBlock(event)}
+                />
+            </IconButton>
+            <IconButton onClick={() => addGraphicBlock("circle")}><CircleIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
+            <IconButton onClick={() => addGraphicBlock("square")}><SquareIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
+            <IconButton onClick={() => addGraphicBlock("triangle")}><CategoryIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
         </div>
     );
 }

@@ -13,7 +13,7 @@ function Header() {
 
     useEffect(() => {
         const onKeyDown = () => {
-            ref.current!.style.width = `${(ref.current!.value.length + 5) * 8}px`;
+            ref.current!.style.width = `${(ref.current!.value.length + 5) * 9}px`;
             }
         const elem = ref.current!
         elem.addEventListener('keydown', onKeyDown)
@@ -23,12 +23,13 @@ function Header() {
     return (
         <div className={styles.header}>
             <div className={styles.infoRow}>
-                <img src="./coconut.svg" className={styles.icon} />
+                <img src="./coconut.svg" className={styles.icon} alt={"coconut"} />
                 <div className={styles.infoColumn}>
                     <input
+                        name={'title'}
                         maxLength={50}
                         ref={ref}
-                        className={classNames(styles.title, styles.input)}
+                        className={classNames(styles.input)}
                         value={title}
                         onChange={(event) => createChangeTitleAction(event.target.value)}
                     />

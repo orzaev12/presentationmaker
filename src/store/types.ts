@@ -23,6 +23,7 @@ import {
     createSetItalicTextAction,
     createChangeFontFamilyOfTextAction,
     createChangeFontSizeOfTextAction,
+    createChangeColorOfBlockAction,
 } from "./actionCreators.ts"
 
 type RootState = ReturnType<typeof rootReducer>
@@ -51,6 +52,7 @@ const useAppActions = () => {
         createSetItalicTextAction: createSetItalicTextAction,
         createChangeFontFamilyOfTextAction: createChangeFontFamilyOfTextAction,
         createChangeFontSizeOfTextAction: createChangeFontSizeOfTextAction,
+        createChangeColorOfBlockAction: createChangeColorOfBlockAction,
         createUndoAction: createUndoAction,
         createRedoAction: createRedoAction,
     }, dispatch)

@@ -59,7 +59,7 @@ type Slide = {
 };
 
 type Presentation = {
-  name: string;
+  title: string;
   indexOfCurrentSlide: number;
   slides: Slide[];
 };

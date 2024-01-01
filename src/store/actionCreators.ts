@@ -2,7 +2,7 @@ import {Position, Presentation, Slide} from "../types/types";
 import { PresentationActions } from "./actions/actions.ts";
 
 function createAddPresentationAction(presentation: Presentation) {
-    const title = presentation.name
+    const title = presentation.title
     const slides = presentation.slides
     const indexOfCurrentSlide = presentation.indexOfCurrentSlide
 
@@ -182,6 +182,17 @@ function createChangeFontSizeOfTextAction(slideId: string, blockId: string, newF
     }
 }
 
+function createChangeColorOfBlockAction(slideId: string, blockId: string, newColor: string) {
+    return {
+        type: PresentationActions.CHANGE_COLOR_OF_BLOCK,
+        payload: {
+            slideId,
+            blockId,
+            newColor,
+        }
+    }
+}
+
 function createUndoAction() {
     return {
         type: PresentationActions.UNDO,
@@ -215,6 +226,7 @@ export {
     createSetItalicTextAction,
     createChangeFontFamilyOfTextAction,
     createChangeFontSizeOfTextAction,
+    createChangeColorOfBlockAction,
     createUndoAction,
     createRedoAction,
 }
