@@ -1,4 +1,4 @@
-import { Presentation, Slide } from "../types/types";
+import {Position, Presentation, Slide} from "../types/types";
 import { PresentationActions } from "./actions/actions.ts";
 
 function createAddPresentationAction(presentation: Presentation) {
@@ -80,13 +80,24 @@ function createChangeBackgroundAction(slide: Slide, newBackground: string) {
     }
 }
 
-function createSetCurrentBlock(slide: Slide, blockId: string) {
+function createSetSelectedBlockAction(slideId: string, blockId: string | null) {
     return {
-        type: PresentationActions.SET_CURRENT_BLOCK,
+        type: PresentationActions.SET_SELECTED_BLOCK,
         payload: {
-            slide,
+            slideId,
             blockId,
         },
+    }
+}
+
+function createChangePositionOfBlockAction(slideId: string, blockId: string, newPosition: Position) {
+    return {
+        type: PresentationActions.CHANGE_POSITION_OF_BLOCK,
+        payload: {
+            slideId,
+            blockId,
+            newPosition,
+        }
     }
 }
 
@@ -119,6 +130,16 @@ function createAddImageBlockAction(slideId: string, data: string) {
     }
 }
 
+function createSetUnderlineTextAction(slideId: string, blockId: string) {
+    return {
+        type: PresentationActions.SET_UNDERLINE_TEXT,
+        payload: {
+            slideId,
+            blockId,
+        }
+    }
+}
+
 function createUndoAction() {
     return {
         type: PresentationActions.UNDO,
@@ -142,10 +163,12 @@ export {
     createSetCurrentSlide,
     createChangeOrderAction,
     createChangeBackgroundAction,
-    createSetCurrentBlock,
+    createSetSelectedBlockAction,
+    createChangePositionOfBlockAction,
     createAddTextBlockAction,
     createAddGraphicBlockAction,
     createAddImageBlockAction,
+    createSetUnderlineTextAction,
     createUndoAction,
     createRedoAction,
 }

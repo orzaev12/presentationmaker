@@ -11,12 +11,14 @@ import {
     createRemoveSlideAction,
     createChangeBackgroundAction,
     createChangeOrderAction,
-    createSetCurrentBlock,
+    createSetSelectedBlockAction,
     createAddTextBlockAction,
     createAddGraphicBlockAction,
     createAddImageBlockAction,
     createUndoAction,
     createRedoAction,
+    createChangePositionOfBlockAction,
+    createSetUnderlineTextAction,
 } from "./actionCreators.ts"
 
 type RootState = ReturnType<typeof rootReducer>
@@ -35,10 +37,12 @@ const useAppActions = () => {
         createSetCurrentSlide: createSetCurrentSlide,
         createChangeOrderAction: createChangeOrderAction,
         createChangeBackgroundAction: createChangeBackgroundAction,
-        createSetCurrentBlock: createSetCurrentBlock,
+        createSetSelectedBlockAction: createSetSelectedBlockAction,
+        createChangePositionOfBlockAction: createChangePositionOfBlockAction,
         createAddTextBlockAction: createAddTextBlockAction,
         createAddGraphicBlockAction: createAddGraphicBlockAction,
         createAddImageBlockAction: createAddImageBlockAction,
+        createSetUnderlineTextAction: createSetUnderlineTextAction,
         createUndoAction: createUndoAction,
         createRedoAction: createRedoAction,
     }, dispatch)

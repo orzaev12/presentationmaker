@@ -1,10 +1,10 @@
 import { Slide as TSlide} from '../../types/types.ts';
 import styles from "./Slide.module.css"
 import classNames from 'classnames';
-import { CSSProperties, useContext, useEffect, useRef, useState } from "react"
+import { CSSProperties, useEffect, useRef, useState } from "react"
 import Block from '../Block/Block.tsx';
-import { PresentationContext } from '../../context/presentation.tsx';
 import { RegisterDndItemFn } from '../../hooks/useDndSlide.ts';
+import {useAppActions} from "../../store/types.ts";
 
 type SlideProps = {
     className?: string;
@@ -15,7 +15,7 @@ type SlideProps = {
 }
 
 function Slide({className, slide, isWorkSpace, registerDndItem, index}: SlideProps) {
-    const { setSelectedBlockId } = useContext(PresentationContext)
+    const { createSetSelectedBlockAction } = useAppActions()
     const [select, setSelect] = useState(false)
     const background: CSSProperties = {
         background: slide.background,
@@ -34,7 +34,7 @@ function Slide({className, slide, isWorkSpace, registerDndItem, index}: SlidePro
 					    ref.current!.style.zIndex = '1'
 					    ref.current!.style.top = `${dragEvent.clientY - event.clientY}px`
                     },
-                    onDrop: (dropEvent) => {
+                    onDrop: () => {
                         ref.current!.style.position = ''
 					    ref.current!.style.zIndex = ''
 					    ref.current!.style.top = ''
@@ -60,7 +60,7 @@ function Slide({className, slide, isWorkSpace, registerDndItem, index}: SlidePro
                 })
 
                 if (!select) {
-                    setSelectedBlockId('')
+                    createSetSelectedBlockAction(slide.id, null)
                 }
             }
             ref.current!.addEventListener('mousedown', handleClick)

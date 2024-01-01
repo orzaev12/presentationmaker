@@ -1,7 +1,7 @@
 import {Action, PresentationActions} from "../actions/actions.ts"
 import {presentation} from "../../const/const.ts"
 import {createHistory} from "../history.ts"
-import {Slide} from "../../types/types.ts"
+import {GraphicBlock, ImageBlock, Slide, TextBlock} from "../../types/types.ts"
 import {v4 as uuid} from "uuid"
 
 const history = createHistory<Slide[]>(presentation.slides)
@@ -14,7 +14,6 @@ const slidesReducer = (state = presentation.slides, action: Action) => {
         }
         case PresentationActions.ADD_SLIDE: {
             state.splice(action.payload.indexOfCurrentSlide + 1, 0, {id: uuid(), background: '#FFFFFF', data: []})
-            //const newState = state.concat({id: uuid(), background: '#FFFFFF', data: []})
             history.addHistoryItem(state)
             return state
         }
@@ -44,42 +43,24 @@ const slidesReducer = (state = presentation.slides, action: Action) => {
                 {
                     return {
                         ...slide,
-                        data: slide.data.concat({
+                        data: slide.data!.concat({
                             id: uuid(),
                             size: {
-                                width: 80,
-                                height: 40,
+                                width: 30,
+                                height: 24,
                             },
                             position: {
-                                x: 12,
-                                y: 90,
+                                x: 10,
+                                y: 10,
                             },
-                            type: "text",
-                            chars: [{
-                                value: "T",
-                                fontSize: 14,
-                                fontFamily: "inherit",
-                                color: "#000000"
-                            },
-                                {
-                                    value: "e",
-                                    fontSize: 14,
-                                    fontFamily: "inherit",
-                                    color: "#000000"
-                                },
-                                {
-                                    value: "x",
-                                    fontSize: 14,
-                                    fontFamily: "inherit",
-                                    color: "#000000"
-                                },
-                                {
-                                    value: "t",
-                                    fontSize: 14,
-                                    fontFamily: "inherit",
-                                    color: "#000000"
-                                },
-                            ],
+                            type: 'text',
+                            value: 'Text',
+                            fontSize: 14,
+                            fontFamily: 'Inherit',
+                            color: '#000000',
+                            underline: false,
+                            italic: false,
+                            bold: false,
                         })
                     }
                 }
@@ -94,25 +75,19 @@ const slidesReducer = (state = presentation.slides, action: Action) => {
                 {
                     return {
                         ...slide,
-                        data: slide.data.concat({
+                        data: slide.data!.concat({
                             id: uuid(),
+                            type: 'graphic',
                             size: {
                                 width: 400,
                                 height: 400,
                             },
                             position: {
-                                x: 12,
+                                x: 10,
                                 y: 10,
                             },
-                            type: 'graphic',
-                            data: {
-                                type: "circle",
-                                size: {
-                                    width: 400,
-                                    height: 400,
-                                },
-                                background: "#00FF00",
-                            }
+                            data: 'circle',
+                            background: '#808080',
                         })
                     }
                 }
@@ -120,25 +95,19 @@ const slidesReducer = (state = presentation.slides, action: Action) => {
                 {
                     return {
                         ...slide,
-                        data: slide.data.concat({
+                        data: slide.data!.concat({
                             id: uuid(),
+                            type: 'graphic',
                             size: {
                                 width: 200,
                                 height: 200,
                             },
                             position: {
-                                x: 12,
+                                x: 10,
                                 y: 10,
                             },
-                            type: 'graphic',
-                            data: {
-                                type: "square",
-                                size: {
-                                    width: 200,
-                                    height: 200,
-                                },
-                                background: "#00FF00",
-                            }
+                            data: 'square',
+                            background: '#808080',
                         })
                     }
                 }
@@ -146,26 +115,19 @@ const slidesReducer = (state = presentation.slides, action: Action) => {
                 {
                     return {
                         ...slide,
-                        data: slide.data.concat({
+                        data: slide.data!.concat({
                             id: uuid(),
+                            type: 'graphic',
                             size: {
                                 width: 160,
-                                height: 40,
+                                height: 80,
                             },
                             position: {
-                                x: 12,
+                                x: 10,
                                 y: 10,
                             },
-                            type: 'graphic',
-                            data: {
-                                type: "triangle",
-                                size: {
-                                    firstSide: 80,
-                                    secondSide: 80,
-                                    thirdSide: 80,
-                                },
-                                background: "#00FF00",
-                            }
+                            data: 'triangle',
+                            background: '#808080',
                         })
                     }
                 }
@@ -179,7 +141,7 @@ const slidesReducer = (state = presentation.slides, action: Action) => {
                 if (slide.id === action.payload.slideId) {
                     return {
                         ...slide,
-                        data: slide.data.concat({
+                        data: slide.data!.concat({
                             id: uuid(),
                             size: {
                                 width: 300,
@@ -194,6 +156,54 @@ const slidesReducer = (state = presentation.slides, action: Action) => {
                         })
                     }
                 }
+                return slide
+            })
+            history.addHistoryItem(newState)
+            return newState
+        }
+        case PresentationActions.SET_SELECTED_BLOCK: {
+            return state.map(slide => {
+                if (slide.id === action.payload.slideId) {
+                    return {
+                        ...slide,
+                        selectedBlockId: action.payload.blockId,
+                    }
+                }
+                return slide
+            })
+        }
+        case PresentationActions.CHANGE_POSITION_OF_BLOCK: {
+            const newState = state.map(slide => {
+                if (slide.id === action.payload.slideId) {
+                    const newBlock: TextBlock|GraphicBlock|ImageBlock  = slide.data?.map(block => {
+                        if (block.id === action.payload.blockId) {
+                            return {
+                                ...block,
+                                position: action.payload.newPosition,
+                            }
+                        }
+                    })
+                }
+                //TODO поменять возвращаемый слайд
+                return slide
+            })
+            history.addHistoryItem(newState)
+            return newState
+        }
+        case PresentationActions.SET_UNDERLINE_TEXT: {
+            const newState = state.map(slide => {
+                if (slide.id === action.payload.slideId) {
+                    slide.data?.map(block => {
+                        if (block.id === action.payload.blockId) {
+                            let textBlock = block as TextBlock
+                            return  {
+                                ...textBlock,
+                                underline: !textBlock.underline
+                            }
+                        }
+                    })
+                }
+                //TODO поменять возвращаемый слайд
                 return slide
             })
             history.addHistoryItem(newState)

@@ -1,16 +1,15 @@
 import styles from "./Editor.module.css"
 import Slide from "../Slide/Slide.tsx";
 import SlideBar from "../SlideBar/SlideBar";
-import { useContext } from "react";
-import { PresentationContext } from "../../context/presentation.tsx";
+import {useAppSelector} from "../../store/types.ts";
 
 function Editor() {
-    const { presentation } = useContext(PresentationContext)
+    const currentSlide = useAppSelector(state => state.slides[state.indexOfCurrentSlide])
 
     return(
         <div className={styles.editor}>
             <SlideBar />
-            <Slide className={styles.slide} slide={presentation.slides[presentation.indexOfCurrentSlide]} isWorkSpace={true}/>
+            <Slide className={styles.slide} slide={currentSlide} isWorkSpace={true}/>
         </div>
     );
 }

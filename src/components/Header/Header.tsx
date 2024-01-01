@@ -1,19 +1,13 @@
 import styles from "./Header.module.css"
-import { useContext, useEffect, useRef } from "react";
-import { PresentationContext } from "../../context/presentation";
+import { useEffect, useRef } from "react";
 import MenuBar from "../MenuBar/MenuBar";
 import ToolBar from "../ToolBar/ToolBar";
 import classNames from "classnames";
-import {useAppActions} from "../../store/types.ts";
+import {useAppActions, useAppSelector} from "../../store/types.ts";
 
 function Header() {
-    const { presentation, setPresentation } = useContext(PresentationContext)
-    const newPresentation = { ...presentation }
+    const title = useAppSelector(state => state.title)
     const ref = useRef<HTMLInputElement>(null)
-    const changeTitle = (newTitle: string) => {
-        newPresentation.name = newTitle
-        setPresentation(newPresentation)
-    }
 
     const { createChangeTitleAction } = useAppActions()
 
@@ -35,7 +29,7 @@ function Header() {
                         maxLength={50}
                         ref={ref}
                         className={classNames(styles.title, styles.input)}
-                        value={presentation.name}
+                        value={title}
                         onChange={(event) => createChangeTitleAction(event.target.value)}
                     />
                     <MenuBar />

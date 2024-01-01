@@ -4,7 +4,7 @@ import UndoIcon from '@mui/icons-material/Undo';
 import RedoIcon from '@mui/icons-material/Redo';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
-import TitleIcon from '@mui/icons-material/Title'; //Category
+import TitleIcon from '@mui/icons-material/Title';
 import ImageIcon from '@mui/icons-material/Image';
 import CircleIcon from '@mui/icons-material/Circle';
 import SquareIcon from '@mui/icons-material/Square';
@@ -14,43 +14,46 @@ import FormatUnderlinedIcon from '@mui/icons-material/FormatUnderlined';
 import FormatItalicIcon from '@mui/icons-material/FormatItalic';
 import { useContext } from "react";
 import { PresentationContext } from "../../context/presentation";
-import { v4 as uuid} from "uuid"
-import { textBlock, circle, square, triangle, image } from "../../const/const";
 import { TextBlock as TTextBlock, GraphicBlock as TGraphicBlock} from "../../types/types";
+import {useAppActions, useAppSelector} from "../../store/types.ts";
+import {createSetUnderlineTextAction} from "../../store/actionCreators.ts";
 
 function ToolBar()
 {
-    const { presentation, setPresentation, selectedBlockId } = useContext(PresentationContext)
-    const currentSlide = presentation.slides[presentation.indexOfCurrentSlide]
+    const { createSetCurrentSlide, createAddSlideAction, createRemoveSlideAction, createChangeBackgroundAction,
+        createAddTextBlockAction, createUndoAction, createRedoAction, createAddGraphicBlockAction, createAddImageBlockAction } = useAppActions()
+    const slides = useAppSelector(state => state.slides)
+    const indexOfCurrentSlide = useAppSelector(state => state.indexOfCurrentSlide)
+    const currentSlide = useAppSelector(state => state.slides[indexOfCurrentSlide])
+    const selectedBlockId = useAppSelector(state => state.slides[indexOfCurrentSlide].selectedBlockId)
+    const selectedBlock = currentSlide.data?.find((block) => block.id === selectedBlockId)
+
+    const { presentation, setPresentation } = useContext(PresentationContext)
     const newPresentation = { ...presentation }
-    const block = newPresentation.slides[newPresentation.indexOfCurrentSlide].data?.find((block) => block.id === selectedBlockId)
+//    const block = newPresentation.slides[newPresentation.indexOfCurrentSlide].data?.find((block) => block.id === selectedBlockId)
 
     const addSlide = () => {
-        const newSlide = {
-                id: uuid(),
-                background: "#FFFFFF",
-                data: [],
-        }
-        newPresentation.slides.splice(presentation.indexOfCurrentSlide + 1, 0, newSlide)
-        setPresentation(newPresentation)
+        createAddSlideAction(indexOfCurrentSlide)
+        createSetCurrentSlide(indexOfCurrentSlide + 1)
     }
 
     const removeSlide = () => {
-        newPresentation.slides = newPresentation.slides.filter(slide => slide.id !== currentSlide.id)
-        presentation.indexOfCurrentSlide == presentation.slides.length - 1 && newPresentation.indexOfCurrentSlide--
-        setPresentation(newPresentation)
+        let indexOfNewCurrentSlide = indexOfCurrentSlide
+        indexOfCurrentSlide == slides.length - 1 && indexOfNewCurrentSlide--
+        createSetCurrentSlide(indexOfNewCurrentSlide)
+        createRemoveSlideAction(slides[indexOfCurrentSlide].id)
+    }
+
+    const changeColorOfSlide = (color: string) => {
+        createChangeBackgroundAction(slides[indexOfCurrentSlide], color)
     }
 
     const addTextBlock = () => {
-        newPresentation.slides[newPresentation.indexOfCurrentSlide].data?.push({ ...textBlock, id: uuid()})
-        setPresentation(newPresentation)
+        createAddTextBlockAction(currentSlide.id)
     }
 
     const addGraphicBlock = (type: string) => {
-        type === 'circle' && newPresentation.slides[newPresentation.indexOfCurrentSlide].data?.push({ ...circle, id: uuid()})
-        type === 'square' && newPresentation.slides[newPresentation.indexOfCurrentSlide].data?.push({ ...square, id: uuid()})
-        type === 'triangle' && newPresentation.slides[newPresentation.indexOfCurrentSlide].data?.push({ ...triangle, id: uuid()})
-        setPresentation(newPresentation)
+        createAddGraphicBlockAction(currentSlide.id, type)
     }
 
     const addImageBlock = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,8 +69,7 @@ function ToolBar()
                 return
             }
             try {
-                newPresentation.slides[newPresentation.indexOfCurrentSlide].data?.push({ ...image, id: uuid(), data: event.target.result.toString()})
-                setPresentation(newPresentation)
+                createAddImageBlockAction(currentSlide.id, event.target.result.toString())
             } catch (error) {
                 alert("Invalid file!")
             }
@@ -75,54 +77,52 @@ function ToolBar()
         reader.readAsDataURL(file)
     }
 
-    const changeBackgroundOfSlide = (color: string) => {
-        newPresentation.slides[newPresentation.indexOfCurrentSlide].background = color
-        setPresentation(newPresentation)
-    }
-
     const setUnderlineText = () => {
-        if (block!.type === 'text')
-        {
-            const textBlock = block as TTextBlock
-            textBlock.underline = !textBlock.underline
-            setPresentation(newPresentation)
+        if (selectedBlock?.type === 'text') {
+            createSetUnderlineTextAction(currentSlide.id, selectedBlock.id)
         }
+        // if (block!.type === 'text')
+        // {
+        //     const textBlock = block as TTextBlock
+        //     textBlock.underline = !textBlock.underline
+        //     setPresentation(newPresentation)
+        // }
     }
 
     const setBoldText = () => {
-        if (block!.type === 'text')
+        if (selectedBlock!.type === 'text')
         {
-            const textBlock = block as TTextBlock
+            const textBlock = selectedBlock as TTextBlock
             textBlock.bold = !textBlock.bold
             setPresentation(newPresentation)
         }
     }
 
     const setItalicText = () => {
-        if (block!.type === 'text')
+        if (selectedBlock!.type === 'text')
         {
-            const textBlock = block as TTextBlock
+            const textBlock = selectedBlock as TTextBlock
             textBlock.italic = !textBlock.italic
             setPresentation(newPresentation)
         }
     }
 
     const changeFontFamilyOfText = (fontFamily: string) => {
-        const textBlock = block as TTextBlock
+        const textBlock = selectedBlock as TTextBlock
         textBlock.fontFamily = fontFamily
         setPresentation(newPresentation)
     }
 
     const changeFontSizeOfText = (fontSize: string) => {
-        const textBlock = block as TTextBlock
+        const textBlock = selectedBlock as TTextBlock
         textBlock.fontSize = parseInt(fontSize)
         setPresentation(newPresentation)
     }
 
     const changeColorOfGraphicBlock = (color: string) => {
-        if (block!.type === 'graphic')
+        if (selectedBlock!.type === 'graphic')
         {
-            const graphicBlock = block as TGraphicBlock
+            const graphicBlock = selectedBlock as TGraphicBlock
             graphicBlock.background = color
             console.log(newPresentation)
             setPresentation(newPresentation)
@@ -131,11 +131,11 @@ function ToolBar()
 
     return (
         <div className={styles.toolbar}>
-            <IconButton><UndoIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
-            <IconButton><RedoIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
+            <IconButton onClick={() => createUndoAction()}><UndoIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
+            <IconButton onClick={() => createRedoAction()}><RedoIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
             <hr className={styles.separate} />
             <IconButton onClick={() => addSlide()}><AddIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
-            {presentation.slides?.length == 1
+            {slides?.length == 1
                 ? <IconButton disabled><DeleteIcon className={styles.button} sx={{ fontSize: 17}}/></IconButton>
                 : <IconButton onClick={() => removeSlide()}><DeleteIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
             }
@@ -144,7 +144,7 @@ function ToolBar()
                 className={styles.select}
                 id="colors" name="colors"
                 value={currentSlide.background}
-                onChange={(event) => changeBackgroundOfSlide(event.target.value)}
+                onChange={(event) => changeColorOfSlide(event.target.value)}
             >
                 <option value="#FFFFFF">Белый</option>
                 <option value="#000000">Черный</option>
@@ -158,7 +158,7 @@ function ToolBar()
             </select>
             <hr className={styles.separate} />
             <IconButton onClick={() => addTextBlock()}><TitleIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
-            {block?.type === 'text' &&
+            {selectedBlock?.type === 'text' &&
                 <div className={styles.flex}>
                     <IconButton onClick={() => { setBoldText() }}><FormatBoldIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
                     <IconButton onClick={() => { setUnderlineText() }}><FormatUnderlinedIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
@@ -167,7 +167,7 @@ function ToolBar()
                     <select
                         className={styles.select}
                         id="fontFamilies" name="fontFamilies"
-                        value={(block as TTextBlock).fontFamily}
+                        value={(selectedBlock as TTextBlock).fontFamily}
                         onChange={(event) => changeFontFamilyOfText(event.target.value)}
                     >
                         <option value="Arial">Arial</option>
@@ -177,7 +177,7 @@ function ToolBar()
                         <option value="Times New Roman">Times New Roman</option>
                     </select>
                     <label htmlFor="fontSize" className={styles.text}>Размер</label>
-                    <input className={styles.input} type="number" value={(block as TTextBlock).fontSize} onChange={(event) => changeFontSizeOfText(event.target.value)} />
+                    <input className={styles.input} type="number" value={(selectedBlock as TTextBlock).fontSize} onChange={(event) => changeFontSizeOfText(event.target.value)} />
                 </div>
             }
             <IconButton>
@@ -186,19 +186,20 @@ function ToolBar()
                     className={styles.none}
                     id='image_uploads'
                     type='file'
+                    accept={'image/png, image/jpeg'}
                     onChange={(event) => addImageBlock(event)}
                 />
             </IconButton>
             <IconButton onClick={() => addGraphicBlock("circle")}><CircleIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
             <IconButton onClick={() => addGraphicBlock("square")}><SquareIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
             <IconButton onClick={() => addGraphicBlock("triangle")}><CategoryIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
-            {block?.type === 'graphic' &&
+            {selectedBlock?.type === 'graphic' &&
                 <div className={styles.flex}>
                     <label htmlFor="graphicColors" className={styles.text}>Цвет фигуры</label>
                     <select
                         className={styles.select}
                         id="graphicColors" name="graphicColors"
-                        value={(block as TGraphicBlock).background}
+                        value={(selectedBlock as TGraphicBlock).background}
                         onChange={(event) => changeColorOfGraphicBlock(event.target.value)}
                     >
                         <option value="#FFFFFF">Белый</option>

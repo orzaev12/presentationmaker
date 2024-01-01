@@ -6,6 +6,7 @@ import GraphicBlock from "../GraphicBlock/GraphicBlock";
 import { CSSProperties, useContext, useEffect, useRef } from "react";
 import { PresentationContext } from "../../context/presentation";
 import { useDragAndDropObject } from "../../hooks/useDndObject";
+import {useAppActions, useAppSelector} from "../../store/types.ts";
 
 type BlockProps = {
     data: TTextBlock | TImageBlock | TGraphicBlock | any;
@@ -14,7 +15,9 @@ type BlockProps = {
 }
 
 function Block({data, id, isWorkSpace}: BlockProps) {
-    const { selectedBlockId, setSelectedBlockId } = useContext(PresentationContext)
+    const currentSlide = useAppSelector(state => state.slides[state.indexOfCurrentSlide])
+    const selectedBlockId = useAppSelector(state => state.slides[state.indexOfCurrentSlide].selectedBlockId)
+    const { createSetSelectedBlockAction, createChangePositionOfBlockAction } = useAppActions()
     const { presentation, setPresentation } = useContext(PresentationContext)
     const newPresentation = { ...presentation }
     const { registerDndItem } = useDragAndDropObject()
@@ -33,7 +36,7 @@ function Block({data, id, isWorkSpace}: BlockProps) {
                 {
                     block.style.outline = "3px solid #1A73E8"
                     block.style.outlineOffset = "1px"
-                    setSelectedBlockId(id)
+                    createSetSelectedBlockAction(currentSlide.id, id)
                 } else {
                     block.style.outline = "none"
                     block.style.outlineOffset = "none"
@@ -59,9 +62,9 @@ function Block({data, id, isWorkSpace}: BlockProps) {
                                 x: dropEvent.clientX + (data.position.x - event.clientX),
                                 y: dropEvent.clientY + (data.position.y - event.clientY),
                             }
-                            const block = newPresentation.slides[newPresentation.indexOfCurrentSlide].data?.find((elem) => elem.id == id)!
-                            block.position = position
-                            setPresentation(newPresentation)
+                            if (selectedBlockId) {
+                                createChangePositionOfBlockAction(currentSlide.id, selectedBlockId, position)
+                            }
                         },
                     })
             }

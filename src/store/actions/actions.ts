@@ -1,4 +1,4 @@
-import { Presentation, Slide } from "../../types/types"
+import {Position, Presentation, Slide} from "../../types/types"
 
 enum PresentationActions {
     ADD_PRESENTATION = 'ADD_PRESENTATION',
@@ -9,10 +9,17 @@ enum PresentationActions {
     REMOVE_SLIDE = 'REMOVE_SLIDE',
     CHANGE_ORDER = 'CHANGE_ORDER',
     CHANGE_BACKGROUND = 'CHANGE_BACKGROUND',
-    SET_CURRENT_BLOCK = 'SET_CURRENT_BLOCK',
+    SET_SELECTED_BLOCK = 'SET_SELECTED_BLOCK',
+    CHANGE_POSITION_OF_BLOCK = 'SET_POSITION_OF_BLOCK',
     ADD_TEXT_BLOCK = 'ADD_TEXT_BLOCK',
     ADD_GRAPHIC_BLOCK = 'ADD_GRAPHIC_BLOCK',
     ADD_IMAGE_BLOCK = 'ADD_IMAGE_BLOCK',
+    SET_UNDERLINE_TEXT = 'SET_UNDERLINE_TEXT',
+    SET_BOLD_TEXT = 'SET_BOLD_TEXT',
+    SET_ITALIC_TEXT = 'SET_ITALIC_TEXT',
+    CHANGE_FONT_FAMILY_OF_TEXT = 'CHANGE_FONT_FAMILY_OF_TEXT',
+    CHANGE_FONT_SIZE_OF_TEXT = 'CHANGE_FONT_SIZE_OF_TEXT',
+    CHANGE_COLOR_OF_GRAPHIC_BLOCK = 'CHANGE_COLOR_OF_GRAPHIC_BLOCK',
     UNDO = 'UNDO',
     REDO = 'REDO',
 }
@@ -76,12 +83,21 @@ type ChangeBackgroundAction = {
     },
 }
 
-type SetCurrentBlockAction = {
-    type: PresentationActions.SET_CURRENT_BLOCK,
+type SetSelectedBlockAction = {
+    type: PresentationActions.SET_SELECTED_BLOCK,
     payload: {
-        slide: Slide,
-        blockId: string,
+        slideId: string,
+        blockId: string | null,
     },
+}
+
+type ChangePositionOfBlockAction = {
+    type: PresentationActions.CHANGE_POSITION_OF_BLOCK,
+    payload: {
+        slideId: string,
+        blockId: string,
+        newPosition: Position,
+    }
 }
 
 type AddTextBlockAction = {
@@ -107,6 +123,14 @@ type AddImageBlockAction = {
     }
 }
 
+type SetUnderlineTextAction = {
+    type: PresentationActions.SET_UNDERLINE_TEXT,
+    payload: {
+        slideId: string,
+        blockId: string,
+    },
+}
+
 type UndoAction = {
     type: PresentationActions.UNDO,
     payload: {},
@@ -120,7 +144,7 @@ type RedoAction = {
 
 export type Action = AddPresentationAction | SavePresentationAction |ChangePresentationTitleAction |
     AddSlideAction | SetCurrentSlide | RemoveSlideAction | ChangeOrderAction | ChangeBackgroundAction |
-    SetCurrentBlockAction | AddTextBlockAction | AddGraphicBlockAction | AddImageBlockAction| UndoAction |
-    RedoAction
+    SetSelectedBlockAction | ChangePositionOfBlockAction | AddTextBlockAction | AddGraphicBlockAction |
+    AddImageBlockAction | SetUnderlineTextAction | UndoAction | RedoAction
 
 export { PresentationActions }

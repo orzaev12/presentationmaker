@@ -55,6 +55,7 @@ type Slide = {
   id: string;
   background: string;
   data: Array<TextBlock | ImageBlock | GraphicBlock> | null;
+  selectedBlockId?: string | null;
 };
 
 type Presentation = {
