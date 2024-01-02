@@ -51,7 +51,8 @@ function Block({data, id, isWorkSpace}: BlockProps) {
         useEffect(() => {
             const { onDragStart } = registerDndItem({ elementRef: ref })
             const onMouseDown = (event: MouseEvent) => {
-                    onDragStart({
+                    onDragStart(
+                        {
                         onDrag: (dragEvent) => {
                             dragEvent.preventDefault()
                             ref.current!.style.top = `${dragEvent.clientY + (data.position.y - event.clientY)}px`
@@ -62,6 +63,7 @@ function Block({data, id, isWorkSpace}: BlockProps) {
                                 x: dropEvent.clientX + (data.position.x - event.clientX),
                                 y: dropEvent.clientY + (data.position.y - event.clientY),
                             }
+                            console.log(data.position, position)
                             createChangePositionOfBlockAction(currentSlide.id, id, position)
                         },
                     })
@@ -83,7 +85,7 @@ function Block({data, id, isWorkSpace}: BlockProps) {
                 ref.current?.removeEventListener('mousedown', onMouseDown)
                 ref.current?.removeEventListener('wheel', onMouseWheel)
             }
-        }, [selectedBlockId])
+        })
     }
     return (
         <div className={styles.block} id={id} style={position} ref={ref}>
