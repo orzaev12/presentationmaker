@@ -272,6 +272,48 @@ const slidesReducer = (state = presentation.slides, action: Action) => {
             history.addHistoryItem(newState)
             return newState
         }
+        case PresentationActions.ADD_CHARACTER: {
+            const newState = state.map(slide => {
+                if (slide.id === action.payload.slideId) {
+                    return {
+                        ...slide,
+                        data: slide.data!.map(block => {
+                            if (block.id === action.payload.blockId) {
+                                if (block.type === 'text') {
+                                    const textBlock = block as TextBlock
+                                    return {...textBlock, value: textBlock.value.concat(action.payload.char)}
+                                }
+                            }
+                            return block
+                        })
+                    }
+                }
+                return slide
+            })
+            history.addHistoryItem(newState)
+            return newState
+        }
+        case PresentationActions.DELETE_CHARACTER: {
+            const newState = state.map(slide => {
+                if (slide.id === action.payload.slideId) {
+                    return {
+                        ...slide,
+                        data: slide.data!.map(block => {
+                            if (block.id === action.payload.blockId) {
+                                if (block.type === 'text') {
+                                    const textBlock = block as TextBlock
+                                    return {...textBlock, value: textBlock.value.slice(0, -1)}
+                                }
+                            }
+                            return block
+                        })
+                    }
+                }
+                return slide
+            })
+            history.addHistoryItem(newState)
+            return newState
+        }
         case PresentationActions.UNDO: {
             const prevState = history.undo()
             if (prevState) {

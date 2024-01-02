@@ -204,6 +204,27 @@ function createChangeSizeOfBlockAction(slideId: string, blockId: string, newSize
     }
 }
 
+function createAddCharacterAction(slideId: string, blockId: string, char: string) {
+    return {
+        type: PresentationActions.ADD_CHARACTER,
+        payload: {
+            slideId,
+            blockId,
+            char,
+        }
+    }
+}
+
+function createDeleteCharacterAction(slideId: string, blockId: string) {
+    return {
+        type: PresentationActions.DELETE_CHARACTER,
+        payload: {
+            slideId,
+            blockId,
+        }
+    }
+}
+
 function createUndoAction() {
     return {
         type: PresentationActions.UNDO,
@@ -239,6 +260,8 @@ export {
     createChangeFontSizeOfTextAction,
     createChangeColorOfBlockAction,
     createChangeSizeOfBlockAction,
+    createAddCharacterAction,
+    createDeleteCharacterAction,
     createUndoAction,
     createRedoAction,
 }
