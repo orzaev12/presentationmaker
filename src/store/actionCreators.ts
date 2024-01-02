@@ -207,6 +207,16 @@ function createRedoAction() {
     }
 }
 
+function createDeleteBlockAction(slideId: string, blockId: string) {
+    return {
+        type: PresentationActions.DELETE_BLOCK,
+        payload: {
+            slideId,
+            blockId,
+        }
+    }
+}
+
 export {
     createAddPresentationAction,
     createSavePresentationAction,
@@ -229,4 +239,5 @@ export {
     createChangeColorOfBlockAction,
     createUndoAction,
     createRedoAction,
+    createDeleteBlockAction,
 }

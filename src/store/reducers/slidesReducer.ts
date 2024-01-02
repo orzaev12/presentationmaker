@@ -2,6 +2,7 @@ import {Action, PresentationActions} from "../actions/actions.ts"
 import {presentation} from "../../const/const.ts"
 import {createHistory} from "../history.ts"
 import {GraphicBlock, Slide, TextBlock} from "../../types/types.ts"
+// @ts-ignore
 import {v4 as uuid} from "uuid"
 
 const history = createHistory<Slide[]>(presentation.slides)
@@ -154,6 +155,19 @@ const slidesReducer = (state = presentation.slides, action: Action) => {
                             type: 'image',
                             data: action.payload.data
                         })
+                    }
+                }
+                return slide
+            })
+            history.addHistoryItem(newState)
+            return newState
+        }
+        case PresentationActions.DELETE_BLOCK: {
+            const newState = state.map(slide => {
+                if (slide.id === action.payload.slideId) {
+                    return {
+                        ...slide,
+                        data: slide.data!.filter(block => block.id != action.payload.blockId)
                     }
                 }
                 return slide

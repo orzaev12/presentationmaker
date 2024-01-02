@@ -14,6 +14,7 @@ enum PresentationActions {
     ADD_TEXT_BLOCK = 'ADD_TEXT_BLOCK',
     ADD_GRAPHIC_BLOCK = 'ADD_GRAPHIC_BLOCK',
     ADD_IMAGE_BLOCK = 'ADD_IMAGE_BLOCK',
+    DELETE_BLOCK = 'DELETE_BLOCK',
     SET_UNDERLINE_TEXT = 'SET_UNDERLINE_TEXT',
     SET_BOLD_TEXT = 'SET_BOLD_TEXT',
     SET_ITALIC_TEXT = 'SET_ITALIC_TEXT',
@@ -123,6 +124,14 @@ type AddImageBlockAction = {
     }
 }
 
+type DeleteBlockAction = {
+    type: PresentationActions.DELETE_BLOCK,
+    payload: {
+        slideId: string,
+        blockId: string,
+    }
+}
+
 type SetUnderlineTextAction = {
     type: PresentationActions.SET_UNDERLINE_TEXT,
     payload: {
@@ -189,6 +198,6 @@ export type Action = AddPresentationAction | SavePresentationAction |ChangePrese
     AddSlideAction | SetCurrentSlide | RemoveSlideAction | ChangeOrderAction | ChangeBackgroundAction |
     SetSelectedBlockAction | ChangePositionOfBlockAction | AddTextBlockAction | AddGraphicBlockAction |
     AddImageBlockAction | SetUnderlineTextAction | SetBoldTextAction | SetItalicTextAction | ChangeFontFamilyOfTextAction |
-    ChangeFontSizeOfTextAction | ChangeColorOfBlock | UndoAction | RedoAction
+    ChangeFontSizeOfTextAction | ChangeColorOfBlock | UndoAction | RedoAction | DeleteBlockAction
 
 export { PresentationActions }

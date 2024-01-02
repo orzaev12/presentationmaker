@@ -14,13 +14,15 @@ import FormatUnderlinedIcon from '@mui/icons-material/FormatUnderlined';
 import FormatItalicIcon from '@mui/icons-material/FormatItalic';
 import { TextBlock as TTextBlock, GraphicBlock as TGraphicBlock} from "../../types/types";
 import {useAppActions, useAppSelector} from "../../store/types.ts";
+// @ts-ignore
+import block from "../Block/Block.tsx";
 
 function ToolBar()
 {
     const { createSetCurrentSlide, createAddSlideAction, createRemoveSlideAction, createChangeBackgroundAction,
         createAddTextBlockAction, createUndoAction, createRedoAction, createAddGraphicBlockAction,createAddImageBlockAction,
         createSetUnderlineTextAction, createSetBoldTextAction, createSetItalicTextAction, createChangeFontFamilyOfTextAction,
-        createChangeFontSizeOfTextAction, createChangeColorOfBlockAction,
+        createChangeFontSizeOfTextAction, createChangeColorOfBlockAction, createDeleteBlockAction,
     } = useAppActions()
     const slides = useAppSelector(state => state.slides)
     const indexOfCurrentSlide = useAppSelector(state => state.indexOfCurrentSlide)
@@ -38,6 +40,12 @@ function ToolBar()
         indexOfCurrentSlide == slides.length - 1 && indexOfNewCurrentSlide--
         createSetCurrentSlide(indexOfNewCurrentSlide)
         createRemoveSlideAction(slides[indexOfCurrentSlide].id)
+    }
+
+    const removeBlock = () => {
+        if (selectedBlock) {
+            createDeleteBlockAction(currentSlide.id, selectedBlock.id)
+        }
     }
 
     const changeColorOfSlide = (color: string) => {
@@ -173,6 +181,9 @@ function ToolBar()
                         <option value="#808080">Серый</option>
                     </select>
                 </div>
+            }
+            {(selectedBlock?.type ) &&
+                <IconButton onClick={() => removeBlock()}><DeleteIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
             }
             <IconButton onClick={() => addTextBlock()}><TitleIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
             <IconButton>
