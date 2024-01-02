@@ -18,7 +18,6 @@ const currentSlideReducer = (state: number = index, action: Action) => {
         }
         case PresentationActions.UNDO: {
             const prevState = history.undo()
-            console.log(prevState)
             if (prevState) {
                 return prevState
             }
