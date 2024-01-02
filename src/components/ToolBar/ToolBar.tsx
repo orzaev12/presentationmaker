@@ -30,7 +30,7 @@ function ToolBar()
 
     const addSlide = () => {
         createAddSlideAction(indexOfCurrentSlide)
-        createSetCurrentSlide(indexOfCurrentSlide + 1)
+        //createSetCurrentSlide(indexOfCurrentSlide + 1)
     }
 
     const removeSlide = () => {
