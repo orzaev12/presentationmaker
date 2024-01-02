@@ -1,7 +1,7 @@
-import { CSSProperties, useContext, useEffect, useRef, useState } from "react";
+import { CSSProperties, useEffect, useRef } from "react";
 import styles from "./TextBlock.module.css"
 import { TextBlock as TTextBlock } from "../../types/types";
-import { PresentationContext } from "../../context/presentation.tsx";
+import {useAppActions, useAppSelector} from "../../store/types.ts";
 
 type TextBlockProps = {
     object: TTextBlock;
@@ -17,53 +17,38 @@ function TextBlock({object, id}: TextBlockProps) {
         fontStyle: object.italic ? "italic" : "",
         fontWeight: object.bold ? "bold" : "",
     }
-    const { presentation, setPresentation } = useContext(PresentationContext)
-    const newPresentation = { ...presentation }
+    const currentSlide = useAppSelector(state => state.slides[state.indexOfCurrentSlide])
+    const selectedBlockId = useAppSelector(state => state.slides[state.indexOfCurrentSlide].selectedBlockId)
+    const selectedBlock = currentSlide.data?.find((block) => block.id === selectedBlockId)
+    const { createAddCharacterAction, createDeleteCharacterAction } = useAppActions()
     const ref = useRef<HTMLDivElement>(null)
-    const [selected, setSelected] = useState(false)
 
     useEffect(() => {
-        const block: HTMLDivElement = ref.current!
-        const handleClick = (event: MouseEvent) => {
-            if (block && block?.contains(event.target as Node)) {
-                setSelected(true)
-            } else {
-                setSelected(false)
-            }
-        }
         const handleKeydown = (event: KeyboardEvent) => {
-            if (selected && event.key)
+            if (event.key)
             {
-                newPresentation.slides[newPresentation.indexOfCurrentSlide].data?.map((item, index) => {
-                    if (item.id === id)
-                    {
-                        const currentSlide = newPresentation.slides[newPresentation.indexOfCurrentSlide]
-                        if (event.key.length === 1) {
-                            object.value += event.key
-                        }
-                        if (event.key === 'Backspace') {
-                            object.value = object.value.slice(0, -1)
-                        }
-                        if (event.key === 'Enter') {
-                            object.value += "\n"
-                        }
-                        if (event.key === 'Space') {
-                            object.value += "\u00A0"
-                        }
-                        currentSlide.data![index] = object
-                        setPresentation(newPresentation)
+                if (selectedBlockId === id)
+                {
+                    if (event.key.length === 1) {
+                        createAddCharacterAction(currentSlide.id, selectedBlockId, event.key)
                     }
-                })
+                    if (event.key === 'Backspace') {
+                        createDeleteCharacterAction(currentSlide.id, selectedBlockId)
+                    }
+                    if (event.key === 'Enter') {
+                        createAddCharacterAction(currentSlide.id, selectedBlockId, '\n')
+                    }
+                    if (event.key === 'Space') {
+                        createAddCharacterAction(currentSlide.id, selectedBlockId, '\u00A0')
+                    }
+                }
             }
         }
-        document.addEventListener('mousedown', handleClick)
         document.addEventListener('keydown', handleKeydown)
         return (() => {
-            document.removeEventListener('mousedown', handleClick)
             document.removeEventListener('keydown', handleKeydown)
         })
-    })
-
+    }, [selectedBlock])
     return (
         <div ref={ref} className={styles.text}>
             <span className={styles.span} style={stylelist}>{object.value}</span>

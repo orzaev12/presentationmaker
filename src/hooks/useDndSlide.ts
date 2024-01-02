@@ -44,7 +44,6 @@ const useDragAndDropSlide = ({onOrderChange}: UseDraggableSlidesParams) => {
 					newIndex = i
 				}
 				onOrderChange(index, newIndex)
-				console.log(index, newIndex)
 				onDrop(event)
 
 				window.removeEventListener('mousemove', onDrag)

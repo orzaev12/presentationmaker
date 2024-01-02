@@ -3,8 +3,7 @@ import styles from "./Block.module.css"
 import TextBlock from "../TextBlock/TextBlock";
 import ImageBlock from "../ImageBlock/ImageBlock";
 import GraphicBlock from "../GraphicBlock/GraphicBlock";
-import { CSSProperties, useContext, useEffect, useRef } from "react";
-import { PresentationContext } from "../../context/presentation";
+import { CSSProperties, useEffect, useRef } from "react";
 import { useDragAndDropObject } from "../../hooks/useDndObject";
 import {useAppActions, useAppSelector} from "../../store/types.ts";
 
@@ -17,9 +16,8 @@ type BlockProps = {
 function Block({data, id, isWorkSpace}: BlockProps) {
     const currentSlide = useAppSelector(state => state.slides[state.indexOfCurrentSlide])
     const selectedBlockId = useAppSelector(state => state.slides[state.indexOfCurrentSlide].selectedBlockId)
-    const { createSetSelectedBlockAction, createChangePositionOfBlockAction } = useAppActions()
-    const { presentation, setPresentation } = useContext(PresentationContext)
-    const newPresentation = { ...presentation }
+    const selectedBlock = currentSlide.data?.find((block) => block.id === selectedBlockId)
+    const { createSetSelectedBlockAction, createChangePositionOfBlockAction, createChangeSizeOfBlockAction } = useAppActions()
     const { registerDndItem } = useDragAndDropObject()
     const ref = useRef<HTMLDivElement>(null)
     const position: CSSProperties = {
@@ -51,7 +49,8 @@ function Block({data, id, isWorkSpace}: BlockProps) {
         useEffect(() => {
             const { onDragStart } = registerDndItem({ elementRef: ref })
             const onMouseDown = (event: MouseEvent) => {
-                    onDragStart({
+                    onDragStart(
+                        {
                         onDrag: (dragEvent) => {
                             dragEvent.preventDefault()
                             ref.current!.style.top = `${dragEvent.clientY + (data.position.y - event.clientY)}px`
@@ -72,9 +71,7 @@ function Block({data, id, isWorkSpace}: BlockProps) {
                         height: data.size.height + event.deltaY,
                         width: data.size.width + event.deltaY,
                     }
-                    const currentBlock = newPresentation.slides[newPresentation.indexOfCurrentSlide].data?.find((element) => element.id === id)!
-                    currentBlock.size = newSize
-                    setPresentation(newPresentation)
+                    createChangeSizeOfBlockAction(currentSlide.id, id, newSize)
                 }
             }
             ref.current!.addEventListener('mousedown', onMouseDown)
@@ -83,7 +80,7 @@ function Block({data, id, isWorkSpace}: BlockProps) {
                 ref.current?.removeEventListener('mousedown', onMouseDown)
                 ref.current?.removeEventListener('wheel', onMouseWheel)
             }
-        }, [selectedBlockId])
+        }, [selectedBlock])
     }
     return (
         <div className={styles.block} id={id} style={position} ref={ref}>
