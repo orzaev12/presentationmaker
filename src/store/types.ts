@@ -24,6 +24,7 @@ import {
     createChangeFontFamilyOfTextAction,
     createChangeFontSizeOfTextAction,
     createChangeColorOfBlockAction,
+    createChangeSizeOfBlockAction,
 } from "./actionCreators.ts"
 
 type RootState = ReturnType<typeof rootReducer>
@@ -53,6 +54,7 @@ const useAppActions = () => {
         createChangeFontFamilyOfTextAction: createChangeFontFamilyOfTextAction,
         createChangeFontSizeOfTextAction: createChangeFontSizeOfTextAction,
         createChangeColorOfBlockAction: createChangeColorOfBlockAction,
+        createChangeSizeOfBlockAction: createChangeSizeOfBlockAction,
         createUndoAction: createUndoAction,
         createRedoAction: createRedoAction,
     }, dispatch)

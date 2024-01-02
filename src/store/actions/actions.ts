@@ -1,4 +1,4 @@
-import {Position, Presentation, Slide} from "../../types/types"
+import {Position, Presentation, Size, Slide} from "../../types/types"
 
 enum PresentationActions {
     ADD_PRESENTATION = 'ADD_PRESENTATION',
@@ -20,6 +20,7 @@ enum PresentationActions {
     CHANGE_FONT_FAMILY_OF_TEXT = 'CHANGE_FONT_FAMILY_OF_TEXT',
     CHANGE_FONT_SIZE_OF_TEXT = 'CHANGE_FONT_SIZE_OF_TEXT',
     CHANGE_COLOR_OF_BLOCK = 'CHANGE_COLOR_OF_BLOCK',
+    CHANGE_SIZE_OF_BLOCK = 'CHANGE_SIZE_OF_BLOCK',
     UNDO = 'UNDO',
     REDO = 'REDO',
 }
@@ -165,12 +166,21 @@ type ChangeFontSizeOfTextAction = {
     }
 }
 
-type ChangeColorOfBlock = {
+type ChangeColorOfBlockAction = {
     type: PresentationActions.CHANGE_COLOR_OF_BLOCK,
     payload: {
         slideId: string,
         blockId: string,
         newColor: string,
+    }
+}
+
+type ChangeSizeOfBlockAction = {
+    type: PresentationActions.CHANGE_SIZE_OF_BLOCK,
+    payload: {
+        slideId: string,
+        blockId: string,
+        newSize: Size,
     }
 }
 
@@ -189,6 +199,6 @@ export type Action = AddPresentationAction | SavePresentationAction |ChangePrese
     AddSlideAction | SetCurrentSlide | RemoveSlideAction | ChangeOrderAction | ChangeBackgroundAction |
     SetSelectedBlockAction | ChangePositionOfBlockAction | AddTextBlockAction | AddGraphicBlockAction |
     AddImageBlockAction | SetUnderlineTextAction | SetBoldTextAction | SetItalicTextAction | ChangeFontFamilyOfTextAction |
-    ChangeFontSizeOfTextAction | ChangeColorOfBlock | UndoAction | RedoAction
+    ChangeFontSizeOfTextAction | ChangeColorOfBlockAction | ChangeSizeOfBlockAction | UndoAction | RedoAction
 
 export { PresentationActions }

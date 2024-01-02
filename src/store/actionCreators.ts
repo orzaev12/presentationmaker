@@ -1,4 +1,4 @@
-import {Position, Presentation, Slide} from "../types/types";
+import {Position, Presentation, Size, Slide} from "../types/types";
 import { PresentationActions } from "./actions/actions.ts";
 
 function createAddPresentationAction(presentation: Presentation) {
@@ -193,6 +193,17 @@ function createChangeColorOfBlockAction(slideId: string, blockId: string, newCol
     }
 }
 
+function createChangeSizeOfBlockAction(slideId: string, blockId: string, newSize: Size) {
+    return {
+        type: PresentationActions.CHANGE_SIZE_OF_BLOCK,
+        payload: {
+            slideId,
+            blockId,
+            newSize,
+        }
+    }
+}
+
 function createUndoAction() {
     return {
         type: PresentationActions.UNDO,
@@ -227,6 +238,7 @@ export {
     createChangeFontFamilyOfTextAction,
     createChangeFontSizeOfTextAction,
     createChangeColorOfBlockAction,
+    createChangeSizeOfBlockAction,
     createUndoAction,
     createRedoAction,
 }
