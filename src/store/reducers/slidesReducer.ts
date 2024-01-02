@@ -172,20 +172,15 @@ const slidesReducer = (state = presentation.slides, action: Action) => {
         case PresentationActions.CHANGE_POSITION_OF_BLOCK: {
             const newState = state.map(slide => {
                 if (slide.id === action.payload.slideId) {
-                    slide.data?.map(block => {
-                        if (block.id === action.payload.blockId) {
-                            block.position = action.payload.newPosition
-                        }
-                    })
-                    // return {
-                    //     ...slide,
-                    //     data: slide.data!.map(block => {
-                    //         if (block.id === action.payload.blockId) {
-                    //             return  { ...block, position: action.payload.newPosition }
-                    //         }
-                    //         return block
-                    //     })
-                    // }
+                    return {
+                        ...slide,
+                        data: slide.data!.map(block => {
+                            if (block.id === action.payload.blockId) {
+                                return  { ...block, position: action.payload.newPosition }
+                            }
+                            return block
+                        })
+                    }
                 }
                 return slide
             })
@@ -301,6 +296,24 @@ const slidesReducer = (state = presentation.slides, action: Action) => {
                                     const graphicBlock = block as GraphicBlock
                                     return {...graphicBlock, background: action.payload.newColor}
                                 }
+                            }
+                            return block
+                        })
+                    }
+                }
+                return slide
+            })
+            history.addHistoryItem(newState)
+            return newState
+        }
+        case PresentationActions.CHANGE_SIZE_OF_BLOCK: {
+            const newState = state.map(slide => {
+                if (slide.id === action.payload.slideId) {
+                    return {
+                        ...slide,
+                        data: slide.data!.map(block => {
+                            if (block.id === action.payload.blockId) {
+                                return {...block, size: action.payload.newSize}
                             }
                             return block
                         })
