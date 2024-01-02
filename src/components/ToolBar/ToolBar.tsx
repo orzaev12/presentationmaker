@@ -20,7 +20,7 @@ import { TextBlock as TTextBlock, GraphicBlock as TGraphicBlock} from "../../typ
 
 function ToolBar()
 {
-    const { presentation, setPresentation, selectedBlockId } = useContext(PresentationContext)
+    const { presentation, setPresentation, selectedBlockId, setSelectedBlockId } = useContext(PresentationContext)
     const currentSlide = presentation.slides[presentation.indexOfCurrentSlide]
     const newPresentation = { ...presentation }
     const block = newPresentation.slides[newPresentation.indexOfCurrentSlide].data?.find((block) => block.id === selectedBlockId)
@@ -119,14 +119,26 @@ function ToolBar()
         setPresentation(newPresentation)
     }
 
-    const changeColorOfGraphicBlock = (color: string) => {
+    const changeColorOfBlock = (color: string) => {
         if (block!.type === 'graphic')
         {
             const graphicBlock = block as TGraphicBlock
             graphicBlock.background = color
-            console.log(newPresentation)
             setPresentation(newPresentation)
         }
+        if (block!.type === 'text')
+        {
+            const textBlock = block as TTextBlock
+            textBlock.color = color
+            setPresentation(newPresentation)
+        }
+    }
+
+    const deleteSelectedBlock = () => {
+        const index = newPresentation.slides[newPresentation.indexOfCurrentSlide].data?.indexOf(block!)
+        newPresentation.slides[newPresentation.indexOfCurrentSlide].data?.splice(index!, 1)
+        setSelectedBlockId('')
+        setPresentation(newPresentation)
     }
 
     return (
@@ -157,6 +169,9 @@ function ToolBar()
                 <option value="#808080">Серый</option>
             </select>
             <hr className={styles.separate} />
+            {selectedBlockId != '' &&
+                <IconButton onClick={() => deleteSelectedBlock()}><DeleteIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
+            }
             <IconButton onClick={() => addTextBlock()}><TitleIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
             {block?.type === 'text' &&
                 <div className={styles.flex}>
@@ -180,26 +195,14 @@ function ToolBar()
                     <input className={styles.input} type="number" value={(block as TTextBlock).fontSize} onChange={(event) => changeFontSizeOfText(event.target.value)} />
                 </div>
             }
-            <IconButton>
-                <label className={styles.button} htmlFor="image_uploads"><ImageIcon sx={{ fontSize: 17}}/></label>
-                <input
-                    className={styles.none}
-                    id='image_uploads'
-                    type='file'
-                    onChange={(event) => addImageBlock(event)}
-                />
-            </IconButton>
-            <IconButton onClick={() => addGraphicBlock("circle")}><CircleIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
-            <IconButton onClick={() => addGraphicBlock("square")}><SquareIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
-            <IconButton onClick={() => addGraphicBlock("triangle")}><CategoryIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
-            {(block?.type === 'graphic' || block?.type === 'text' )&&
+            {(block?.type === 'graphic' || block?.type === 'text') &&
                 <div className={styles.flex}>
-                    <label htmlFor="graphicColors" className={styles.text}>Цвет</label>
+                    <span className={styles.text}>{block?.type === 'graphic' ? 'Цвет фигуры' : 'Цвет шрифта'}</span>
                     <select
                         className={styles.select}
-                        id="graphicColors" name="graphicColors"
-                        value={(block as TGraphicBlock).background}
-                        onChange={(event) => changeColorOfGraphicBlock(event.target.value)}
+                        name="graphicColors"
+                        value={block.type === 'graphic' ? (block as TGraphicBlock).background : (block as TTextBlock).color}
+                        onChange={(event) => changeColorOfBlock(event.target.value)}
                     >
                         <option value="#FFFFFF">Белый</option>
                         <option value="#000000">Черный</option>
@@ -213,6 +216,18 @@ function ToolBar()
                     </select>
                 </div>
             }
+            <IconButton>
+                <label className={styles.button} htmlFor="image_uploads"><ImageIcon sx={{ fontSize: 17}}/></label>
+                <input
+                    className={styles.none}
+                    id='image_uploads'
+                    type='file'
+                    onChange={(event) => addImageBlock(event)}
+                />
+            </IconButton>
+            <IconButton onClick={() => addGraphicBlock("circle")}><CircleIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
+            <IconButton onClick={() => addGraphicBlock("square")}><SquareIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
+            <IconButton onClick={() => addGraphicBlock("triangle")}><CategoryIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
         </div>
     );
 }
