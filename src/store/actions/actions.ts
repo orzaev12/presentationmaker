@@ -75,7 +75,8 @@ type RemoveSlideAction = {
 type ChangeOrderAction = {
     type: PresentationActions.CHANGE_ORDER,
     payload: {
-        // ???
+        from: number,
+        to: number,
     },
 }
 

@@ -61,11 +61,12 @@ function createRemoveSlideAction(slideId: string) {
     }
 }
 
-function createChangeOrderAction() {
+function createChangeOrderAction(from: number, to: number) {
     return {
         type: PresentationActions.CHANGE_ORDER,
         payload: {
-            // ???
+            from,
+            to,
         },
     }
 }
