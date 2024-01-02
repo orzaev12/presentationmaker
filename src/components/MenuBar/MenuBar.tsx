@@ -42,22 +42,34 @@ function MenuBar()
         reader.readAsText(file)
     }
 
-    const toPdf = () => {
-        const app = document.getElementById('app')
-        html2PDF(app!, {
+    const getPdf = () => {
+        const pages = []
+        for (let i = 0; i < slides.length; i++)
+        {
+            const doc = document.getElementById(slides[i].id)!
+            pages.push(doc)
+        }
+        html2PDF(pages, {
             jsPDF: {
-              format: [1080, 1920],
+                unit: 'pt',
+                format: [1860, 1081],
+                orientation: 'l',
+            },
+            html2canvas: {
+                scale: 10,
+                width: 238.5,
+                height: 138.5,
             },
             imageType: 'image/jpeg',
-            output: './pdf/generate.pdf'
-          });
+            output: `${title}.pdf`,
+          })
     }
 
     return (
         <div className="menu">
             <button className={styles.button}><label className={styles.text} htmlFor="file_uploads">Загрузить</label></button>
             <button className={styles.button}><a className={styles.text} href={getURL()} download={title}>Сохранить JSON</a></button>
-            <button className={styles.button} onClick={() => toPdf()}>PDF</button>
+            <button className={styles.button} onClick={() => getPdf()}><a className={styles.text}>Сохранить PDF</a></button>
             <input className={styles.input} id="file_uploads" type="file" accept="application/json" onChange={(event) => loadFile(event)}></input>
         </div>
     )

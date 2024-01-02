@@ -8,7 +8,7 @@ function App() {
     useArrowsListeners()
     useUndoRedoListeners()
     return (
-        <div className="app">
+        <div id='app' className="app">
             <Header />
             <Editor />
         </div>
