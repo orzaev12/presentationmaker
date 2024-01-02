@@ -164,7 +164,7 @@ const slidesReducer = (state = presentation.slides, action: Action) => {
         case PresentationActions.SET_SELECTED_BLOCK: {
             return state.map(slide => {
                 if (slide.id === action.payload.slideId) {
-                    slide.selectedBlockId = action.payload.blockId
+                    return {...slide, selectedBlockId: action.payload.blockId}
                 }
                 return slide
             })
@@ -172,15 +172,20 @@ const slidesReducer = (state = presentation.slides, action: Action) => {
         case PresentationActions.CHANGE_POSITION_OF_BLOCK: {
             const newState = state.map(slide => {
                 if (slide.id === action.payload.slideId) {
-                    return {
-                        ...slide,
-                        data: slide.data!.map(block => {
-                            if (block.id === action.payload.blockId) {
-                                return  { ...block, position: action.payload.newPosition }
-                            }
-                            return block
-                        })
-                    }
+                    slide.data?.map(block => {
+                        if (block.id === action.payload.blockId) {
+                            block.position = action.payload.newPosition
+                        }
+                    })
+                    // return {
+                    //     ...slide,
+                    //     data: slide.data!.map(block => {
+                    //         if (block.id === action.payload.blockId) {
+                    //             return  { ...block, position: action.payload.newPosition }
+                    //         }
+                    //         return block
+                    //     })
+                    // }
                 }
                 return slide
             })
