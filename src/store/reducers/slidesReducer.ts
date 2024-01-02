@@ -14,9 +14,10 @@ const slidesReducer = (state = presentation.slides, action: Action) => {
             return action.payload.slides
         }
         case PresentationActions.ADD_SLIDE: {
-            state.splice(action.payload.indexOfCurrentSlide + 1, 0, {id: uuid(), background: '#FFFFFF', data: []})
-            history.addHistoryItem(state)
-            return state
+            const newState = state
+            newState.splice(action.payload.indexOfCurrentSlide + 1, 0, {id: uuid(), background: '#FFFFFF', data: []})
+            history.addHistoryItem(newState)
+            return newState
         }
         case PresentationActions.REMOVE_SLIDE: {
             const newState = state.filter(item => item.id != action.payload.slideId)
