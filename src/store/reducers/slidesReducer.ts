@@ -24,7 +24,10 @@ const slidesReducer = (state = presentation.slides, action: Action) => {
             return newState
         }
         case PresentationActions.CHANGE_ORDER:
-            return state//???
+            const removed = state.splice(action.payload.from, 1)
+            state.splice(action.payload.to, 0, removed[0])
+            history.addHistoryItem(state)
+            return state
         case PresentationActions.CHANGE_BACKGROUND: {
             const newState = state.map(slide => {
                 if (slide.id === action.payload.slide.id) {
@@ -102,6 +105,19 @@ const slidesReducer = (state = presentation.slides, action: Action) => {
                             id: uuid(),
                             data: action.payload.data,
                         })
+                    }
+                }
+                return slide
+            })
+            history.addHistoryItem(newState)
+            return newState
+        }
+        case PresentationActions.DELETE_BLOCK: {
+            const newState = state.map(slide => {
+                if (slide.id === action.payload.slideId) {
+                    return {
+                        ...slide,
+                        data: slide.data!.filter(block => block.id != action.payload.blockId)
                     }
                 }
                 return slide
@@ -262,6 +278,48 @@ const slidesReducer = (state = presentation.slides, action: Action) => {
                         data: slide.data!.map(block => {
                             if (block.id === action.payload.blockId) {
                                 return {...block, size: action.payload.newSize}
+                            }
+                            return block
+                        })
+                    }
+                }
+                return slide
+            })
+            history.addHistoryItem(newState)
+            return newState
+        }
+        case PresentationActions.ADD_CHARACTER: {
+            const newState = state.map(slide => {
+                if (slide.id === action.payload.slideId) {
+                    return {
+                        ...slide,
+                        data: slide.data!.map(block => {
+                            if (block.id === action.payload.blockId) {
+                                if (block.type === 'text') {
+                                    const textBlock = block as TextBlock
+                                    return {...textBlock, value: textBlock.value.concat(action.payload.char)}
+                                }
+                            }
+                            return block
+                        })
+                    }
+                }
+                return slide
+            })
+            history.addHistoryItem(newState)
+            return newState
+        }
+        case PresentationActions.DELETE_CHARACTER: {
+            const newState = state.map(slide => {
+                if (slide.id === action.payload.slideId) {
+                    return {
+                        ...slide,
+                        data: slide.data!.map(block => {
+                            if (block.id === action.payload.blockId) {
+                                if (block.type === 'text') {
+                                    const textBlock = block as TextBlock
+                                    return {...textBlock, value: textBlock.value.slice(0, -1)}
+                                }
                             }
                             return block
                         })

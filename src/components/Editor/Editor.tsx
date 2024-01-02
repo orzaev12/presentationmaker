@@ -9,7 +9,10 @@ function Editor() {
     return(
         <div className={styles.editor}>
             <SlideBar />
-            <Slide className={styles.slide} slide={currentSlide} isWorkSpace={true}/>
+            <div className={styles.workPlace}>
+                <Slide className={styles.slide} slide={currentSlide} isWorkSpace={true}/>
+            </div>
+
         </div>
     );
 }

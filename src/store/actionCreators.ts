@@ -61,11 +61,12 @@ function createRemoveSlideAction(slideId: string) {
     }
 }
 
-function createChangeOrderAction() {
+function createChangeOrderAction(from: number, to: number) {
     return {
         type: PresentationActions.CHANGE_ORDER,
         payload: {
-            // ???
+            from,
+            to,
         },
     }
 }
@@ -204,6 +205,27 @@ function createChangeSizeOfBlockAction(slideId: string, blockId: string, newSize
     }
 }
 
+function createAddCharacterAction(slideId: string, blockId: string, char: string) {
+    return {
+        type: PresentationActions.ADD_CHARACTER,
+        payload: {
+            slideId,
+            blockId,
+            char,
+        }
+    }
+}
+
+function createDeleteCharacterAction(slideId: string, blockId: string) {
+    return {
+        type: PresentationActions.DELETE_CHARACTER,
+        payload: {
+            slideId,
+            blockId,
+        }
+    }
+}
+
 function createUndoAction() {
     return {
         type: PresentationActions.UNDO,
@@ -215,6 +237,16 @@ function createRedoAction() {
     return {
         type: PresentationActions.REDO,
         payload: {},
+    }
+}
+
+function createDeleteBlockAction(slideId: string, blockId: string) {
+    return {
+        type: PresentationActions.DELETE_BLOCK,
+        payload: {
+            slideId,
+            blockId,
+        }
     }
 }
 
@@ -239,6 +271,9 @@ export {
     createChangeFontSizeOfTextAction,
     createChangeColorOfBlockAction,
     createChangeSizeOfBlockAction,
+    createAddCharacterAction,
+    createDeleteCharacterAction,
     createUndoAction,
     createRedoAction,
+    createDeleteBlockAction,
 }

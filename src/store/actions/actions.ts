@@ -14,6 +14,7 @@ enum PresentationActions {
     ADD_TEXT_BLOCK = 'ADD_TEXT_BLOCK',
     ADD_GRAPHIC_BLOCK = 'ADD_GRAPHIC_BLOCK',
     ADD_IMAGE_BLOCK = 'ADD_IMAGE_BLOCK',
+    DELETE_BLOCK = 'DELETE_BLOCK',
     SET_UNDERLINE_TEXT = 'SET_UNDERLINE_TEXT',
     SET_BOLD_TEXT = 'SET_BOLD_TEXT',
     SET_ITALIC_TEXT = 'SET_ITALIC_TEXT',
@@ -21,6 +22,8 @@ enum PresentationActions {
     CHANGE_FONT_SIZE_OF_TEXT = 'CHANGE_FONT_SIZE_OF_TEXT',
     CHANGE_COLOR_OF_BLOCK = 'CHANGE_COLOR_OF_BLOCK',
     CHANGE_SIZE_OF_BLOCK = 'CHANGE_SIZE_OF_BLOCK',
+    ADD_CHARACTER = 'ADD_CHARACTER',
+    DELETE_CHARACTER = 'DELETE_CHARACTER',
     UNDO = 'UNDO',
     REDO = 'REDO',
 }
@@ -72,7 +75,8 @@ type RemoveSlideAction = {
 type ChangeOrderAction = {
     type: PresentationActions.CHANGE_ORDER,
     payload: {
-        // ???
+        from: number,
+        to: number,
     },
 }
 
@@ -121,6 +125,14 @@ type AddImageBlockAction = {
     payload: {
         slideId: string,
         data: string,
+    }
+}
+
+type DeleteBlockAction = {
+    type: PresentationActions.DELETE_BLOCK,
+    payload: {
+        slideId: string,
+        blockId: string,
     }
 }
 
@@ -184,6 +196,23 @@ type ChangeSizeOfBlockAction = {
     }
 }
 
+type AddCharacterAction = {
+    type: PresentationActions.ADD_CHARACTER,
+    payload: {
+        slideId: string,
+        blockId: string,
+        char: string,
+    }
+}
+
+type DeleteCharacterAction = {
+    type: PresentationActions.DELETE_CHARACTER,
+    payload: {
+        slideId: string,
+        blockId: string,
+    }
+}
+
 type UndoAction = {
     type: PresentationActions.UNDO,
     payload: {},
@@ -199,6 +228,7 @@ export type Action = AddPresentationAction | SavePresentationAction |ChangePrese
     AddSlideAction | SetCurrentSlide | RemoveSlideAction | ChangeOrderAction | ChangeBackgroundAction |
     SetSelectedBlockAction | ChangePositionOfBlockAction | AddTextBlockAction | AddGraphicBlockAction |
     AddImageBlockAction | SetUnderlineTextAction | SetBoldTextAction | SetItalicTextAction | ChangeFontFamilyOfTextAction |
-    ChangeFontSizeOfTextAction | ChangeColorOfBlockAction | ChangeSizeOfBlockAction | UndoAction | RedoAction
+    ChangeFontSizeOfTextAction  | DeleteBlockAction | ChangeColorOfBlockAction | ChangeSizeOfBlockAction | AddCharacterAction |
+    DeleteCharacterAction | UndoAction | RedoAction
 
 export { PresentationActions }
