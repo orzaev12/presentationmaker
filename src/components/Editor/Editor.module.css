@@ -11,3 +11,12 @@
     height: 900px;
     margin: 9px 45px;
 }
+
+.workPlace
+{
+    overflow: hidden;
+    display: flex;
+    width: calc(100vw - 320px);
+    align-items: center;
+    justify-content: center;
+}

@@ -4,6 +4,6 @@
     flex-wrap: wrap;
     margin-bottom: 10px;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
 }
 
