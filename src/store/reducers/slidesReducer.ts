@@ -3,6 +3,7 @@ import {presentation} from "../../const/const.ts"
 import {createHistory} from "../history.ts"
 import {GraphicBlock, Slide, TextBlock} from "../../types/types.ts"
 import {v4 as uuid} from "uuid"
+import { image, textBlock, circle, triangle, square } from "../../const/const.ts"
 
 const history = createHistory<Slide[]>(presentation.slides)
 
@@ -44,23 +45,8 @@ const slidesReducer = (state = presentation.slides, action: Action) => {
                     return {
                         ...slide,
                         data: slide.data!.concat({
+                            ...textBlock,
                             id: uuid(),
-                            size: {
-                                width: 30,
-                                height: 24,
-                            },
-                            position: {
-                                x: 10,
-                                y: 10,
-                            },
-                            type: 'text',
-                            value: 'Text',
-                            fontSize: 14,
-                            fontFamily: 'Inherit',
-                            color: '#000000',
-                            underline: false,
-                            italic: false,
-                            bold: false,
                         })
                     }
                 }
@@ -76,18 +62,8 @@ const slidesReducer = (state = presentation.slides, action: Action) => {
                     return {
                         ...slide,
                         data: slide.data!.concat({
+                            ...circle,
                             id: uuid(),
-                            type: 'graphic',
-                            size: {
-                                width: 400,
-                                height: 400,
-                            },
-                            position: {
-                                x: 10,
-                                y: 10,
-                            },
-                            data: 'circle',
-                            background: '#808080',
                         })
                     }
                 }
@@ -96,18 +72,8 @@ const slidesReducer = (state = presentation.slides, action: Action) => {
                     return {
                         ...slide,
                         data: slide.data!.concat({
+                            ...square,
                             id: uuid(),
-                            type: 'graphic',
-                            size: {
-                                width: 200,
-                                height: 200,
-                            },
-                            position: {
-                                x: 10,
-                                y: 10,
-                            },
-                            data: 'square',
-                            background: '#808080',
                         })
                     }
                 }
@@ -116,18 +82,8 @@ const slidesReducer = (state = presentation.slides, action: Action) => {
                     return {
                         ...slide,
                         data: slide.data!.concat({
+                            ...triangle,
                             id: uuid(),
-                            type: 'graphic',
-                            size: {
-                                width: 160,
-                                height: 80,
-                            },
-                            position: {
-                                x: 10,
-                                y: 10,
-                            },
-                            data: 'triangle',
-                            background: '#808080',
                         })
                     }
                 }
@@ -142,17 +98,9 @@ const slidesReducer = (state = presentation.slides, action: Action) => {
                     return {
                         ...slide,
                         data: slide.data!.concat({
+                            ...image,
                             id: uuid(),
-                            size: {
-                                width: 300,
-                                height: 240,
-                            },
-                            position: {
-                                x: 12,
-                                y: 10,
-                            },
-                            type: 'image',
-                            data: action.payload.data
+                            data: action.payload.data,
                         })
                     }
                 }
