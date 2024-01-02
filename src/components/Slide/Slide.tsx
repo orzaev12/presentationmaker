@@ -70,7 +70,7 @@ function Slide({className, slide, isWorkSpace, registerDndItem, index}: SlidePro
         }, [])
     }
     return (
-        <div ref={ref} id={slide.id} className={classNames(styles.slide, className)} style={background}>
+        <div ref={ref} id='app' className={classNames(styles.slide, className)} style={background}>
             {slide.data?.map((block) => (
                 <Block id={block.id} key={block.id} data={block} isWorkSpace={isWorkSpace}/>
             ))}

@@ -61,7 +61,6 @@ function Block({data, id, isWorkSpace}: BlockProps) {
                                 x: dropEvent.clientX + (data.position.x - event.clientX),
                                 y: dropEvent.clientY + (data.position.y - event.clientY),
                             }
-                            console.log(data.position, position)
                             createChangePositionOfBlockAction(currentSlide.id, id, position)
                         },
                     })

@@ -1,4 +1,4 @@
-import styles from "./ToolBar.module.css"
+import styles from "./ToolBar.module.css";
 import IconButton from '@mui/material/IconButton';
 import UndoIcon from '@mui/icons-material/Undo';
 import RedoIcon from '@mui/icons-material/Redo';
