@@ -20,3 +20,15 @@
     align-items: center;
     justify-content: center;
 }
+
+.slideShow
+{
+    overflow: hidden;
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+}
