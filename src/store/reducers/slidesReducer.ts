@@ -2,7 +2,6 @@ import {Action, PresentationActions} from "../actions/actions.ts"
 import {presentation} from "../../const/const.ts"
 import {createHistory} from "../history.ts"
 import {GraphicBlock, Slide, TextBlock} from "../../types/types.ts"
-// @ts-ignore
 import {v4 as uuid} from "uuid"
 import { image, textBlock, circle, triangle, square } from "../../const/const.ts"
 
@@ -25,7 +24,6 @@ const slidesReducer = (state = presentation.slides, action: Action) => {
             return newState
         }
         case PresentationActions.CHANGE_ORDER:
-            //const newState = state
             const removed = state.splice(action.payload.from, 1)
             state.splice(action.payload.to, 0, removed[0])
             history.addHistoryItem(state)

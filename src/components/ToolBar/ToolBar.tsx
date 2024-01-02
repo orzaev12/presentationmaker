@@ -14,8 +14,6 @@ import FormatUnderlinedIcon from '@mui/icons-material/FormatUnderlined';
 import FormatItalicIcon from '@mui/icons-material/FormatItalic';
 import { TextBlock as TTextBlock, GraphicBlock as TGraphicBlock} from "../../types/types";
 import {useAppActions, useAppSelector} from "../../store/types.ts";
-// @ts-ignore
-import block from "../Block/Block.tsx";
 
 function ToolBar()
 {
