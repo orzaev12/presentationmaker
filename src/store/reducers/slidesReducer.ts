@@ -24,10 +24,11 @@ const slidesReducer = (state = presentation.slides, action: Action) => {
             return newState
         }
         case PresentationActions.CHANGE_ORDER:
-            const removed = state.splice(action.payload.from, 1)
-            state.splice(action.payload.to, 0, removed[0])
-            history.addHistoryItem(state)
-            return state
+            const newState = [...state]
+            const removed = newState.splice(action.payload.from, 1)
+            newState.splice(action.payload.to, 0, removed[0])
+            history.addHistoryItem(newState)
+            return newState
         case PresentationActions.CHANGE_BACKGROUND: {
             const newState = state.map(slide => {
                 if (slide.id === action.payload.slide.id) {

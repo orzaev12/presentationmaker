@@ -13,7 +13,7 @@ const currentSlideReducer = (state: number = index, action: Action) => {
             return action.payload.indexOfCurrentSlide
         }
         case PresentationActions.SET_CURRENT_SLIDE: {
-            history.addHistoryItem(action.payload.indexOfNewCurrentSlide)
+            // history.addHistoryItem(action.payload.indexOfNewCurrentSlide)
             return action.payload.indexOfNewCurrentSlide
         }
         default:
