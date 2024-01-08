@@ -1,4 +1,4 @@
-import styles from "./ToolBar.module.css"
+import styles from "./ToolBar.module.css";
 import IconButton from '@mui/material/IconButton';
 import UndoIcon from '@mui/icons-material/Undo';
 import RedoIcon from '@mui/icons-material/Redo';
@@ -30,7 +30,7 @@ function ToolBar()
 
     const addSlide = () => {
         createAddSlideAction(indexOfCurrentSlide)
-        createSetCurrentSlide(indexOfCurrentSlide + 1)
+        //createSetCurrentSlide(indexOfCurrentSlide + 1)
     }
 
     const removeSlide = () => {

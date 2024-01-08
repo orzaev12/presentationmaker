@@ -16,6 +16,20 @@ const currentSlideReducer = (state: number = index, action: Action) => {
             history.addHistoryItem(action.payload.indexOfNewCurrentSlide)
             return action.payload.indexOfNewCurrentSlide
         }
+        case PresentationActions.UNDO: {
+            const prevState = history.undo()
+            if (prevState) {
+                return prevState
+            }
+            return state
+        }
+        case PresentationActions.REDO: {
+            const nextState = history.redo()
+            if (nextState) {
+                return nextState
+            }
+            return state
+        }
         default:
             return state
     }
