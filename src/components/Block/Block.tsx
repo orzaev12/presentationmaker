@@ -1,11 +1,12 @@
-import {TextBlock as TTextBlock, ImageBlock as TImageBlock, GraphicBlock as TGraphicBlock } from "../../types/types";
+import {TextBlock as TTextBlock, ImageBlock as TImageBlock, GraphicBlock as TGraphicBlock} from "../../types/types";
 import styles from "./Block.module.css"
 import TextBlock from "../TextBlock/TextBlock";
 import ImageBlock from "../ImageBlock/ImageBlock";
 import GraphicBlock from "../GraphicBlock/GraphicBlock";
-import { CSSProperties, useEffect, useRef } from "react";
-import { useDragAndDropObject } from "../../hooks/useDndObject";
+import {CSSProperties, useEffect, useRef} from "react";
+import {useDragAndDropObject} from "../../hooks/useDndObject";
 import {useAppActions, useAppSelector} from "../../store/types.ts";
+import classNames from "classnames";
 
 type BlockProps = {
     data: TTextBlock | TImageBlock | TGraphicBlock | any;
@@ -17,21 +18,25 @@ function Block({data, id, isWorkSpace}: BlockProps) {
     const currentSlide = useAppSelector(state => state.slides[state.indexOfCurrentSlide])
     const selectedBlockId = useAppSelector(state => state.slides[state.indexOfCurrentSlide].selectedBlockId)
     const selectedBlock = currentSlide.data?.find((block) => block.id === selectedBlockId)
-    const { createSetSelectedBlockAction, createChangePositionOfBlockAction, createChangeSizeOfBlockAction } = useAppActions()
-    const { registerDndItem } = useDragAndDropObject()
+    const {
+        createSetSelectedBlockAction,
+        createChangePositionOfBlockAction,
+        createChangeSizeOfBlockAction
+    } = useAppActions()
+    const {registerDndItem} = useDragAndDropObject()
     const ref = useRef<HTMLDivElement>(null)
+    const refPoint = useRef<HTMLDivElement>(null)
+    const refBlock = useRef<HTMLDivElement>(null)
     const position: CSSProperties = {
         left: data.position.x,
         top: data.position.y,
     }
 
-    if (isWorkSpace)
-    {   //выделение блока
+    if (isWorkSpace) {   //выделение блока
         useEffect(() => {
             const block: HTMLDivElement = ref.current!
             const handleClick = (event: MouseEvent) => {
-                if (block && block?.contains(event.target as Node))
-                {
+                if (block && block?.contains(event.target as Node)) {
                     block.style.outline = "3px solid #1A73E8"
                     block.style.outlineOffset = "1px"
                     createSetSelectedBlockAction(currentSlide.id, id)
@@ -47,10 +52,10 @@ function Block({data, id, isWorkSpace}: BlockProps) {
         }, [])
         // DnD and resize objects
         useEffect(() => {
-            const { onDragStart } = registerDndItem({ elementRef: ref })
+            const {onDragStart} = registerDndItem({elementRef: refBlock})
             const onMouseDown = (event: MouseEvent) => {
-                    onDragStart(
-                        {
+                onDragStart(
+                    {
                         onDrag: (dragEvent) => {
                             dragEvent.preventDefault()
                             ref.current!.style.top = `${dragEvent.clientY + (data.position.y - event.clientY)}px`
@@ -74,19 +79,65 @@ function Block({data, id, isWorkSpace}: BlockProps) {
                     createChangeSizeOfBlockAction(currentSlide.id, id, newSize)
                 }
             }
-            ref.current!.addEventListener('mousedown', onMouseDown)
-            ref.current!.addEventListener('wheel', onMouseWheel, { passive: true})
+            refBlock.current!.addEventListener('mousedown', onMouseDown)
+            refBlock.current!.addEventListener('wheel', onMouseWheel, {passive: true})
             return () => {
-                ref.current?.removeEventListener('mousedown', onMouseDown)
-                ref.current?.removeEventListener('wheel', onMouseWheel)
+                refBlock.current?.removeEventListener('mousedown', onMouseDown)
+                refBlock.current?.removeEventListener('wheel', onMouseWheel)
+            }
+        }, [selectedBlock])
+
+
+        useEffect(() => {
+            const {onDragStart} = registerDndItem({elementRef: refPoint})
+            const onMouseDown = (event: MouseEvent) => {
+                onDragStart(
+                    {
+                        onDrag: (dragEvent) => {
+                            dragEvent.preventDefault()
+                            if (data.data == "triangle") {
+                                // @ts-ignore
+                                ref.current!.firstChild!.firstChild!.style.borderLeft = `${(dragEvent.clientX + (data.size.width - event.clientX)) / 2}px solid transparent`
+                                // @ts-ignore
+                                ref.current!.firstChild!.firstChild!.style.borderRight = `${(dragEvent.clientX + (data.size.width - event.clientX)) / 2}px solid transparent`
+                                // @ts-ignore
+                                ref.current!.firstChild!.firstChild!.style.borderBottom = `${dragEvent.clientY + (data.size.height - event.clientY)}px solid ${data.background}`
+                            } else {
+                                // @ts-ignore
+                                ref.current!.firstChild!.firstChild!.style.height = `${dragEvent.clientY + (data.size.height - event.clientY)}px`
+                                // @ts-ignore
+                                ref.current!.firstChild!.firstChild!.style.width = `${dragEvent.clientX + (data.size.width - event.clientX)}px`
+                                if (data.data == 'circle') {
+                                    // @ts-ignore
+                                    ref.current!.firstChild!.firstChild!.style.borderRadius = `${dragEvent.clientX + (data.size.width - event.clientX)}px / ${dragEvent.clientY + (data.size.height - event.clientY)}px `
+                                }
+                            }
+                        },
+                        onDrop: (dropEvent) => {
+                            const size = {
+                                width: dropEvent.clientX + (data.size.width - event.clientX),
+                                height: dropEvent.clientY + (data.size.height - event.clientY),
+                            }
+                            createChangeSizeOfBlockAction(currentSlide.id, id, size)
+                        },
+                    })
+            }
+            refPoint.current!.addEventListener('mousedown', onMouseDown)
+            return () => {
+                refPoint.current?.removeEventListener('mousedown', onMouseDown)
             }
         }, [selectedBlock])
     }
     return (
-        <div className={styles.block} id={id} style={position} ref={ref}>
-            {data.type === "text" && <TextBlock object={data} id={id}/>}
-            {data.type === "image" && <ImageBlock object={data}/>}
-            {data.type === "graphic" && <GraphicBlock data={data}/>}
+        <div className={styles.block} style={position} id={id} ref={ref}>
+            <div ref={refBlock}>
+                {data.type === "text" && <TextBlock object={data} id={id}/>}
+                {data.type === "image" && <ImageBlock object={data}/>}
+                {data.type === "graphic" && <GraphicBlock data={data}/>}
+            </div>
+            <div
+                className={isWorkSpace ? id === selectedBlockId ? classNames(styles.point) : classNames(styles.point, styles.hide) : classNames(styles.point, styles.hide)}
+                ref={refPoint}></div>
         </div>
     )
 }

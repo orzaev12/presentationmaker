@@ -14,7 +14,7 @@ function GraphicBlock({data}: GraphicBlockProps) {
             width: data.size.width,
             height: data.size.height,
             backgroundColor: data.background,
-            borderRadius: data.size.width / 2,
+            borderRadius: `${data.size.width / 2}px / ${data.size.height / 2}px`,
         }
     }
     if (data.data == "square")
@@ -31,8 +31,8 @@ function GraphicBlock({data}: GraphicBlockProps) {
         styleList = {
             width: 0,
             height: 0,
-            borderLeft: `${data.size.height}px solid transparent`,
-            borderRight: `${data.size.height}px solid transparent`,
+            borderLeft: `${data.size.width / 2}px solid transparent`,
+            borderRight: `${data.size.width / 2}px solid transparent`,
             borderBottom: `${data.size.height}px solid ${data.background}`,
         }
     }
