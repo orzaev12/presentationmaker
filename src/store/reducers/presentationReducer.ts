@@ -38,7 +38,7 @@ const presentationReducer = (state: Presentation = presentation, action: Action)
             return newState
         }
         case PresentationActions.CHANGE_ORDER:
-            const newState = JSON.parse(JSON.stringify(state))
+            const newState: Presentation = JSON.parse(JSON.stringify(state))
             const removed = newState.slides.splice(action.payload.from, 1)
             newState.slides.splice(action.payload.to, 0, removed[0])
             history.addHistoryItem(newState)
