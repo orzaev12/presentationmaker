@@ -1,11 +1,12 @@
 import {TextBlock as TTextBlock, ImageBlock as TImageBlock, GraphicBlock as TGraphicBlock} from "../../types/types";
-import styles from "./Block.module.css"
-import TextBlock from "../TextBlock/TextBlock";
-import ImageBlock from "../ImageBlock/ImageBlock";
+import {useAppActions, useAppSelector} from "../../store/types.ts";
+import {useDragAndDropObject} from "../../hooks/useDndObject";
+import {useResizeObject} from "../../hooks/useResizeObject";
 import GraphicBlock from "../GraphicBlock/GraphicBlock";
 import {CSSProperties, useEffect, useRef} from "react";
-import {useDragAndDropObject} from "../../hooks/useDndObject";
-import {useAppActions, useAppSelector} from "../../store/types.ts";
+import ImageBlock from "../ImageBlock/ImageBlock";
+import TextBlock from "../TextBlock/TextBlock";
+import styles from "./Block.module.css"
 import classNames from "classnames";
 
 type BlockProps = {
@@ -24,6 +25,7 @@ function Block({data, id, isWorkSpace}: BlockProps) {
         createChangeSizeOfBlockAction
     } = useAppActions()
     const {registerDndItem} = useDragAndDropObject()
+    const {registerResizeItem} = useResizeObject()
     const ref = useRef<HTMLDivElement>(null)
     const refPoint = useRef<HTMLDivElement>(null)
     const refBlock = useRef<HTMLDivElement>(null)
@@ -90,9 +92,9 @@ function Block({data, id, isWorkSpace}: BlockProps) {
 
 
         useEffect(() => {
-            const {onDragStart} = registerDndItem({elementRef: refPoint})
+            const {onResizeStart} = registerResizeItem({elementRef: refPoint})
             const onMouseDown = (event: MouseEvent) => {
-                onDragStart(
+                onResizeStart(
                     {
                         onDrag: (dragEvent) => {
                             dragEvent.preventDefault()
