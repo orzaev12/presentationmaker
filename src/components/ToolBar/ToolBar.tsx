@@ -166,7 +166,7 @@ function ToolBar()
                             <ColorLensIcon className={styles.button} sx={{ fontSize: 17}}/>
                         </label>
                         <input
-                            className={styles.none}
+                            className={styles.colorPicker}
                             type={"color"}
                             id={"graphicColor"}
                             value={selectedBlock.type === 'graphic' ? (selectedBlock as TGraphicBlock).background : (selectedBlock as TTextBlock).color}
