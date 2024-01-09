@@ -6,6 +6,7 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import TitleIcon from '@mui/icons-material/Title';
 import ImageIcon from '@mui/icons-material/Image';
+import ColorLensIcon from '@mui/icons-material/ColorLens';
 import CircleIcon from '@mui/icons-material/Circle';
 import SquareIcon from '@mui/icons-material/Square';
 import CategoryIcon from '@mui/icons-material/Category';
@@ -160,23 +161,18 @@ function ToolBar()
             }
             {(selectedBlock?.type === 'graphic' || selectedBlock?.type === 'text') &&
                 <div className={styles.flex}>
-                    <span className={styles.text}>{selectedBlock?.type === 'graphic' ? 'Цвет фигуры' : 'Цвет шрифта'}</span>
-                    <select
-                        className={styles.select}
-                        name="graphicColors"
-                        value={selectedBlock.type === 'graphic' ? (selectedBlock as TGraphicBlock).background : (selectedBlock as TTextBlock).color}
-                        onChange={(event) => changeColorOfBlock(event.target.value)}
-                    >
-                        <option value="#FFFFFF">Белый</option>
-                        <option value="#000000">Черный</option>
-                        <option value="#FF0000">Красный</option>
-                        <option value="#008000">Зеленый</option>
-                        <option value="#0000FF">Синий</option>
-                        <option value="#8B00FF">Фиолетовый</option>
-                        <option value="#FFFF00">Желтый</option>
-                        <option value="#FFA500">Оранжевый</option>
-                        <option value="#808080">Серый</option>
-                    </select>
+                    <IconButton>
+                        <label htmlFor={"graphicColor"}>
+                            <ColorLensIcon className={styles.button} sx={{ fontSize: 17}}/>
+                        </label>
+                        <input
+                            className={styles.none}
+                            type={"color"}
+                            id={"graphicColor"}
+                            value={selectedBlock.type === 'graphic' ? (selectedBlock as TGraphicBlock).background : (selectedBlock as TTextBlock).color}
+                            onChange={(event) => changeColorOfBlock(event.target.value)}
+                        />
+                    </IconButton>
                 </div>
             }
             {(selectedBlock?.type ) &&
