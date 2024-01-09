@@ -7,6 +7,7 @@ const index = presentation.indexOfCurrentSlide
 const history = createHistory<number>(index)
 
 const currentSlideReducer = (state: number = index, action: Action) => {
+    console.log(state)
     switch (action.type) {
         case PresentationActions.ADD_PRESENTATION: {
             history.addHistoryItem(action.payload.indexOfCurrentSlide)
@@ -18,7 +19,7 @@ const currentSlideReducer = (state: number = index, action: Action) => {
         }
         case PresentationActions.UNDO: {
             const prevState = history.undo()
-            if (prevState) {
+            if (prevState || prevState === 0) {
                 return prevState
             }
             return state
