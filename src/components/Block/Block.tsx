@@ -95,21 +95,20 @@ function Block({data, id, isWorkSpace}: BlockProps) {
                     {
                         onDrag: (dragEvent) => {
                             dragEvent.preventDefault()
+                            // @ts-ignore
+                            let blockStyleList = ref.current!.firstChild!.firstChild!.style;
+                            let currentWidth = dragEvent.clientX + (data.size.width - event.clientX)
+                            let currentHeight = dragEvent.clientY + (data.size.height - event.clientY)
+
                             if (data.data == "triangle") {
-                                // @ts-ignore
-                                ref.current!.firstChild!.firstChild!.style.borderLeft = `${(dragEvent.clientX + (data.size.width - event.clientX)) / 2}px solid transparent`
-                                // @ts-ignore
-                                ref.current!.firstChild!.firstChild!.style.borderRight = `${(dragEvent.clientX + (data.size.width - event.clientX)) / 2}px solid transparent`
-                                // @ts-ignore
-                                ref.current!.firstChild!.firstChild!.style.borderBottom = `${dragEvent.clientY + (data.size.height - event.clientY)}px solid ${data.background}`
+                                blockStyleList.borderLeft = `${currentWidth / 2}px solid transparent`
+                                blockStyleList.borderRight = `${currentWidth / 2}px solid transparent`
+                                blockStyleList.borderBottom = `${currentHeight}px solid ${data.background}`
                             } else {
-                                // @ts-ignore
-                                ref.current!.firstChild!.firstChild!.style.height = `${dragEvent.clientY + (data.size.height - event.clientY)}px`
-                                // @ts-ignore
-                                ref.current!.firstChild!.firstChild!.style.width = `${dragEvent.clientX + (data.size.width - event.clientX)}px`
+                                blockStyleList.height = `${currentHeight}px`
+                                blockStyleList.width = `${currentWidth}px`
                                 if (data.data == 'circle') {
-                                    // @ts-ignore
-                                    ref.current!.firstChild!.firstChild!.style.borderRadius = `${dragEvent.clientX + (data.size.width - event.clientX)}px / ${dragEvent.clientY + (data.size.height - event.clientY)}px `
+                                    blockStyleList.borderRadius = `${currentWidth}px / ${currentHeight}px `
                                 }
                             }
                         },
@@ -136,7 +135,7 @@ function Block({data, id, isWorkSpace}: BlockProps) {
                 {data.type === "graphic" && <GraphicBlock data={data}/>}
             </div>
             <div
-                className={isWorkSpace ? id === selectedBlockId ? classNames(styles.point) : classNames(styles.point, styles.hide) : classNames(styles.point, styles.hide)}
+                className={isWorkSpace && id === selectedBlockId && data.type != "text" ? classNames(styles.point) : classNames(styles.point, styles.hide)}
                 ref={refPoint}></div>
         </div>
     )
