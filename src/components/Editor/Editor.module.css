@@ -12,16 +12,10 @@
     margin: 9px 45px;
 }
 
-.workPlace
+.workspace
 {
     overflow: hidden;
     display: flex;
-    width: calc(100vw - 320px);
-    align-items: center;
-    justify-content: center;
-}
-
-.previewWindow {
     width: calc(100vw - 320px);
     align-items: center;
     justify-content: center;
