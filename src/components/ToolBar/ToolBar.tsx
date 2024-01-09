@@ -6,7 +6,8 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import TitleIcon from '@mui/icons-material/Title';
 import ImageIcon from '@mui/icons-material/Image';
-import ColorLensIcon from '@mui/icons-material/ColorLens';
+import FormatColorFillIcon from '@mui/icons-material/FormatColorFill';
+import ColorizeIcon from '@mui/icons-material/Colorize';
 import CircleIcon from '@mui/icons-material/Circle';
 import SquareIcon from '@mui/icons-material/Square';
 import CategoryIcon from '@mui/icons-material/Category';
@@ -59,15 +60,13 @@ function ToolBar()
     }
 
     const addImageBlock = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (!event.target.files)
-        {
+        if (!event.target.files) {
             return
         }
         const file = event.target.files[0];
         const reader = new FileReader();
         reader.onload = (event) => {
-            if (!event.target?.result)
-            {
+            if (!event.target?.result) {
                 return
             }
             try {
@@ -119,23 +118,20 @@ function ToolBar()
                 ? <IconButton disabled><DeleteIcon className={styles.button} sx={{ fontSize: 17}}/></IconButton>
                 : <IconButton onClick={() => removeSlide()}><DeleteIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
             }
-            <span className={styles.text}>Фон</span>
-            <select
-                className={styles.select}
-                name="colors"
-                value={currentSlide.background}
-                onChange={(event) => changeColorOfSlide(event.target.value)}
-            >
-                <option value="#FFFFFF">Белый</option>
-                <option value="#000000">Черный</option>
-                <option value="#FF0000">Красный</option>
-                <option value="#008000">Зеленый</option>
-                <option value="#0000FF">Синий</option>
-                <option value="#8B00FF">Фиолетовый</option>
-                <option value="#FFFF00">Желтый</option>
-                <option value="#FFA500">Оранжевый</option>
-                <option value="#808080">Серый</option>
-            </select>
+            <div className={styles.flex}>
+                <IconButton>
+                    <label htmlFor={"slideColor"}>
+                        <FormatColorFillIcon className={styles.button} sx={{ fontSize: 17}}/>
+                    </label>
+                    <input
+                        className={styles.colorPicker}
+                        type={"color"}
+                        id={"slideColor"}
+                        value={currentSlide.background}
+                        onChange={(event) => changeColorOfSlide(event.target.value)}
+                    />
+                </IconButton>
+            </div>
             <hr className={styles.separate} />
             {selectedBlock?.type === 'text' &&
                 <div className={styles.flex}>
@@ -163,7 +159,7 @@ function ToolBar()
                 <div className={styles.flex}>
                     <IconButton>
                         <label htmlFor={"graphicColor"}>
-                            <ColorLensIcon className={styles.button} sx={{ fontSize: 17}}/>
+                            <ColorizeIcon className={styles.button} sx={{ fontSize: 17}}/>
                         </label>
                         <input
                             className={styles.colorPicker}
