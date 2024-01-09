@@ -11,6 +11,8 @@ function Header() {
     const { createSetSelectedBlockAction } = useAppActions()
     const ref = useRef<HTMLInputElement>(null)
     const previewWindow = document.getElementById("preview-window")
+    const workSpace = (previewWindow != null) ? previewWindow!.children[0] as HTMLElement : null
+
 
     const { createChangeTitleAction } = useAppActions()
 
@@ -37,8 +39,10 @@ function Header() {
         const onFullScreen = () => {
             if (document.fullscreenElement)
             {
+                workSpace!.style.transform = `scale(${window.innerWidth / 1660})`
                 previewWindow!.style.pointerEvents = 'none'
             } else {
+                workSpace!.style.transform = ''
                 previewWindow!.style.pointerEvents = 'auto'
             }
         }
