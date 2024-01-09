@@ -10,9 +10,10 @@ function Editor() {
         <div className={styles.editor}>
             <SlideBar />
             <div className={styles.workPlace}>
-                <Slide className={styles.slide} slide={currentSlide} isWorkSpace={true}/>
+                <div className={styles.previewWindow} id="preview-window">
+                    <Slide className={styles.slide} slide={currentSlide} isWorkSpace={true}/>
+                </div>
             </div>
-
         </div>
     );
 }

@@ -7,7 +7,10 @@ import {useAppActions, useAppSelector} from "../../store/types.ts";
 
 function Header() {
     const title = useAppSelector(state => state.presentation.title)
+    const currentSlide = useAppSelector(state => state.presentation.slides[state.presentation.indexOfCurrentSlide])
+    const { createSetSelectedBlockAction } = useAppActions()
     const ref = useRef<HTMLInputElement>(null)
+    const previewWindow = document.getElementById("preview-window")
 
     const { createChangeTitleAction } = useAppActions()
 
@@ -19,6 +22,32 @@ function Header() {
         elem.addEventListener('keydown', onKeyDown)
         return () => elem.removeEventListener('keydown', onKeyDown)
     }, [])
+
+    const previewMode = () => {
+        const block = document.getElementById(currentSlide.selectedBlockId!)
+        console.log(block)
+        if (block) {
+            block!.style.outline = "none"
+        }
+        createSetSelectedBlockAction(currentSlide.id, null)
+        previewWindow!.requestFullscreen()
+    }
+
+    useEffect(() => {
+        const onFullScreen = () => {
+            if (document.fullscreenElement)
+            {
+                previewWindow!.style.pointerEvents = 'none'
+            } else {
+                previewWindow!.style.pointerEvents = 'auto'
+            }
+        }
+        document.addEventListener('fullscreenchange', onFullScreen)
+        return (() => {
+            document.removeEventListener('fullscreenchange', onFullScreen)
+        })
+    })
+
 
     return (
         <div className={styles.header}>
@@ -35,6 +64,7 @@ function Header() {
                     />
                     <MenuBar />
                 </div>
+                <button className={styles.button} onClick={() => previewMode()}>Просмотр</button>
             </div>
             <ToolBar />
         </div>

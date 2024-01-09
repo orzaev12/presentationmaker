@@ -50,6 +50,7 @@ function Block({data, id, isWorkSpace}: BlockProps) {
                 ref.current?.parentElement?.removeEventListener("mousedown", handleClick)
             }
         }, [])
+
         // DnD and resize objects
         useEffect(() => {
             const {onDragStart} = registerDndItem({elementRef: refBlock})
@@ -129,7 +130,7 @@ function Block({data, id, isWorkSpace}: BlockProps) {
         }, [selectedBlock])
     }
     return (
-        <div className={styles.block} style={position} id={id} ref={ref}>
+        <div className={styles.block} style={position} id={isWorkSpace ? id : undefined} ref={ref}>
             <div ref={refBlock}>
                 {data.type === "text" && <TextBlock object={data} id={id}/>}
                 {data.type === "image" && <ImageBlock object={data}/>}
@@ -137,7 +138,8 @@ function Block({data, id, isWorkSpace}: BlockProps) {
             </div>
             <div
                 className={isWorkSpace ? id === selectedBlockId ? classNames(styles.point) : classNames(styles.point, styles.hide) : classNames(styles.point, styles.hide)}
-                ref={refPoint}></div>
+                ref={refPoint}>
+            </div>
         </div>
     )
 }
