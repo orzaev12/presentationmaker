@@ -6,7 +6,7 @@ import classNames from "classnames";
 import {useAppActions, useAppSelector} from "../../store/types.ts";
 
 function Header() {
-    const title = useAppSelector(state => state.title)
+    const title = useAppSelector(state => state.presentation.title)
     const ref = useRef<HTMLInputElement>(null)
 
     const { createChangeTitleAction } = useAppActions()

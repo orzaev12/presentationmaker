@@ -1,12 +1,8 @@
-import { slidesReducer } from "./slidesReducer.ts";
-import { combineReducers } from 'redux'
-import { titleReducer } from "./titleReducer.ts";
-import { currentSlideReducer } from "./currentSlideReducer.ts";
+import { combineReducers } from "redux";
+import { presentationReducer } from "./presentationReducer.ts";
 
-export const rootReducer =  combineReducers({
-    title: titleReducer,
-    slides: slidesReducer,
-    indexOfCurrentSlide: currentSlideReducer,
+export const rootReducer = combineReducers({
+    presentation: presentationReducer,
 })
 
 export type RootState = ReturnType<typeof rootReducer>

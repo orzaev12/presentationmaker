@@ -5,8 +5,8 @@ import { useDragAndDropSlide } from "../../hooks/useDndSlide.ts";
 import {useAppActions, useAppSelector} from "../../store/types.ts";
 
 function SlideBar() {
-    const slides = useAppSelector(state => state.slides)
-    const indexOfCurrentSlide = useAppSelector(state => state.indexOfCurrentSlide)
+    const slides = useAppSelector(state => state.presentation.slides)
+    const indexOfCurrentSlide = useAppSelector(state => state.presentation.indexOfCurrentSlide)
 
     const { createSetCurrentSlide, createChangeOrderAction } = useAppActions()
 

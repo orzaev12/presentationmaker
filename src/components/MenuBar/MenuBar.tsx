@@ -5,8 +5,8 @@ import html2PDF from 'jspdf-html2canvas';
 
 function MenuBar()
 {
-    const title = useAppSelector(state => state.title)
-    const slides = useAppSelector(state => state.slides)
+    const title = useAppSelector(state => state.presentation.title)
+    const slides = useAppSelector(state => state.presentation.slides)
     const { createAddPresentationAction } = useAppActions()
 
     function getURL(): string {

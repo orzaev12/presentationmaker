@@ -15,8 +15,8 @@ type BlockProps = {
 }
 
 function Block({data, id, isWorkSpace}: BlockProps) {
-    const currentSlide = useAppSelector(state => state.slides[state.indexOfCurrentSlide])
-    const selectedBlockId = useAppSelector(state => state.slides[state.indexOfCurrentSlide].selectedBlockId)
+    const currentSlide = useAppSelector(state => state.presentation.slides[state.presentation.indexOfCurrentSlide])
+    const selectedBlockId = useAppSelector(state => state.presentation.slides[state.presentation.indexOfCurrentSlide].selectedBlockId)
     const selectedBlock = currentSlide.data?.find((block) => block.id === selectedBlockId)
     const {
         createSetSelectedBlockAction,
