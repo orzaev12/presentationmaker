@@ -25,7 +25,6 @@ function Header() {
 
     const previewMode = () => {
         const block = document.getElementById(currentSlide.selectedBlockId!)
-        console.log(block)
         if (block) {
             block!.style.outline = "none"
         }
