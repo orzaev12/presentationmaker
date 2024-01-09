@@ -15,8 +15,8 @@ type BlockProps = {
 }
 
 function Block({data, id, isWorkSpace}: BlockProps) {
-    const currentSlide = useAppSelector(state => state.slides[state.indexOfCurrentSlide])
-    const selectedBlockId = useAppSelector(state => state.slides[state.indexOfCurrentSlide].selectedBlockId)
+    const currentSlide = useAppSelector(state => state.presentation.slides[state.presentation.indexOfCurrentSlide])
+    const selectedBlockId = useAppSelector(state => state.presentation.slides[state.presentation.indexOfCurrentSlide].selectedBlockId)
     const selectedBlock = currentSlide.data?.find((block) => block.id === selectedBlockId)
     const {
         createSetSelectedBlockAction,
@@ -50,6 +50,7 @@ function Block({data, id, isWorkSpace}: BlockProps) {
                 ref.current?.parentElement?.removeEventListener("mousedown", handleClick)
             }
         }, [])
+
         // DnD and resize objects
         useEffect(() => {
             const {onDragStart} = registerDndItem({elementRef: refBlock})
@@ -128,7 +129,7 @@ function Block({data, id, isWorkSpace}: BlockProps) {
         }, [selectedBlock])
     }
     return (
-        <div className={styles.block} style={position} id={id} ref={ref}>
+        <div className={styles.block} style={position} id={isWorkSpace ? id : undefined} ref={ref}>
             <div ref={refBlock}>
                 {data.type === "text" && <TextBlock object={data} id={id}/>}
                 {data.type === "image" && <ImageBlock object={data}/>}

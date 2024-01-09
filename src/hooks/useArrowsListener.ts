@@ -2,8 +2,8 @@ import {useEffect} from 'react'
 import {useAppActions, useAppSelector} from "../store/types.ts";
 
 function useArrowsListeners() {
-    const slides = useAppSelector(state => state.slides)
-    const indexOfCurrentSlide = useAppSelector(state => state.indexOfCurrentSlide)
+    const slides = useAppSelector(state => state.presentation.slides)
+    const indexOfCurrentSlide = useAppSelector(state => state.presentation.indexOfCurrentSlide)
     const { createSetCurrentSlide } = useAppActions()
 
 	useEffect(() => {

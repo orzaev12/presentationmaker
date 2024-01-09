@@ -17,8 +17,8 @@ function TextBlock({object, id}: TextBlockProps) {
         fontStyle: object.italic ? "italic" : "",
         fontWeight: object.bold ? "bold" : "",
     }
-    const currentSlide = useAppSelector(state => state.slides[state.indexOfCurrentSlide])
-    const selectedBlockId = useAppSelector(state => state.slides[state.indexOfCurrentSlide].selectedBlockId)
+    const currentSlide = useAppSelector(state => state.presentation.slides[state.presentation.indexOfCurrentSlide])
+    const selectedBlockId = useAppSelector(state => state.presentation.slides[state.presentation.indexOfCurrentSlide].selectedBlockId)
     const selectedBlock = currentSlide.data?.find((block) => block.id === selectedBlockId)
     const { createAddCharacterAction, createDeleteCharacterAction } = useAppActions()
     const ref = useRef<HTMLDivElement>(null)

@@ -87,7 +87,7 @@ const slide: Slide = {
 }
 
 const presentation: Presentation = {
-    name: '',
+    title: 'Презентация без названия',
     indexOfCurrentSlide: 0,
     slides: [slide],
 }

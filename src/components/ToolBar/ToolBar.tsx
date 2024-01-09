@@ -22,15 +22,14 @@ function ToolBar()
         createSetUnderlineTextAction, createSetBoldTextAction, createSetItalicTextAction, createChangeFontFamilyOfTextAction,
         createChangeFontSizeOfTextAction, createChangeColorOfBlockAction, createDeleteBlockAction,
     } = useAppActions()
-    const slides = useAppSelector(state => state.slides)
-    const indexOfCurrentSlide = useAppSelector(state => state.indexOfCurrentSlide)
-    const currentSlide = useAppSelector(state => state.slides[indexOfCurrentSlide])
-    const selectedBlockId = useAppSelector(state => state.slides[indexOfCurrentSlide].selectedBlockId)
+    const slides = useAppSelector(state => state.presentation.slides)
+    const indexOfCurrentSlide = useAppSelector(state => state.presentation.indexOfCurrentSlide)
+    const currentSlide = useAppSelector(state => state.presentation.slides[indexOfCurrentSlide])
+    const selectedBlockId = useAppSelector(state => state.presentation.slides[indexOfCurrentSlide].selectedBlockId)
     const selectedBlock = currentSlide.data?.find((block) => block.id === selectedBlockId)
 
     const addSlide = () => {
         createAddSlideAction(indexOfCurrentSlide)
-        //createSetCurrentSlide(indexOfCurrentSlide + 1)
     }
 
     const removeSlide = () => {
