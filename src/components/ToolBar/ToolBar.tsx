@@ -189,9 +189,14 @@ function ToolBar()
                     onChange={(event) => addImageBlock(event)}
                 />
             </IconButton>
-            <IconButton onClick={() => addGraphicBlock("circle")}><CircleIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
-            <IconButton onClick={() => addGraphicBlock("square")}><SquareIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
-            <IconButton onClick={() => addGraphicBlock("triangle")}><CategoryIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
+            <div className={styles.buttons}>
+                <span className={styles.iks}><IconButton><CategoryIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton></span>
+                <div className={styles.box}>
+                    <IconButton onClick={() => addGraphicBlock("circle")}><CircleIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
+                    <IconButton onClick={() => addGraphicBlock("square")}><SquareIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
+                    <IconButton onClick={() => addGraphicBlock("triangle")}><CategoryIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
+                </div>
+            </div>
         </div>
     );
 }

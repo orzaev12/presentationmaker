@@ -1,5 +1,4 @@
-.toolbar
-{
+.toolbar {
     display: flex;
     background-color: #edf2fa;
     border: none;
@@ -9,19 +8,17 @@
     max-height: 40px;
 }
 
-.button
-{
+.button {
     margin: 3px 4px;
 }
 
-.text
-{
+.text {
     padding: 6px 15px;
     border: none;
     background: transparent;
     font: 14px Google Sans, Roboto, sans-serif;
     line-height: 28px;
-    color: rgba(0,0,0, 70%);
+    color: rgba(0, 0, 0, 70%);
 }
 
 .select {
@@ -30,8 +27,7 @@
     border-radius: 4px;
 }
 
-.separate
-{
+.separate {
     margin: 10px 0;
     height: 20px;
 }
@@ -49,4 +45,38 @@
 
 .none {
     display: none;
+}
+
+.buttons {
+    display: block;
+    border-radius: 50%;
+    color: white;
+    position: relative;
+    cursor: pointer;
+}
+
+.box {
+    display: none;
+    background-color: #edf2fa;
+    border-radius: 10px;
+    color: #444;
+    border: 1px solid #ccc;
+    position: absolute;
+    z-index: 2;
+    top: 38px;
+}
+
+.buttons:hover .box {
+    display: block;
+}
+
+.iks {
+    display: inline-block;
+    font-size: 18px;
+    font-weight: bold;
+    transition: transform .8s ease-in-out;
+}
+
+.iks:hover {
+    transform: rotateZ(180deg);
 }
