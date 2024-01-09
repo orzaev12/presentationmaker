@@ -40,10 +40,12 @@ function Header() {
             if (document.fullscreenElement)
             {
                 workSpace!.style.transform = `scale(${window.innerWidth / 1660})`
+                workSpace!.style.overflow = `hidden`
                 previewWindow!.style.pointerEvents = 'none'
             } else {
                 workSpace!.style.transform = ''
                 previewWindow!.style.pointerEvents = 'auto'
+                workSpace!.style.overflow = ``
             }
         }
         document.addEventListener('fullscreenchange', onFullScreen)
