@@ -116,9 +116,11 @@ function Block({data, id, isWorkSpace}: BlockProps) {
                             }
                         },
                         onDrop: (dropEvent) => {
+                            let newWidth = dropEvent.clientX + (data.size.width - event.clientX);
+                            let newHeight = dropEvent.clientY + (data.size.height - event.clientY);
                             const size = {
-                                width: dropEvent.clientX + (data.size.width - event.clientX),
-                                height: dropEvent.clientY + (data.size.height - event.clientY),
+                                width: (newWidth > 3) ? newWidth : 3,
+                                height: (newHeight > 3) ? newHeight : 3,
                             }
                             createChangeSizeOfBlockAction(currentSlide.id, id, size)
                         },
