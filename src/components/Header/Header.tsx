@@ -7,12 +7,7 @@ import {useAppActions, useAppSelector} from "../../store/types.ts";
 
 function Header() {
     const title = useAppSelector(state => state.presentation.title)
-    const currentSlide = useAppSelector(state => state.presentation.slides[state.presentation.indexOfCurrentSlide])
-    const { createSetSelectedBlockAction } = useAppActions()
     const ref = useRef<HTMLInputElement>(null)
-    const previewWindow = document.getElementById("preview-window")
-    const workSpace = (previewWindow != null) ? previewWindow!.children[0] as HTMLElement : null
-
 
     const { createChangeTitleAction } = useAppActions()
 
@@ -23,37 +18,7 @@ function Header() {
         const elem = ref.current!
         elem.addEventListener('keydown', onKeyDown)
         return () => elem.removeEventListener('keydown', onKeyDown)
-    }, [])
-
-    const previewMode = () => {
-        const block = document.getElementById(currentSlide.selectedBlockId!)
-        console.log(block)
-        if (block) {
-            block!.style.outline = "none"
-        }
-        createSetSelectedBlockAction(currentSlide.id, null)
-        previewWindow!.requestFullscreen()
-    }
-
-    useEffect(() => {
-        const onFullScreen = () => {
-            if (document.fullscreenElement)
-            {
-                workSpace!.style.transform = `scale(${window.innerWidth / 1660})`
-                workSpace!.style.overflow = `hidden`
-                previewWindow!.style.pointerEvents = 'none'
-            } else {
-                workSpace!.style.transform = ''
-                previewWindow!.style.pointerEvents = 'auto'
-                workSpace!.style.overflow = ``
-            }
-        }
-        document.addEventListener('fullscreenchange', onFullScreen)
-        return (() => {
-            document.removeEventListener('fullscreenchange', onFullScreen)
-        })
-    })
-
+    }, [title])
 
     return (
         <div className={styles.header}>
@@ -70,7 +35,6 @@ function Header() {
                     />
                     <MenuBar />
                 </div>
-                <button className={styles.button} onClick={() => previewMode()}>Просмотр</button>
             </div>
             <ToolBar />
         </div>
