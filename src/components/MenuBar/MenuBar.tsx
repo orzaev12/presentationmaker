@@ -1,9 +1,9 @@
 import styles from "./MenuBar.module.css"
+import classNames from "classnames";
 import {useAppActions, useAppSelector} from "../../store/types.ts";
 import {Presentation} from "../../types/types.ts";
 import html2PDF from 'jspdf-html2canvas';
 import {useEffect} from "react";
-import jsPDF from "jspdf";
 
 function MenuBar()
 {
@@ -18,7 +18,7 @@ function MenuBar()
         const presentation: Presentation = {
             title: title,
             slides: slides,
-            indexOfCurrentSlide: slides.length - 1
+            indexOfCurrentSlide: 0
         }
         const presentJson = JSON.stringify(presentation)
         const type = "application/json"
@@ -106,10 +106,10 @@ function MenuBar()
     return (
         <div className="menu">
             <button className={styles.button}><label className={styles.text} htmlFor="file_uploads">Загрузить</label></button>
-            <button className={styles.button}><a className={styles.text} href={getURL()} download={title}>Сохранить JSON</a></button>
+            <button className={styles.button} onClick={() => createSetSelectedBlockAction(currentSlide.id, null)}><a className={styles.text} href={getURL()} download={title}>Сохранить JSON</a></button>
             <button className={styles.button} onClick={() => getPdf()}><a className={styles.text}>Сохранить PDF</a></button>
             <input className={styles.input} id="file_uploads" type="file" accept="application/json" onChange={(event) => loadFile(event)}></input>
-            <button className={styles.button} onClick={() => previewMode()}>Просмотр</button>
+            <button className={classNames(styles.button, styles.text)} onClick={() => previewMode()}>Просмотр</button>
         </div>
     )
 }

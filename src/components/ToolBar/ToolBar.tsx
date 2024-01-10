@@ -153,7 +153,7 @@ function ToolBar()
                         <option value="Times New Roman">Times New Roman</option>
                     </select>
                     <span className={styles.text}>Размер</span>
-                    <input name={'size'} className={styles.input} type="number" value={(selectedBlock as TTextBlock).fontSize} onChange={(event) => changeFontSizeOfText(event.target.value)} />
+                    <input name='size' className={styles.input} type="number" value={(selectedBlock as TTextBlock).fontSize} onChange={(event) => changeFontSizeOfText(event.target.value)} />
                 </div>
             }
             {(selectedBlock?.type === 'graphic' || selectedBlock?.type === 'text') &&

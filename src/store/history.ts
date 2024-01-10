@@ -2,6 +2,7 @@ type HistoryOperations<T> = {
     addHistoryItem: (item: T) => void,
     undo: () => T | null,
     redo: () => T | null,
+    clear: () => void,
 }
 
 export function createHistory<T>(initHistoryAction: T): HistoryOperations<T> {
@@ -41,6 +42,10 @@ export function createHistory<T>(initHistoryAction: T): HistoryOperations<T> {
             ++nextItemIndex
             // Получаем элемент из истории
             return historyItems[nextItemIndex]
+        },
+        clear: () => {
+            nextItemIndex = 0
+            historyItems = []
         },
     }
 }
