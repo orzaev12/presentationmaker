@@ -95,7 +95,7 @@ function MenuBar()
         return (() => {
             document.removeEventListener('fullscreenchange', onFullScreen)
         })
-    }, [])
+    }, [workSpace])
 
     return (
         <div className="menu">
