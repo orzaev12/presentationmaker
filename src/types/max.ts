@@ -6,7 +6,7 @@ import {
   Size,
   Position,
   GraphicBlock,
-} from "./types";
+} from "./types"
 
 const positionOfTextBlock: Position = {
   x: 12,
@@ -65,7 +65,7 @@ const textBlock: TextBlock = {
   type: "text",
   value: "Text",
   fontSize: 13,
-  fontFamily: 'Roboto,',
+  fontFamily: "Roboto,",
   color: "#000000",
   bold: true,
   underline: true,
@@ -86,7 +86,7 @@ const graphicBlock1: GraphicBlock = {
   id: "segssergfc",
   size: sizeOfTriangleBlock,
   position: positionOfTriangle,
-  data: 'triangle',
+  data: "triangle",
 }
 
 const graphicBlock2: GraphicBlock = {
@@ -95,7 +95,7 @@ const graphicBlock2: GraphicBlock = {
   size: sizeOfCircle,
   position: positionOfCircle,
   type: "graphic",
-  data: 'circle',
+  data: "circle",
 }
 
 const graphicBlock3: GraphicBlock = {
@@ -104,31 +104,31 @@ const graphicBlock3: GraphicBlock = {
   size: sizeOfSquare,
   position: positionOfSquare,
   type: "graphic",
-  data: 'square',
+  data: "square",
 }
 
 const slide: Slide = {
   id: "kdmf1",
   background: "#aaaaaa",
   data: [textBlock, imageBlock, graphicBlock1, graphicBlock2, graphicBlock3],
-};
+}
 
 const slide2: Slide = {
   id: "kdmfs1",
   background: "#F5A133",
   data: [graphicBlock2, graphicBlock3],
-};
+}
 
 const slide3: Slide = {
   id: "kds1",
   background: "#FF55FF",
   data: [],
-};
+}
 
 const present: Presentation = {
   title: "Max examples",
   indexOfCurrentSlide: 0,
   slides: [slide, slide2, slide3],
-};
+}
 
-export default present;
+export default present

@@ -5,14 +5,14 @@ import { useArrowsListeners } from "./hooks/useArrowsListener"
 import { useUndoRedoListeners } from "./hooks/useUndoRedoListeners"
 
 function App() {
-    useArrowsListeners()
-    useUndoRedoListeners()
-    return (
-        <div id='app' className="app">
-            <Header />
-            <Editor />
-        </div>
-    )
+  useArrowsListeners()
+  useUndoRedoListeners()
+  return (
+    <div id="app" className="app">
+      <Header />
+      <Editor />
+    </div>
+  )
 }
 
-export default App;
+export default App

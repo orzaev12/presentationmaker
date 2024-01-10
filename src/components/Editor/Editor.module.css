@@ -1,22 +1,19 @@
-.editor
-{
-    display: flex;
+.editor {
+  display: flex;
 }
 
-.slide
-{
-    max-width: 1590px;
-    max-height: 900px;
-    width: 1590px;
-    height: 900px;
-    margin: 9px 45px;
+.slide {
+  max-width: 1590px;
+  max-height: 900px;
+  width: 1590px;
+  height: 900px;
+  margin: 9px 45px;
 }
 
-.workspace
-{
-    overflow: hidden;
-    display: flex;
-    width: calc(100vw - 320px);
-    align-items: center;
-    justify-content: center;
+.workspace {
+  overflow: hidden;
+  display: flex;
+  width: calc(100vw - 320px);
+  align-items: center;
+  justify-content: center;
 }
