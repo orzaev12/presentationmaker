@@ -1,8 +1,5 @@
-import {
-  Presentation,
-  Slide
-} from "./types";
-import { v4 as uuid} from "uuid"
+import { Presentation, Slide } from "./types"
+import { v4 as uuid } from "uuid"
 
 const slide: Slide = {
   id: uuid(),
@@ -16,4 +13,4 @@ const present: Presentation = {
   slides: [slide],
 }
 
-export {present}
+export { present }

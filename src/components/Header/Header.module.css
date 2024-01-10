@@ -1,54 +1,54 @@
 .header {
-    display: flex;
-    flex-direction: column;
-    padding: 10px 20px;
-    gap: 3px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 20px;
+  gap: 3px;
 }
 
 .infoColumn {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .infoRow {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .icon {
-    width: 49px;
-    height: 49px;
+  width: 49px;
+  height: 49px;
 }
 
 .input {
-    font-size: 18px;
-    padding: 0;
-    outline: none;
-    border: none;
-    background: transparent;
-    margin: 0 0 5px 6px;
+  font-size: 18px;
+  padding: 0;
+  outline: none;
+  border: none;
+  background: transparent;
+  margin: 0 0 5px 6px;
 }
 
 .input:focus {
-    outline: 2px solid #0b57d0 !important;
-    outline-offset: 4px;
-    border-radius: 1px;
+  outline: 2px solid #0b57d0 !important;
+  outline-offset: 4px;
+  border-radius: 1px;
 }
 
 .button {
-    border: none;
-    cursor: pointer;
-    transition: border-color 0.25s;
-    font-family: Sans,Roboto,sans-serif;
-    font-size: 14px;
-    color: #202124;
-    font-weight: 400;
-    letter-spacing: .2px;
-    white-space: nowrap;
-    margin-top: 30px;
+  border: none;
+  cursor: pointer;
+  transition: border-color 0.25s;
+  font-family: Sans, Roboto, sans-serif;
+  font-size: 14px;
+  color: #202124;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+  margin-top: 30px;
 }
 
 :-webkit-full-screen {
-    background-color: black;
-    height: 900px;
+  background-color: black;
+  height: 900px;
 }

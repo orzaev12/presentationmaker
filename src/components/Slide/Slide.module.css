@@ -1,9 +1,7 @@
-.slide
-{
-    display: flex;
-    flex-wrap: wrap;
-    margin-bottom: 10px;
-    position: relative;
-    overflow: visible;
+.slide {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+  position: relative;
+  overflow: visible;
 }
-
