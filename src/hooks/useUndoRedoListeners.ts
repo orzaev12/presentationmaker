@@ -19,7 +19,7 @@ function useUndoRedoListeners() {
 		window.addEventListener('keydown', handleKeydownEvent)
 
 		return () => window.removeEventListener('keydown', handleKeydownEvent)
-	})
+	}, [])
 }
 
 export {
