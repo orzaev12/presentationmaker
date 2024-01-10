@@ -6,13 +6,13 @@ type Position = {
 type Size = {
   width: number;
   height: number;
-}
+};
 
 type TriangleSize = {
   firstSide: number;
   secondSide: number;
   thirdSide: number;
-}
+};
 
 type Block = {
   id: string;
@@ -44,12 +44,12 @@ type GraphicBlock = Block & {
 
 type Operation = {
   id: string;
-}
+};
 
 type History = {
   operations: Operation[];
   undoOperations: Operation[];
-}
+};
 
 type Slide = {
   id: string;

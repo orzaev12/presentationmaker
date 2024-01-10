@@ -2,7 +2,7 @@ import { combineReducers } from "redux";
 import { presentationReducer } from "./presentationReducer.ts";
 
 export const rootReducer = combineReducers({
-    presentation: presentationReducer,
-})
+  presentation: presentationReducer,
+});
 
-export type RootState = ReturnType<typeof rootReducer>
+export type RootState = ReturnType<typeof rootReducer>;
