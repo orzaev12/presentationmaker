@@ -18,6 +18,11 @@
   white-space: nowrap;
 }
 
+.text:hover {
+    color: #747bff;
+    cursor: pointer;
+}
+
 .input {
   display: none;
 }
