@@ -1,24 +1,24 @@
-import styles from "./Header.module.css";
-import { useEffect, useRef } from "react";
-import MenuBar from "../MenuBar/MenuBar";
-import ToolBar from "../ToolBar/ToolBar";
-import classNames from "classnames";
-import { useAppActions, useAppSelector } from "../../store/types.ts";
+import styles from "./Header.module.css"
+import { useEffect, useRef } from "react"
+import MenuBar from "../MenuBar/MenuBar"
+import ToolBar from "../ToolBar/ToolBar"
+import classNames from "classnames"
+import { useAppActions, useAppSelector } from "../../store/types.ts"
 
 function Header() {
-  const title = useAppSelector((state) => state.presentation.title);
-  const ref = useRef<HTMLInputElement>(null);
+  const title = useAppSelector((state) => state.presentation.title)
+  const ref = useRef<HTMLInputElement>(null)
 
-  const { createChangeTitleAction } = useAppActions();
+  const { createChangeTitleAction } = useAppActions()
 
   useEffect(() => {
     const onKeyDown = () => {
-      ref.current!.style.width = `${(ref.current!.value.length + 5) * 9}px`;
-    };
-    const elem = ref.current!;
-    elem.addEventListener("keydown", onKeyDown);
-    return () => elem.removeEventListener("keydown", onKeyDown);
-  }, [title]);
+      ref.current!.style.width = `${(ref.current!.value.length + 5) * 9}px`
+    }
+    const elem = ref.current!
+    elem.addEventListener("keydown", onKeyDown)
+    return () => elem.removeEventListener("keydown", onKeyDown)
+  }, [title])
 
   return (
     <div className={styles.header}>
@@ -38,7 +38,7 @@ function Header() {
       </div>
       <ToolBar />
     </div>
-  );
+  )
 }
 
-export default Header;
+export default Header

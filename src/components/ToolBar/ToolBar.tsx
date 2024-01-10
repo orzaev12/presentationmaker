@@ -1,25 +1,25 @@
-import styles from "./ToolBar.module.css";
-import IconButton from "@mui/material/IconButton";
-import UndoIcon from "@mui/icons-material/Undo";
-import RedoIcon from "@mui/icons-material/Redo";
-import AddIcon from "@mui/icons-material/Add";
-import DeleteIcon from "@mui/icons-material/Delete";
-import TitleIcon from "@mui/icons-material/Title";
-import ImageIcon from "@mui/icons-material/Image";
-import FormatColorFillIcon from "@mui/icons-material/FormatColorFill";
-import ColorizeIcon from "@mui/icons-material/Colorize";
-import CircleIcon from "@mui/icons-material/Circle";
-import SquareIcon from "@mui/icons-material/Square";
-import CategoryIcon from "@mui/icons-material/Category";
-import FormatBoldIcon from "@mui/icons-material/FormatBold";
-import FormatUnderlinedIcon from "@mui/icons-material/FormatUnderlined";
-import FormatItalicIcon from "@mui/icons-material/FormatItalic";
-import ChangeHistoryIcon from "@mui/icons-material/ChangeHistory";
+import styles from "./ToolBar.module.css"
+import IconButton from "@mui/material/IconButton"
+import UndoIcon from "@mui/icons-material/Undo"
+import RedoIcon from "@mui/icons-material/Redo"
+import AddIcon from "@mui/icons-material/Add"
+import DeleteIcon from "@mui/icons-material/Delete"
+import TitleIcon from "@mui/icons-material/Title"
+import ImageIcon from "@mui/icons-material/Image"
+import FormatColorFillIcon from "@mui/icons-material/FormatColorFill"
+import ColorizeIcon from "@mui/icons-material/Colorize"
+import CircleIcon from "@mui/icons-material/Circle"
+import SquareIcon from "@mui/icons-material/Square"
+import CategoryIcon from "@mui/icons-material/Category"
+import FormatBoldIcon from "@mui/icons-material/FormatBold"
+import FormatUnderlinedIcon from "@mui/icons-material/FormatUnderlined"
+import FormatItalicIcon from "@mui/icons-material/FormatItalic"
+import ChangeHistoryIcon from "@mui/icons-material/ChangeHistory"
 import {
   TextBlock as TTextBlock,
   GraphicBlock as TGraphicBlock,
-} from "../../types/types";
-import { useAppActions, useAppSelector } from "../../store/types.ts";
+} from "../../types/types"
+import { useAppActions, useAppSelector } from "../../store/types.ts"
 
 function ToolBar() {
   const {
@@ -39,109 +39,109 @@ function ToolBar() {
     createChangeFontSizeOfTextAction,
     createChangeColorOfBlockAction,
     createDeleteBlockAction,
-  } = useAppActions();
-  const slides = useAppSelector((state) => state.presentation.slides);
+  } = useAppActions()
+  const slides = useAppSelector((state) => state.presentation.slides)
   const indexOfCurrentSlide = useAppSelector(
     (state) => state.presentation.indexOfCurrentSlide,
-  );
+  )
   const currentSlide = useAppSelector(
     (state) => state.presentation.slides[indexOfCurrentSlide],
-  );
+  )
   const selectedBlockId = useAppSelector(
     (state) => state.presentation.slides[indexOfCurrentSlide].selectedBlockId,
-  );
+  )
   const selectedBlock = currentSlide.data?.find(
     (block) => block.id === selectedBlockId,
-  );
+  )
 
   const addSlide = () => {
-    createAddSlideAction(indexOfCurrentSlide);
-  };
+    createAddSlideAction(indexOfCurrentSlide)
+  }
 
   const removeSlide = () => {
-    let indexOfNewCurrentSlide = indexOfCurrentSlide;
-    indexOfCurrentSlide == slides.length - 1 && indexOfNewCurrentSlide--;
-    createSetCurrentSlide(indexOfNewCurrentSlide);
-    createRemoveSlideAction(slides[indexOfCurrentSlide].id);
-  };
+    let indexOfNewCurrentSlide = indexOfCurrentSlide
+    indexOfCurrentSlide == slides.length - 1 && indexOfNewCurrentSlide--
+    createSetCurrentSlide(indexOfNewCurrentSlide)
+    createRemoveSlideAction(slides[indexOfCurrentSlide].id)
+  }
 
   const removeBlock = () => {
     if (selectedBlock) {
-      createDeleteBlockAction(currentSlide.id, selectedBlock.id);
+      createDeleteBlockAction(currentSlide.id, selectedBlock.id)
     }
-  };
+  }
 
   const changeColorOfSlide = (color: string) => {
-    createChangeBackgroundAction(slides[indexOfCurrentSlide], color);
-  };
+    createChangeBackgroundAction(slides[indexOfCurrentSlide], color)
+  }
 
   const addTextBlock = () => {
-    createAddTextBlockAction(currentSlide.id);
-  };
+    createAddTextBlockAction(currentSlide.id)
+  }
 
   const addGraphicBlock = (type: string) => {
-    createAddGraphicBlockAction(currentSlide.id, type);
-  };
+    createAddGraphicBlockAction(currentSlide.id, type)
+  }
 
   const addImageBlock = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files) {
-      return;
+      return
     }
-    const file = event.target.files[0];
-    const reader = new FileReader();
+    const file = event.target.files[0]
+    const reader = new FileReader()
     reader.onload = (event) => {
       if (!event.target?.result) {
-        return;
+        return
       }
       try {
         createAddImageBlockAction(
           currentSlide.id,
           event.target.result.toString(),
-        );
+        )
       } catch (error) {
-        alert("Invalid file!");
+        alert("Invalid file!")
       }
-    };
-    reader.readAsDataURL(file);
-  };
+    }
+    reader.readAsDataURL(file)
+  }
 
   const setUnderlineText = () => {
     if (selectedBlock?.type === "text") {
-      createSetUnderlineTextAction(currentSlide.id, selectedBlock.id);
+      createSetUnderlineTextAction(currentSlide.id, selectedBlock.id)
     }
-  };
+  }
 
   const setBoldText = () => {
     if (selectedBlock?.type === "text") {
-      createSetBoldTextAction(currentSlide.id, selectedBlock.id);
+      createSetBoldTextAction(currentSlide.id, selectedBlock.id)
     }
-  };
+  }
 
   const setItalicText = () => {
     if (selectedBlock?.type === "text") {
-      createSetItalicTextAction(currentSlide.id, selectedBlock.id);
+      createSetItalicTextAction(currentSlide.id, selectedBlock.id)
     }
-  };
+  }
 
   const changeFontFamilyOfText = (fontFamily: string) => {
     createChangeFontFamilyOfTextAction(
       currentSlide.id,
       selectedBlock!.id,
       fontFamily,
-    );
-  };
+    )
+  }
 
   const changeFontSizeOfText = (fontSize: string) => {
     createChangeFontSizeOfTextAction(
       currentSlide.id,
       selectedBlock!.id,
       parseInt(fontSize),
-    );
-  };
+    )
+  }
 
   const changeColorOfBlock = (color: string) => {
-    createChangeColorOfBlockAction(currentSlide.id, selectedBlock!.id, color);
-  };
+    createChangeColorOfBlockAction(currentSlide.id, selectedBlock!.id, color)
+  }
 
   return (
     <div className={styles.toolbar}>
@@ -186,14 +186,14 @@ function ToolBar() {
         <div className={styles.flex}>
           <IconButton
             onClick={() => {
-              setBoldText();
+              setBoldText()
             }}
           >
             <FormatBoldIcon className={styles.button} sx={{ fontSize: 17 }} />
           </IconButton>
           <IconButton
             onClick={() => {
-              setUnderlineText();
+              setUnderlineText()
             }}
           >
             <FormatUnderlinedIcon
@@ -203,7 +203,7 @@ function ToolBar() {
           </IconButton>
           <IconButton
             onClick={() => {
-              setItalicText();
+              setItalicText()
             }}
           >
             <FormatItalicIcon className={styles.button} sx={{ fontSize: 17 }} />
@@ -294,7 +294,7 @@ function ToolBar() {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default ToolBar;
+export default ToolBar

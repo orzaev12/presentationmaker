@@ -1,7 +1,7 @@
-import { TypedUseSelectorHook, useSelector } from "react-redux";
-import { rootReducer } from "./reducers/rootReducer.ts";
-import { useDispatch } from "react-redux";
-import { bindActionCreators } from "redux";
+import { TypedUseSelectorHook, useSelector } from "react-redux"
+import { rootReducer } from "./reducers/rootReducer.ts"
+import { useDispatch } from "react-redux"
+import { bindActionCreators } from "redux"
 import {
   createAddPresentationAction,
   createSavePresentationAction,
@@ -28,14 +28,14 @@ import {
   createChangeSizeOfBlockAction,
   createAddCharacterAction,
   createDeleteCharacterAction,
-} from "./actionCreators.ts";
+} from "./actionCreators.ts"
 
-type RootState = ReturnType<typeof rootReducer>;
+type RootState = ReturnType<typeof rootReducer>
 
-const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
 
 const useAppActions = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   return bindActionCreators(
     {
@@ -66,7 +66,7 @@ const useAppActions = () => {
       createDeleteBlockAction: createDeleteBlockAction,
     },
     dispatch,
-  );
-};
+  )
+}
 
-export { useAppSelector, useAppActions };
+export { useAppSelector, useAppActions }

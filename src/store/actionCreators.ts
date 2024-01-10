@@ -1,10 +1,10 @@
-import { Position, Presentation, Size, Slide } from "../types/types";
-import { PresentationActions } from "./actions/actions.ts";
+import { Position, Presentation, Size, Slide } from "../types/types"
+import { PresentationActions } from "./actions/actions.ts"
 
 function createAddPresentationAction(presentation: Presentation) {
-  const title = presentation.title;
-  const slides = presentation.slides;
-  const indexOfCurrentSlide = presentation.indexOfCurrentSlide;
+  const title = presentation.title
+  const slides = presentation.slides
+  const indexOfCurrentSlide = presentation.indexOfCurrentSlide
 
   return {
     type: PresentationActions.ADD_PRESENTATION,
@@ -13,7 +13,7 @@ function createAddPresentationAction(presentation: Presentation) {
       slides,
       indexOfCurrentSlide,
     },
-  };
+  }
 }
 
 function createSavePresentationAction(presentation: Presentation) {
@@ -22,7 +22,7 @@ function createSavePresentationAction(presentation: Presentation) {
     payload: {
       presentation,
     },
-  };
+  }
 }
 
 function createChangeTitleAction(newTitle: string) {
@@ -31,7 +31,7 @@ function createChangeTitleAction(newTitle: string) {
     payload: {
       newTitle,
     },
-  };
+  }
 }
 
 function createAddSlideAction(indexOfCurrentSlide: number) {
@@ -40,7 +40,7 @@ function createAddSlideAction(indexOfCurrentSlide: number) {
     payload: {
       indexOfCurrentSlide,
     },
-  };
+  }
 }
 
 function createSetCurrentSlide(indexOfNewCurrentSlide: number) {
@@ -49,7 +49,7 @@ function createSetCurrentSlide(indexOfNewCurrentSlide: number) {
     payload: {
       indexOfNewCurrentSlide,
     },
-  };
+  }
 }
 
 function createRemoveSlideAction(slideId: string) {
@@ -58,7 +58,7 @@ function createRemoveSlideAction(slideId: string) {
     payload: {
       slideId,
     },
-  };
+  }
 }
 
 function createChangeOrderAction(from: number, to: number) {
@@ -68,7 +68,7 @@ function createChangeOrderAction(from: number, to: number) {
       from,
       to,
     },
-  };
+  }
 }
 
 function createChangeBackgroundAction(slide: Slide, newBackground: string) {
@@ -78,7 +78,7 @@ function createChangeBackgroundAction(slide: Slide, newBackground: string) {
       slide,
       newBackground,
     },
-  };
+  }
 }
 
 function createSetSelectedBlockAction(slideId: string, blockId: string | null) {
@@ -88,7 +88,7 @@ function createSetSelectedBlockAction(slideId: string, blockId: string | null) {
       slideId,
       blockId,
     },
-  };
+  }
 }
 
 function createChangePositionOfBlockAction(
@@ -103,7 +103,7 @@ function createChangePositionOfBlockAction(
       blockId,
       newPosition,
     },
-  };
+  }
 }
 
 function createAddTextBlockAction(slideId: string) {
@@ -112,7 +112,7 @@ function createAddTextBlockAction(slideId: string) {
     payload: {
       slideId,
     },
-  };
+  }
 }
 
 function createAddGraphicBlockAction(slideId: string, type: string) {
@@ -122,7 +122,7 @@ function createAddGraphicBlockAction(slideId: string, type: string) {
       slideId,
       type,
     },
-  };
+  }
 }
 
 function createAddImageBlockAction(slideId: string, data: string) {
@@ -132,7 +132,7 @@ function createAddImageBlockAction(slideId: string, data: string) {
       slideId,
       data,
     },
-  };
+  }
 }
 
 function createSetUnderlineTextAction(slideId: string, blockId: string) {
@@ -142,7 +142,7 @@ function createSetUnderlineTextAction(slideId: string, blockId: string) {
       slideId,
       blockId,
     },
-  };
+  }
 }
 
 function createSetBoldTextAction(slideId: string, blockId: string) {
@@ -152,7 +152,7 @@ function createSetBoldTextAction(slideId: string, blockId: string) {
       slideId,
       blockId,
     },
-  };
+  }
 }
 
 function createSetItalicTextAction(slideId: string, blockId: string) {
@@ -162,7 +162,7 @@ function createSetItalicTextAction(slideId: string, blockId: string) {
       slideId,
       blockId,
     },
-  };
+  }
 }
 
 function createChangeFontFamilyOfTextAction(
@@ -177,7 +177,7 @@ function createChangeFontFamilyOfTextAction(
       blockId,
       newFontFamily,
     },
-  };
+  }
 }
 
 function createChangeFontSizeOfTextAction(
@@ -192,7 +192,7 @@ function createChangeFontSizeOfTextAction(
       blockId,
       newFontSize,
     },
-  };
+  }
 }
 
 function createChangeColorOfBlockAction(
@@ -207,7 +207,7 @@ function createChangeColorOfBlockAction(
       blockId,
       newColor,
     },
-  };
+  }
 }
 
 function createChangeSizeOfBlockAction(
@@ -222,7 +222,7 @@ function createChangeSizeOfBlockAction(
       blockId,
       newSize,
     },
-  };
+  }
 }
 
 function createAddCharacterAction(
@@ -237,7 +237,7 @@ function createAddCharacterAction(
       blockId,
       char,
     },
-  };
+  }
 }
 
 function createDeleteCharacterAction(slideId: string, blockId: string) {
@@ -247,21 +247,21 @@ function createDeleteCharacterAction(slideId: string, blockId: string) {
       slideId,
       blockId,
     },
-  };
+  }
 }
 
 function createUndoAction() {
   return {
     type: PresentationActions.UNDO,
     payload: {},
-  };
+  }
 }
 
 function createRedoAction() {
   return {
     type: PresentationActions.REDO,
     payload: {},
-  };
+  }
 }
 
 function createDeleteBlockAction(slideId: string, blockId: string) {
@@ -271,7 +271,7 @@ function createDeleteBlockAction(slideId: string, blockId: string) {
       slideId,
       blockId,
     },
-  };
+  }
 }
 
 export {
@@ -300,4 +300,4 @@ export {
   createUndoAction,
   createRedoAction,
   createDeleteBlockAction,
-};
+}

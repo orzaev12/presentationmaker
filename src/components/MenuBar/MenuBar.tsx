@@ -1,58 +1,58 @@
-import styles from "./MenuBar.module.css";
-import classNames from "classnames";
-import { useAppActions, useAppSelector } from "../../store/types.ts";
-import { Presentation } from "../../types/types.ts";
-import html2PDF from "jspdf-html2canvas";
-import { useEffect } from "react";
+import styles from "./MenuBar.module.css"
+import classNames from "classnames"
+import { useAppActions, useAppSelector } from "../../store/types.ts"
+import { Presentation } from "../../types/types.ts"
+import html2PDF from "jspdf-html2canvas"
+import { useEffect } from "react"
 
 function MenuBar() {
-  const title = useAppSelector((state) => state.presentation.title);
+  const title = useAppSelector((state) => state.presentation.title)
   const currentSlide = useAppSelector(
     (state) =>
       state.presentation.slides[state.presentation.indexOfCurrentSlide],
-  );
-  const slides = useAppSelector((state) => state.presentation.slides);
-  const previewWindow = document.getElementById("preview-window");
+  )
+  const slides = useAppSelector((state) => state.presentation.slides)
+  const previewWindow = document.getElementById("preview-window")
   const workSpace =
-    previewWindow != null ? (previewWindow!.children[0] as HTMLElement) : null;
+    previewWindow != null ? (previewWindow!.children[0] as HTMLElement) : null
   const { createAddPresentationAction, createSetSelectedBlockAction } =
-    useAppActions();
+    useAppActions()
 
   function getURL(): string {
     const presentation: Presentation = {
       title: title,
       slides: slides,
       indexOfCurrentSlide: 0,
-    };
-    const presentJson = JSON.stringify(presentation);
-    const type = "application/json";
-    const file = new Blob([presentJson], { type: type });
-    return URL.createObjectURL(file);
+    }
+    const presentJson = JSON.stringify(presentation)
+    const type = "application/json"
+    const file = new Blob([presentJson], { type: type })
+    return URL.createObjectURL(file)
   }
 
   function loadFile(event: React.ChangeEvent<HTMLInputElement>) {
     if (!event.target.files) {
-      return;
+      return
     }
-    const file = event.target.files[0];
-    const reader = new FileReader();
+    const file = event.target.files[0]
+    const reader = new FileReader()
     reader.onload = (event) => {
       if (!event.target?.result) {
-        return;
+        return
       }
       try {
-        createAddPresentationAction(JSON.parse(event.target.result.toString()));
+        createAddPresentationAction(JSON.parse(event.target.result.toString()))
       } catch (error) {
-        alert("Invalid file!");
+        alert("Invalid file!")
       }
-    };
-    reader.readAsText(file);
+    }
+    reader.readAsText(file)
   }
   function getPdf() {
-    const pages = [];
+    const pages = []
     for (let i = 0; i < slides.length; i++) {
-      const doc = document.getElementById(slides[i].id)!;
-      pages.push(doc);
+      const doc = document.getElementById(slides[i].id)!
+      pages.push(doc)
     }
     html2PDF(pages, {
       jsPDF: {
@@ -71,37 +71,37 @@ function MenuBar() {
       },
       imageType: "image/jpeg",
       success(pdf) {
-        pdf.save(title);
+        pdf.save(title)
       },
-    });
+    })
   }
 
   const previewMode = () => {
-    const block = document.getElementById(currentSlide.selectedBlockId!);
+    const block = document.getElementById(currentSlide.selectedBlockId!)
     if (block) {
-      block!.style.outline = "none";
+      block!.style.outline = "none"
     }
-    createSetSelectedBlockAction(currentSlide.id, null);
-    previewWindow?.requestFullscreen();
-  };
+    createSetSelectedBlockAction(currentSlide.id, null)
+    previewWindow?.requestFullscreen()
+  }
 
   useEffect(() => {
     const onFullScreen = () => {
       if (document.fullscreenElement) {
-        workSpace!.style.transform = `scale(${window.innerWidth / 1660})`;
-        workSpace!.style.overflow = `hidden`;
-        previewWindow!.style.pointerEvents = "none";
+        workSpace!.style.transform = `scale(${window.innerWidth / 1660})`
+        workSpace!.style.overflow = `hidden`
+        previewWindow!.style.pointerEvents = "none"
       } else {
-        workSpace!.style.transform = "";
-        previewWindow!.style.pointerEvents = "auto";
-        workSpace!.style.overflow = ``;
+        workSpace!.style.transform = ""
+        previewWindow!.style.pointerEvents = "auto"
+        workSpace!.style.overflow = ``
       }
-    };
-    document.addEventListener("fullscreenchange", onFullScreen);
+    }
+    document.addEventListener("fullscreenchange", onFullScreen)
     return () => {
-      document.removeEventListener("fullscreenchange", onFullScreen);
-    };
-  }, [workSpace]);
+      document.removeEventListener("fullscreenchange", onFullScreen)
+    }
+  }, [workSpace])
 
   return (
     <div className="menu">
@@ -135,7 +135,7 @@ function MenuBar() {
         Просмотр
       </button>
     </div>
-  );
+  )
 }
 
-export default MenuBar;
+export default MenuBar

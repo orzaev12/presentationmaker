@@ -1,4 +1,4 @@
-import { Position, Presentation, Size, Slide } from "../../types/types";
+import { Position, Presentation, Size, Slide } from "../../types/types"
 
 enum PresentationActions {
   ADD_PRESENTATION = "ADD_PRESENTATION",
@@ -29,199 +29,199 @@ enum PresentationActions {
 }
 
 type AddPresentationAction = {
-  type: PresentationActions.ADD_PRESENTATION;
+  type: PresentationActions.ADD_PRESENTATION
   payload: {
-    title: string;
-    slides: Slide[];
-    indexOfCurrentSlide: number;
-  };
-};
+    title: string
+    slides: Slide[]
+    indexOfCurrentSlide: number
+  }
+}
 
 type SavePresentationAction = {
-  type: PresentationActions.SAVE_PRESENTATION;
+  type: PresentationActions.SAVE_PRESENTATION
   payload: {
-    presentation: Presentation;
-  };
-};
+    presentation: Presentation
+  }
+}
 
 type ChangePresentationTitleAction = {
-  type: PresentationActions.CHANGE_TITLE;
+  type: PresentationActions.CHANGE_TITLE
   payload: {
-    newTitle: string;
-  };
-};
+    newTitle: string
+  }
+}
 
 type AddSlideAction = {
-  type: PresentationActions.ADD_SLIDE;
+  type: PresentationActions.ADD_SLIDE
   payload: {
-    indexOfCurrentSlide: number;
-  };
-};
+    indexOfCurrentSlide: number
+  }
+}
 
 type SetCurrentSlide = {
-  type: PresentationActions.SET_CURRENT_SLIDE;
+  type: PresentationActions.SET_CURRENT_SLIDE
   payload: {
-    indexOfNewCurrentSlide: number;
-  };
-};
+    indexOfNewCurrentSlide: number
+  }
+}
 
 type RemoveSlideAction = {
-  type: PresentationActions.REMOVE_SLIDE;
+  type: PresentationActions.REMOVE_SLIDE
   payload: {
-    slideId: string;
-  };
-};
+    slideId: string
+  }
+}
 
 type ChangeOrderAction = {
-  type: PresentationActions.CHANGE_ORDER;
+  type: PresentationActions.CHANGE_ORDER
   payload: {
-    from: number;
-    to: number;
-  };
-};
+    from: number
+    to: number
+  }
+}
 
 type ChangeBackgroundAction = {
-  type: PresentationActions.CHANGE_BACKGROUND;
+  type: PresentationActions.CHANGE_BACKGROUND
   payload: {
-    slide: Slide;
-    newBackground: string;
-  };
-};
+    slide: Slide
+    newBackground: string
+  }
+}
 
 type SetSelectedBlockAction = {
-  type: PresentationActions.SET_SELECTED_BLOCK;
+  type: PresentationActions.SET_SELECTED_BLOCK
   payload: {
-    slideId: string;
-    blockId: string | null;
-  };
-};
+    slideId: string
+    blockId: string | null
+  }
+}
 
 type ChangePositionOfBlockAction = {
-  type: PresentationActions.CHANGE_POSITION_OF_BLOCK;
+  type: PresentationActions.CHANGE_POSITION_OF_BLOCK
   payload: {
-    slideId: string;
-    blockId: string;
-    newPosition: Position;
-  };
-};
+    slideId: string
+    blockId: string
+    newPosition: Position
+  }
+}
 
 type AddTextBlockAction = {
-  type: PresentationActions.ADD_TEXT_BLOCK;
+  type: PresentationActions.ADD_TEXT_BLOCK
   payload: {
-    slideId: string;
-  };
-};
+    slideId: string
+  }
+}
 
 type AddGraphicBlockAction = {
-  type: PresentationActions.ADD_GRAPHIC_BLOCK;
+  type: PresentationActions.ADD_GRAPHIC_BLOCK
   payload: {
-    slideId: string;
-    type: string;
-  };
-};
+    slideId: string
+    type: string
+  }
+}
 
 type AddImageBlockAction = {
-  type: PresentationActions.ADD_IMAGE_BLOCK;
+  type: PresentationActions.ADD_IMAGE_BLOCK
   payload: {
-    slideId: string;
-    data: string;
-  };
-};
+    slideId: string
+    data: string
+  }
+}
 
 type DeleteBlockAction = {
-  type: PresentationActions.DELETE_BLOCK;
+  type: PresentationActions.DELETE_BLOCK
   payload: {
-    slideId: string;
-    blockId: string;
-  };
-};
+    slideId: string
+    blockId: string
+  }
+}
 
 type SetUnderlineTextAction = {
-  type: PresentationActions.SET_UNDERLINE_TEXT;
+  type: PresentationActions.SET_UNDERLINE_TEXT
   payload: {
-    slideId: string;
-    blockId: string;
-  };
-};
+    slideId: string
+    blockId: string
+  }
+}
 
 type SetBoldTextAction = {
-  type: PresentationActions.SET_BOLD_TEXT;
+  type: PresentationActions.SET_BOLD_TEXT
   payload: {
-    slideId: string;
-    blockId: string;
-  };
-};
+    slideId: string
+    blockId: string
+  }
+}
 
 type SetItalicTextAction = {
-  type: PresentationActions.SET_ITALIC_TEXT;
+  type: PresentationActions.SET_ITALIC_TEXT
   payload: {
-    slideId: string;
-    blockId: string;
-  };
-};
+    slideId: string
+    blockId: string
+  }
+}
 
 type ChangeFontFamilyOfTextAction = {
-  type: PresentationActions.CHANGE_FONT_FAMILY_OF_TEXT;
+  type: PresentationActions.CHANGE_FONT_FAMILY_OF_TEXT
   payload: {
-    slideId: string;
-    blockId: string;
-    newFontFamily: string;
-  };
-};
+    slideId: string
+    blockId: string
+    newFontFamily: string
+  }
+}
 
 type ChangeFontSizeOfTextAction = {
-  type: PresentationActions.CHANGE_FONT_SIZE_OF_TEXT;
+  type: PresentationActions.CHANGE_FONT_SIZE_OF_TEXT
   payload: {
-    slideId: string;
-    blockId: string;
-    newFontSize: number;
-  };
-};
+    slideId: string
+    blockId: string
+    newFontSize: number
+  }
+}
 
 type ChangeColorOfBlockAction = {
-  type: PresentationActions.CHANGE_COLOR_OF_BLOCK;
+  type: PresentationActions.CHANGE_COLOR_OF_BLOCK
   payload: {
-    slideId: string;
-    blockId: string;
-    newColor: string;
-  };
-};
+    slideId: string
+    blockId: string
+    newColor: string
+  }
+}
 
 type ChangeSizeOfBlockAction = {
-  type: PresentationActions.CHANGE_SIZE_OF_BLOCK;
+  type: PresentationActions.CHANGE_SIZE_OF_BLOCK
   payload: {
-    slideId: string;
-    blockId: string;
-    newSize: Size;
-  };
-};
+    slideId: string
+    blockId: string
+    newSize: Size
+  }
+}
 
 type AddCharacterAction = {
-  type: PresentationActions.ADD_CHARACTER;
+  type: PresentationActions.ADD_CHARACTER
   payload: {
-    slideId: string;
-    blockId: string;
-    char: string;
-  };
-};
+    slideId: string
+    blockId: string
+    char: string
+  }
+}
 
 type DeleteCharacterAction = {
-  type: PresentationActions.DELETE_CHARACTER;
+  type: PresentationActions.DELETE_CHARACTER
   payload: {
-    slideId: string;
-    blockId: string;
-  };
-};
+    slideId: string
+    blockId: string
+  }
+}
 
 type UndoAction = {
-  type: PresentationActions.UNDO;
-  payload: {};
-};
+  type: PresentationActions.UNDO
+  payload: {}
+}
 
 type RedoAction = {
-  type: PresentationActions.REDO;
-  payload: {};
-};
+  type: PresentationActions.REDO
+  payload: {}
+}
 
 export type Action =
   | AddPresentationAction
@@ -248,6 +248,6 @@ export type Action =
   | AddCharacterAction
   | DeleteCharacterAction
   | UndoAction
-  | RedoAction;
+  | RedoAction
 
-export { PresentationActions };
+export { PresentationActions }

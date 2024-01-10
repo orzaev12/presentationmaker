@@ -4,8 +4,8 @@ import {
   ImageBlock,
   Slide,
   Presentation,
-} from "../types/types";
-import { v4 as uuid } from "uuid";
+} from "../types/types"
+import { v4 as uuid } from "uuid"
 
 const textBlock: TextBlock = {
   id: uuid(),
@@ -25,7 +25,7 @@ const textBlock: TextBlock = {
   underline: false,
   italic: false,
   bold: false,
-};
+}
 
 const circle: GraphicBlock = {
   id: uuid(),
@@ -40,7 +40,7 @@ const circle: GraphicBlock = {
   type: "graphic",
   data: "circle",
   background: "#808080",
-};
+}
 
 const square: GraphicBlock = {
   id: uuid(),
@@ -55,7 +55,7 @@ const square: GraphicBlock = {
   type: "graphic",
   data: "square",
   background: "#808080",
-};
+}
 
 const triangle: GraphicBlock = {
   id: uuid(),
@@ -70,7 +70,7 @@ const triangle: GraphicBlock = {
   },
   data: "triangle",
   background: "#808080",
-};
+}
 
 const image: ImageBlock = {
   id: uuid(),
@@ -84,18 +84,18 @@ const image: ImageBlock = {
   },
   type: "image",
   data: "",
-};
+}
 
 const slide: Slide = {
   id: uuid(),
   background: "#FFFFFF",
   data: [],
-};
+}
 
 const presentation: Presentation = {
   title: "Презентация без названия",
   indexOfCurrentSlide: 0,
   slides: [slide],
-};
+}
 
-export { textBlock, circle, square, triangle, image, presentation };
+export { textBlock, circle, square, triangle, image, presentation }

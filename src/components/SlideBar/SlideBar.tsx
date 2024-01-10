@@ -1,35 +1,35 @@
-import styles from "./SlideBar.module.css";
-import Slide from "../Slide/Slide.tsx";
-import classNames from "classnames";
-import { useDragAndDropSlide } from "../../hooks/useDndSlide.ts";
-import { useAppActions, useAppSelector } from "../../store/types.ts";
+import styles from "./SlideBar.module.css"
+import Slide from "../Slide/Slide.tsx"
+import classNames from "classnames"
+import { useDragAndDropSlide } from "../../hooks/useDndSlide.ts"
+import { useAppActions, useAppSelector } from "../../store/types.ts"
 
 function SlideBar() {
-  const slides = useAppSelector((state) => state.presentation.slides);
+  const slides = useAppSelector((state) => state.presentation.slides)
   const indexOfCurrentSlide = useAppSelector(
     (state) => state.presentation.indexOfCurrentSlide,
-  );
+  )
   const currentSlide = useAppSelector(
     (state) => state.presentation.slides[indexOfCurrentSlide],
-  );
+  )
 
   const {
     createSetCurrentSlide,
     createChangeOrderAction,
     createSetSelectedBlockAction,
-  } = useAppActions();
+  } = useAppActions()
 
   const setCurrentSlide = (index: number) => {
-    createSetSelectedBlockAction(currentSlide.id, null);
-    createSetCurrentSlide(index);
-  };
+    createSetSelectedBlockAction(currentSlide.id, null)
+    createSetCurrentSlide(index)
+  }
 
   const { registerDndItem } = useDragAndDropSlide({
     onOrderChange: (from, to) => {
-      createChangeOrderAction(from, to);
-      createSetCurrentSlide(to);
+      createChangeOrderAction(from, to)
+      createSetCurrentSlide(to)
     },
-  });
+  })
 
   return (
     <div className={styles.slidebar}>
@@ -55,7 +55,7 @@ function SlideBar() {
         </div>
       ))}
     </div>
-  );
+  )
 }
 
-export default SlideBar;
+export default SlideBar
