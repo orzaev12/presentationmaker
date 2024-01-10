@@ -24,7 +24,7 @@ function useArrowsListeners() {
 		window.addEventListener('keydown', handleKeydownEvent)
 
 		return () => window.removeEventListener('keydown', handleKeydownEvent)
-	})
+	}, [indexOfCurrentSlide])
 }
 
 export {
