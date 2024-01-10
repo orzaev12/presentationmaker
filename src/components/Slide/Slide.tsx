@@ -51,27 +51,6 @@ function Slide({
     }, [])
   }
 
-  // если блок не выделен
-  if (isWorkSpace) {
-    useEffect(() => {
-      const children = Array.from(ref.current!.children)
-      const handleClick = (event: MouseEvent) => {
-        children.map((child) => {
-          if (child && child.contains(event.target as Node)) {
-            setSelect(true)
-          }
-        })
-
-        if (!select) {
-          createSetSelectedBlockAction(slide.id, null)
-        }
-      }
-      ref.current!.addEventListener("mousedown", handleClick)
-      return () => {
-        ref.current!.removeEventListener("mousedown", handleClick)
-      }
-    }, [])
-  }
   return (
     <div
       ref={ref}

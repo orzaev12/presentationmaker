@@ -1,4 +1,4 @@
-import { CSSProperties, useEffect, useRef } from "react"
+import { CSSProperties, useEffect, useRef } from "react";
 import styles from "./TextBlock.module.css"
 import { TextBlock as TTextBlock } from "../../types/types"
 import { useAppActions, useAppSelector } from "../../store/types.ts"

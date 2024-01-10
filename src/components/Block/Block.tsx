@@ -53,12 +53,7 @@ function Block({ data, id, isWorkSpace }: BlockProps) {
       const block: HTMLDivElement = ref.current!
       const handleClick = (event: MouseEvent) => {
         if (block && block?.contains(event.target as Node)) {
-          block.style.outline = "3px solid #1A73E8"
-          block.style.outlineOffset = "1px"
           createSetSelectedBlockAction(currentSlide.id, id)
-        } else {
-          block.style.outline = "none"
-          block.style.outlineOffset = "none"
         }
       }
       ref.current!.parentElement?.addEventListener("mousedown", handleClick)
@@ -70,47 +65,52 @@ function Block({ data, id, isWorkSpace }: BlockProps) {
       }
     }, [])
 
-    // DnD and resize objects
-    useEffect(() => {
-      const { onDragStart } = registerDndItem({ elementRef: refBlock })
-      const onMouseDown = (event: MouseEvent) => {
-        onDragStart({
-          onDrag: (dragEvent) => {
-            dragEvent.preventDefault()
-            ref.current!.style.top = `${
-              dragEvent.clientY + (data.position.y - event.clientY)
-            }px`
-            ref.current!.style.left = `${
-              dragEvent.clientX + (data.position.x - event.clientX)
-            }px`
-          },
-          onDrop: (dropEvent) => {
-            const position = {
-              x: dropEvent.clientX + (data.position.x - event.clientX),
-              y: dropEvent.clientY + (data.position.y - event.clientY),
+        // DnD and resize objects
+        useEffect(() => {
+            const block: HTMLDivElement = ref.current!
+            if (block.id === selectedBlockId)
+            {
+                block.style.outline = "3px solid #1A73E8"
+                block.style.outlineOffset = "1px"
+            } else {
+                block.style.outline = "none"
+                block.style.outlineOffset = "none"
             }
-            createChangePositionOfBlockAction(currentSlide.id, id, position)
-          },
-        })
-      }
-      const onMouseWheel = (event: WheelEvent) => {
-        if (selectedBlockId === id && data.type !== "text") {
-          const newSize = {
-            height: data.size.height + event.deltaY,
-            width: data.size.width + event.deltaY,
-          }
-          createChangeSizeOfBlockAction(currentSlide.id, id, newSize)
-        }
-      }
-      refBlock.current!.addEventListener("mousedown", onMouseDown)
-      refBlock.current!.addEventListener("wheel", onMouseWheel, {
-        passive: true,
-      })
-      return () => {
-        refBlock.current?.removeEventListener("mousedown", onMouseDown)
-        refBlock.current?.removeEventListener("wheel", onMouseWheel)
-      }
-    }, [selectedBlock])
+            const {onDragStart} = registerDndItem({elementRef: refBlock})
+            const onMouseDown = (event: MouseEvent) => {
+                onDragStart(
+                    {
+                        onDrag: (dragEvent) => {
+                            dragEvent.preventDefault()
+                            ref.current!.style.top = `${dragEvent.clientY + (data.position.y - event.clientY)}px`
+                            ref.current!.style.left = `${dragEvent.clientX + (data.position.x - event.clientX)}px`
+                        },
+                        onDrop: (dropEvent) => {
+                            const position = {
+                                x: dropEvent.clientX + (data.position.x - event.clientX),
+                                y: dropEvent.clientY + (data.position.y - event.clientY),
+                            }
+                            createChangePositionOfBlockAction(currentSlide.id, id, position)
+                        },
+                    })
+            }
+            const onMouseWheel = (event: WheelEvent) => {
+                if (selectedBlockId === id && data.type !== 'text') {
+                    const newSize = {
+                        height: data.size.height + event.deltaY,
+                        width: data.size.width + event.deltaY,
+                    }
+                    createChangeSizeOfBlockAction(currentSlide.id, id, newSize)
+                }
+            }
+            refBlock.current!.addEventListener('mousedown', onMouseDown)
+            refBlock.current!.addEventListener('wheel', onMouseWheel, {passive: true})
+            return () => {
+                refBlock.current?.removeEventListener('mousedown', onMouseDown)
+                refBlock.current?.removeEventListener('wheel', onMouseWheel)
+            }
+        }, [selectedBlock])
+
 
     useEffect(() => {
       const { onResizeStart } = registerResizeItem({ elementRef: refPoint })
