@@ -1,4 +1,4 @@
-import { CSSProperties, useEffect, useRef } from "react";
+import { CSSProperties, useEffect, useRef, useState } from "react";
 import styles from "./TextBlock.module.css"
 import { TextBlock as TTextBlock } from "../../types/types";
 import {useAppActions, useAppSelector} from "../../store/types.ts";
@@ -29,7 +29,7 @@ function TextBlock({object, id}: TextBlockProps) {
         const handleKeydown = (event: KeyboardEvent) => {
             if (event.key)
             {
-                if (selectedBlockId === id)
+                if (selectedBlockId === id && !document.querySelector('input:focus'))
                 {
                     if (event.key.length === 1) {
                         createAddCharacterAction(currentSlide.id, selectedBlockId, event.key)
