@@ -40,11 +40,6 @@ function Block({data, id, isWorkSpace}: BlockProps) {
             const handleClick = (event: MouseEvent) => {
                 if (block && block?.contains(event.target as Node)) {
                     createSetSelectedBlockAction(currentSlide.id, id)
-                    block.style.outline = "3px solid #1A73E8"
-                    block.style.outlineOffset = "1px"
-                } else {
-                    block.style.outline = "none"
-                    block.style.outlineOffset = "none"
                 }
             }
             ref.current!.parentElement?.addEventListener("mousedown", handleClick)
@@ -53,8 +48,17 @@ function Block({data, id, isWorkSpace}: BlockProps) {
             }
         }, [])
 
-        // DnD and resize objects
+        // DnD and resize objects and select object
         useEffect(() => {
+            const block: HTMLDivElement = ref.current!
+            if (block.id === selectedBlockId)
+            {
+                block.style.outline = "3px solid #1A73E8"
+                block.style.outlineOffset = "1px"
+            } else {
+                block.style.outline = "none"
+                block.style.outlineOffset = "none"
+            }
             const {onDragStart} = registerDndItem({elementRef: refBlock})
             const onMouseDown = (event: MouseEvent) => {
                 onDragStart(

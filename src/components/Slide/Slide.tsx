@@ -1,10 +1,9 @@
 import { Slide as TSlide} from '../../types/types.ts';
 import styles from "./Slide.module.css"
 import classNames from 'classnames';
-import { CSSProperties, useEffect, useRef, useState } from "react"
+import { CSSProperties, useEffect, useRef} from "react"
 import Block from '../Block/Block.tsx';
 import { RegisterDndItemFn } from '../../hooks/useDndSlide.ts';
-import {useAppActions} from "../../store/types.ts";
 
 type SlideProps = {
     className?: string;
@@ -15,7 +14,6 @@ type SlideProps = {
 }
 
 function Slide({className, slide, isWorkSpace, registerDndItem, index}: SlideProps) {
-    const { createSetSelectedBlockAction } = useAppActions()
     const ref = useRef<HTMLDivElement>(null)
     const background: CSSProperties = {
         background: slide.background,
@@ -41,31 +39,6 @@ function Slide({className, slide, isWorkSpace, registerDndItem, index}: SlidePro
             }
             ref.current!.addEventListener('mousedown', onMouseDown)
             return (() => ref.current?.removeEventListener('mousedown', onMouseDown))
-        }, [])
-    }
-
-    if (isWorkSpace)
-    {
-        const [select, setSelect] = useState(false)
-        useEffect(() => {
-            console.log(ref.current)
-            const children = Array.from(ref.current!.children)
-            const handleClick = (event: MouseEvent) => {
-                children.map((child) => {
-                    if (child && child.contains(event.target as Node))
-                    {
-                        setSelect(true)
-                    }
-                })
-
-                if (!select) {
-                    createSetSelectedBlockAction(slide.id, null)
-                }
-            }
-            ref.current!.addEventListener('mousedown', handleClick)
-            return (() => {
-                ref.current!.removeEventListener('mousedown', handleClick)
-            })
         }, [])
     }
     return (
