@@ -1,10 +1,31 @@
-.text {
+.block {
     min-height: 24px;
     min-width: 5px;
     user-select: none;
 }
 
-.span {
+.text {
     display: block;
     white-space: pre-wrap;
+}
+
+.cursor {
+    display: inline-block;
+    width: 1px;
+    margin: 0 2px;
+    background-color: black;
+    animation: cursor-blink 1s infinite;
+}
+
+
+@keyframes cursor-blink {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }

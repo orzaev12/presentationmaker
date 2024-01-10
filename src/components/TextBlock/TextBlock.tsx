@@ -1,4 +1,4 @@
-import { CSSProperties, useEffect, useRef } from "react";
+import { CSSProperties, useEffect, useRef, useState } from "react";
 import styles from "./TextBlock.module.css"
 import { TextBlock as TTextBlock } from "../../types/types";
 import {useAppActions, useAppSelector} from "../../store/types.ts";
@@ -17,17 +17,19 @@ function TextBlock({object, id}: TextBlockProps) {
         fontStyle: object.italic ? "italic" : "",
         fontWeight: object.bold ? "bold" : "",
     }
+    const styleForCursor: CSSProperties = {
+        height: object.fontSize
+    }
     const currentSlide = useAppSelector(state => state.presentation.slides[state.presentation.indexOfCurrentSlide])
     const selectedBlockId = useAppSelector(state => state.presentation.slides[state.presentation.indexOfCurrentSlide].selectedBlockId)
     const selectedBlock = currentSlide.data?.find((block) => block.id === selectedBlockId)
     const { createAddCharacterAction, createDeleteCharacterAction } = useAppActions()
     const ref = useRef<HTMLDivElement>(null)
-
     useEffect(() => {
         const handleKeydown = (event: KeyboardEvent) => {
             if (event.key)
             {
-                if (selectedBlockId === id)
+                if (selectedBlockId === id && !document.querySelector('input:focus'))
                 {
                     if (event.key.length === 1) {
                         createAddCharacterAction(currentSlide.id, selectedBlockId, event.key)
@@ -50,8 +52,10 @@ function TextBlock({object, id}: TextBlockProps) {
         })
     }, [selectedBlock])
     return (
-        <div ref={ref} className={styles.text}>
-            <span className={styles.span} style={stylelist}>{object.value}</span>
+        <div ref={ref} className={styles.block}>
+            <p className={styles.text} style={stylelist}>{object.value}
+            {selectedBlockId === id && <span className={styles.cursor} style={styleForCursor}></span>}
+            </p>
         </div>
     )
 }

@@ -14,6 +14,7 @@ import CategoryIcon from '@mui/icons-material/Category';
 import FormatBoldIcon from '@mui/icons-material/FormatBold';
 import FormatUnderlinedIcon from '@mui/icons-material/FormatUnderlined';
 import FormatItalicIcon from '@mui/icons-material/FormatItalic';
+import ChangeHistoryIcon from '@mui/icons-material/ChangeHistory';
 import { TextBlock as TTextBlock, GraphicBlock as TGraphicBlock} from "../../types/types";
 import {useAppActions, useAppSelector} from "../../store/types.ts";
 
@@ -152,7 +153,7 @@ function ToolBar()
                         <option value="Times New Roman">Times New Roman</option>
                     </select>
                     <span className={styles.text}>Размер</span>
-                    <input name={'size'} className={styles.input} type="number" value={(selectedBlock as TTextBlock).fontSize} onChange={(event) => changeFontSizeOfText(event.target.value)} />
+                    <input name='size' className={styles.input} type="number" value={(selectedBlock as TTextBlock).fontSize} onChange={(event) => changeFontSizeOfText(event.target.value)} />
                 </div>
             }
             {(selectedBlock?.type === 'graphic' || selectedBlock?.type === 'text') &&
@@ -190,7 +191,7 @@ function ToolBar()
                 <div className={styles.box}>
                     <IconButton onClick={() => addGraphicBlock("circle")}><CircleIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
                     <IconButton onClick={() => addGraphicBlock("square")}><SquareIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
-                    <IconButton onClick={() => addGraphicBlock("triangle")}><CategoryIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
+                    <IconButton onClick={() => addGraphicBlock("triangle")}><ChangeHistoryIcon className={styles.button} sx={{ fontSize: 17}} /></IconButton>
                 </div>
             </div>
         </div>

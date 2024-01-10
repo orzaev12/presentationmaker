@@ -13,7 +13,7 @@
 }
 
 .text {
-    padding: 6px 15px;
+    padding: 2px 15px;
     border: none;
     background: transparent;
     font: 14px Google Sans, Roboto, sans-serif;
@@ -43,6 +43,7 @@
 .flex
 {
     display: flex;
+    margin-top: 6px;
 }
 
 .colorPicker

@@ -15,6 +15,7 @@ const presentationReducer = (state: Presentation = presentation, action: Action)
                 slides: action.payload.slides,
                 indexOfCurrentSlide: action.payload.indexOfCurrentSlide,
             }
+            history.clear()
             history.addHistoryItem(newState)
             return newState
         }

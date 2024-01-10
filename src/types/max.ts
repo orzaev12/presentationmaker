@@ -3,29 +3,10 @@ import {
   Slide,
   TextBlock,
   ImageBlock,
-  Char,
   Size,
   Position,
   GraphicBlock,
-  TriangleSize,
-  Triangle,
-  Circle,
-  Square
 } from "./types";
-
-const char1: Char = {
-  value: "A",
-  fontSize: 14,
-  fontFamily: "inherit",
-  color: "#FFFFFF"
-}
-
-const char2: Char = {
-  value: "B",
-  fontSize: 20,
-  fontFamily: "inherit",
-  color: "#FF77FF"
-}
 
 const positionOfTextBlock: Position = {
   x: 12,
@@ -50,12 +31,6 @@ const positionOfCircle: Position = {
 const positionOfSquare: Position = {
   x: 12,
   y: 10,
-}
-
-const sizeOfTriangle: TriangleSize = {
-  firstSide: 40,
-  secondSide: 80,
-  thirdSide: 80,
 }
 
 const sizeOfTriangleBlock: Size = {
@@ -88,7 +63,13 @@ const textBlock: TextBlock = {
   size: sizeOfTextBlock,
   position: positionOfTextBlock,
   type: "text",
-  chars: [char1, char2],
+  value: "Text",
+  fontSize: 13,
+  fontFamily: 'Roboto,',
+  color: "#000000",
+  bold: true,
+  underline: true,
+  italic: true,
 }
 
 const imageBlock: ImageBlock = {
@@ -99,46 +80,31 @@ const imageBlock: ImageBlock = {
   data: "/coconut.svg",
 }
 
-const triangle: Triangle = {
-  type: "triangle",
-  size: sizeOfTriangle,
-  background: "#FF0000",
-}
-
 const graphicBlock1: GraphicBlock = {
+  type: "graphic",
+  background: "#000000",
   id: "segssergfc",
   size: sizeOfTriangleBlock,
   position: positionOfTriangle,
-  type: "graphic",
-  data: triangle,
-}
-
-const circle: Circle = {
-  type: "circle",
-  size: sizeOfCircle,
-  background: "#00FF00",
+  data: 'triangle',
 }
 
 const graphicBlock2: GraphicBlock = {
   id: "segsse1rgfc",
+  background: "#000000",
   size: sizeOfCircle,
   position: positionOfCircle,
   type: "graphic",
-  data: circle,
-}
-
-const square: Square = {
-  type: "square",
-  size: sizeOfSquare,
-  background: "#00FFFF",
+  data: 'circle',
 }
 
 const graphicBlock3: GraphicBlock = {
   id: "segsse1rgesfc",
+  background: "#000000",
   size: sizeOfSquare,
   position: positionOfSquare,
   type: "graphic",
-  data: square,
+  data: 'square',
 }
 
 const slide: Slide = {
@@ -160,8 +126,8 @@ const slide3: Slide = {
 };
 
 const present: Presentation = {
-  name: "Max examples",
-  currentSlide: slide,
+  title: "Max examples",
+  indexOfCurrentSlide: 0,
   slides: [slide, slide2, slide3],
 };
 
