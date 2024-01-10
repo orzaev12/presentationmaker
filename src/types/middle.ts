@@ -2,24 +2,9 @@ import {
     Presentation,
     Slide,
     TextBlock,
-    Char,
     Size,
     Position
 } from "./types";
-
-const char: Char = {
-    value: "A",
-    fontSize: 14,
-    fontFamily: "inherit",
-    color: "#FFFFFF"
-}
-
-const char2: Char = {
-    value: "b",
-    fontSize: 14,
-    fontFamily: "inherit",
-    color: "#000"
-}
 
 const positionTextBlock: Position = {
     x: 12,
@@ -36,7 +21,13 @@ const textBlock: TextBlock = {
     size: sizeTextBlock,
     position: positionTextBlock,
     type: "text",
-    chars: [char, char2],
+    value: "Text",
+    fontSize: 13,
+    fontFamily: 'Roboto,',
+    color: "#000000",
+    bold: true,
+    underline: true,
+    italic: true,
 }
 
 const slide: Slide = {
@@ -46,8 +37,8 @@ const slide: Slide = {
 };
 
 const present: Presentation = {
-    name: "Middle examples",
-    currentSlide: slide,
+    title: "Middle examples",
+    indexOfCurrentSlide: 0,
     slides: [slide],
   };
 
