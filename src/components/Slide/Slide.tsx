@@ -16,12 +16,10 @@ type SlideProps = {
 
 function Slide({className, slide, isWorkSpace, registerDndItem, index}: SlideProps) {
     const { createSetSelectedBlockAction } = useAppActions()
-    const [select, setSelect] = useState(false)
+    const ref = useRef<HTMLDivElement>(null)
     const background: CSSProperties = {
         background: slide.background,
     }
-    const ref = useRef<HTMLDivElement>(null)
-
     if (!isWorkSpace)
     {
         useEffect(() => {
@@ -46,10 +44,11 @@ function Slide({className, slide, isWorkSpace, registerDndItem, index}: SlidePro
         }, [])
     }
 
-    // если блок не выделен
     if (isWorkSpace)
     {
+        const [select, setSelect] = useState(false)
         useEffect(() => {
+            console.log(ref.current)
             const children = Array.from(ref.current!.children)
             const handleClick = (event: MouseEvent) => {
                 children.map((child) => {

@@ -39,9 +39,9 @@ function Block({data, id, isWorkSpace}: BlockProps) {
             const block: HTMLDivElement = ref.current!
             const handleClick = (event: MouseEvent) => {
                 if (block && block?.contains(event.target as Node)) {
+                    createSetSelectedBlockAction(currentSlide.id, id)
                     block.style.outline = "3px solid #1A73E8"
                     block.style.outlineOffset = "1px"
-                    createSetSelectedBlockAction(currentSlide.id, id)
                 } else {
                     block.style.outline = "none"
                     block.style.outlineOffset = "none"
