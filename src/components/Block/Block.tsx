@@ -1,11 +1,12 @@
 import {TextBlock as TTextBlock, ImageBlock as TImageBlock, GraphicBlock as TGraphicBlock} from "../../types/types";
-import styles from "./Block.module.css"
-import TextBlock from "../TextBlock/TextBlock";
-import ImageBlock from "../ImageBlock/ImageBlock";
+import {useAppActions, useAppSelector} from "../../store/types.ts";
+import {useDragAndDropObject} from "../../hooks/useDndObject";
+import {useResizeObject} from "../../hooks/useResizeObject";
 import GraphicBlock from "../GraphicBlock/GraphicBlock";
 import {CSSProperties, useEffect, useRef} from "react";
-import {useDragAndDropObject} from "../../hooks/useDndObject";
-import {useAppActions, useAppSelector} from "../../store/types.ts";
+import ImageBlock from "../ImageBlock/ImageBlock";
+import TextBlock from "../TextBlock/TextBlock";
+import styles from "./Block.module.css"
 import classNames from "classnames";
 
 type BlockProps = {
@@ -24,6 +25,7 @@ function Block({data, id, isWorkSpace}: BlockProps) {
         createChangeSizeOfBlockAction
     } = useAppActions()
     const {registerDndItem} = useDragAndDropObject()
+    const {registerResizeItem} = useResizeObject()
     const ref = useRef<HTMLDivElement>(null)
     const refPoint = useRef<HTMLDivElement>(null)
     const refBlock = useRef<HTMLDivElement>(null)
@@ -90,27 +92,26 @@ function Block({data, id, isWorkSpace}: BlockProps) {
 
 
         useEffect(() => {
-            const {onDragStart} = registerDndItem({elementRef: refPoint})
+            const {onResizeStart} = registerResizeItem({elementRef: refPoint})
             const onMouseDown = (event: MouseEvent) => {
-                onDragStart(
+                onResizeStart(
                     {
                         onDrag: (dragEvent) => {
                             dragEvent.preventDefault()
+                            // @ts-ignore
+                            let blockStyleList = ref.current!.firstChild!.firstChild!.style;
+                            let currentWidth = dragEvent.clientX + (data.size.width - event.clientX)
+                            let currentHeight = dragEvent.clientY + (data.size.height - event.clientY)
+
                             if (data.data == "triangle") {
-                                // @ts-ignore
-                                ref.current!.firstChild!.firstChild!.style.borderLeft = `${(dragEvent.clientX + (data.size.width - event.clientX)) / 2}px solid transparent`
-                                // @ts-ignore
-                                ref.current!.firstChild!.firstChild!.style.borderRight = `${(dragEvent.clientX + (data.size.width - event.clientX)) / 2}px solid transparent`
-                                // @ts-ignore
-                                ref.current!.firstChild!.firstChild!.style.borderBottom = `${dragEvent.clientY + (data.size.height - event.clientY)}px solid ${data.background}`
+                                blockStyleList.borderLeft = `${currentWidth / 2}px solid transparent`
+                                blockStyleList.borderRight = `${currentWidth / 2}px solid transparent`
+                                blockStyleList.borderBottom = `${currentHeight}px solid ${data.background}`
                             } else {
-                                // @ts-ignore
-                                ref.current!.firstChild!.firstChild!.style.height = `${dragEvent.clientY + (data.size.height - event.clientY)}px`
-                                // @ts-ignore
-                                ref.current!.firstChild!.firstChild!.style.width = `${dragEvent.clientX + (data.size.width - event.clientX)}px`
+                                blockStyleList.height = `${currentHeight}px`
+                                blockStyleList.width = `${currentWidth}px`
                                 if (data.data == 'circle') {
-                                    // @ts-ignore
-                                    ref.current!.firstChild!.firstChild!.style.borderRadius = `${dragEvent.clientX + (data.size.width - event.clientX)}px / ${dragEvent.clientY + (data.size.height - event.clientY)}px `
+                                    blockStyleList.borderRadius = `${currentWidth}px / ${currentHeight}px `
                                 }
                             }
                         },
@@ -137,9 +138,8 @@ function Block({data, id, isWorkSpace}: BlockProps) {
                 {data.type === "graphic" && <GraphicBlock data={data}/>}
             </div>
             <div
-                className={isWorkSpace ? id === selectedBlockId ? classNames(styles.point) : classNames(styles.point, styles.hide) : classNames(styles.point, styles.hide)}
-                ref={refPoint}>
-            </div>
+                className={isWorkSpace && id === selectedBlockId && data.type != "text" ? classNames(styles.point) : classNames(styles.point, styles.hide)}
+                ref={refPoint}></div>
         </div>
     )
 }
